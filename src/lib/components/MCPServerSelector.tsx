@@ -5,7 +5,7 @@ import { useServerCardStore } from "@lib/stores/serverCardStore";
 import { Badge } from "@lib/components/ui/badge";
 import { cn } from "@lib/utils/cn";
 import { getMockServerCard } from "@lib/mock/servers";
-import { Loader2 } from "lucide-react";
+import { Loader2, X } from "lucide-react";
 
 function getHostname(url: string): string {
   if (url.startsWith("mock://")) return url;
@@ -22,7 +22,8 @@ export function MCPServerSelector() {
   const loading = usePredefinedServersStore((s) => s.loading);
   const loadDefaults = usePredefinedServersStore((s) => s.loadDefaults);
   const select = usePredefinedServersStore((s) => s.select);
-  const { setFromPredefined, connect } = useMCPConnectionStore();
+  const removeServer = usePredefinedServersStore((s) => s.removeServer);
+  const { setFromPredefined, connect, disconnect, connectionStatus } = useMCPConnectionStore();
   const { setRawJson } = useServerCardStore();
 
   useEffect(() => {
@@ -38,8 +39,16 @@ export function MCPServerSelector() {
   }, [loading, servers, selectedId]);
 
   const handleSelect = async (id: string) => {
+    // Skip if already selected and connected/connecting
+    if (id === selectedId && (connectionStatus === "connected" || connectionStatus === "connecting")) return;
+
     const server = servers.find((s) => s.id === id);
     if (!server) return;
+
+    // Disconnect previous session before switching
+    if (connectionStatus === "connected") {
+      await disconnect();
+    }
 
     select(id);
     setFromPredefined(server);
@@ -53,6 +62,18 @@ export function MCPServerSelector() {
     }
 
     await connect();
+  };
+
+  const handleRemove = (e: React.MouseEvent, id: string) => {
+    e.stopPropagation();
+    const wasSelected = selectedId === id;
+    removeServer(id);
+    if (wasSelected) {
+      const remaining = servers.filter((s) => s.id !== id);
+      if (remaining.length > 0) {
+        handleSelect(remaining[0].id);
+      }
+    }
   };
 
   if (loading) {
@@ -70,40 +91,52 @@ export function MCPServerSelector() {
     <div className="space-y-1.5">
       <h3 className="text-xs font-medium text-muted-foreground">Servers</h3>
       <div className="space-y-1" role="list">
-        {servers.map((server) => (
-          <div
-            key={server.id}
-            role="listitem"
-            tabIndex={0}
-            aria-selected={selectedId === server.id}
-            className={cn(
-              "cursor-pointer rounded-md border px-2.5 py-2 transition-colors hover:bg-accent/50",
-              selectedId === server.id && "border-primary bg-accent/30",
-            )}
-            onClick={() => handleSelect(server.id)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                handleSelect(server.id);
-              }
-            }}
-          >
-            <div className="flex items-center gap-1.5">
-              <p className="text-xs font-medium truncate flex-1">{server.title || server.name}</p>
-              {server.mocked && (
-                <Badge variant="outline" className="text-[9px] h-3.5 border-warning/50 text-warning shrink-0">
-                  Mock
-                </Badge>
+        {servers.map((server) => {
+          const isCustom = server.id.startsWith("custom-");
+          return (
+            <div
+              key={server.id}
+              role="listitem"
+              tabIndex={0}
+              aria-selected={selectedId === server.id}
+              className={cn(
+                "group cursor-pointer rounded-md border px-2.5 py-2 transition-colors hover:bg-accent/50",
+                selectedId === server.id && "border-primary bg-accent/30",
               )}
-              {server.tags?.slice(0, 1).map((tag) => (
-                <Badge key={tag} variant="outline" className="text-[9px] h-3.5 shrink-0">
-                  {tag}
-                </Badge>
-              ))}
+              onClick={() => handleSelect(server.id)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  handleSelect(server.id);
+                }
+              }}
+            >
+              <div className="flex items-center gap-1.5">
+                <p className="text-sm font-medium truncate flex-1">{server.title || server.name}</p>
+                {server.mocked && (
+                  <Badge variant="outline" className="text-[9px] h-3.5 border-warning/50 text-warning shrink-0">
+                    Mock
+                  </Badge>
+                )}
+                {server.tags?.slice(0, 1).map((tag) => (
+                  <Badge key={tag} variant="outline" className="text-[9px] h-3.5 shrink-0">
+                    {tag}
+                  </Badge>
+                ))}
+                {isCustom && (
+                  <button
+                    onClick={(e) => handleRemove(e, server.id)}
+                    className="hidden group-hover:flex h-4 w-4 items-center justify-center rounded-sm hover:bg-destructive/20 text-muted-foreground hover:text-destructive shrink-0 transition-colors"
+                    title="Remove server"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                )}
+              </div>
+              <p className="text-xs text-muted-foreground truncate mt-0.5">{getHostname(server.url)}</p>
             </div>
-            <p className="text-[10px] text-muted-foreground truncate mt-0.5">{getHostname(server.url)}</p>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

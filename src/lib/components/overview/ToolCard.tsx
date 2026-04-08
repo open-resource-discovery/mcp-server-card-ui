@@ -23,7 +23,7 @@ export function ToolCard({ tool, readOnly }: ToolCardProps) {
       <AccordionTrigger className="hover:no-underline hover:bg-muted/50 rounded-md px-2 -mx-2 transition-colors py-3">
         <div className="flex flex-1 flex-col gap-0.5 text-left min-w-0">
           <AnnotationBadges annotations={tool.annotations} />
-          <span className="text-sm font-medium truncate">{displayName}</span>
+          <span className="text-xs font-medium truncate">{displayName}</span>
           {displayName !== tool.name && (
             <span className="font-mono text-[11px] text-muted-foreground truncate">
               {tool.name}
@@ -65,7 +65,7 @@ export function ToolCard({ tool, readOnly }: ToolCardProps) {
               <span className="text-xs font-medium text-muted-foreground">Metadata</span>
               <div className="flex flex-wrap gap-1.5">
                 {Object.entries(tool._meta).map(([key, value]) => (
-                  <Badge key={key} variant="outline" size="sm">
+                  <Badge key={key} variant="outline">
                     {key}: {typeof value === "string" ? value : JSON.stringify(value)}
                   </Badge>
                 ))}
@@ -114,7 +114,7 @@ function AnnotationBadges({ annotations }: { annotations?: Tool["annotations"] }
   return (
     <div className="flex gap-1.5">
       {badges.map((b) => (
-        <Badge key={b.label} variant={b.variant} size="sm">
+        <Badge key={b.label} variant={b.variant}>
           {b.label}
         </Badge>
       ))}

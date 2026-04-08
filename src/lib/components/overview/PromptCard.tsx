@@ -23,13 +23,13 @@ export function PromptCard({ prompt }: PromptCardProps) {
         <div className="flex flex-1 flex-col gap-0.5 text-left min-w-0">
           {prompt.arguments && prompt.arguments.length > 0 && (
             <div className="flex gap-1.5">
-              <Badge variant="secondary" size="sm">
+              <Badge variant="secondary">
                 {prompt.arguments.length} arg
                 {prompt.arguments.length !== 1 ? "s" : ""}
               </Badge>
             </div>
           )}
-          <span className="text-sm font-medium truncate">{displayName}</span>
+          <span className="text-xs font-medium truncate">{displayName}</span>
           {displayName !== prompt.name && (
             <span className="font-mono text-[11px] text-muted-foreground truncate">
               {prompt.name}
@@ -67,11 +67,11 @@ export function PromptCard({ prompt }: PromptCardProps) {
                         </span>
                       )}
                       {arg.required ? (
-                        <Badge variant="warning" size="sm">
+                        <Badge variant="warning">
                           required
                         </Badge>
                       ) : (
-                        <Badge variant="secondary" size="sm">
+                        <Badge variant="secondary">
                           optional
                         </Badge>
                       )}

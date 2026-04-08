@@ -2,6 +2,7 @@ import { create } from "zustand";
 import type { PredefinedServer } from "@lib/types/connection";
 import { getStoredJson, setStoredJson } from "@lib/utils/local-storage";
 import { getConfigServers, getConfigOrdUrl } from "@lib/utils/playground-config";
+import { discoverServersFromOrd } from "@lib/utils/ord-discovery";
 
 interface PredefinedServersState {
   servers: PredefinedServer[];
@@ -24,78 +25,6 @@ function getBaseUrl(): string {
     }
   }
   return import.meta.env.BASE_URL;
-}
-
-/* ---------- ORD (Open Resource Discovery) ---------- */
-
-interface ORDConfig {
-  baseUrl?: string;
-  openResourceDiscoveryV1?: {
-    documents?: { url: string }[];
-  };
-}
-
-interface ORDApiResource {
-  ordId: string;
-  title?: string;
-  shortDescription?: string;
-  description?: string;
-  apiProtocol?: string;
-  entryPoints?: string[];
-}
-
-interface ORDDocument {
-  apiResources?: ORDApiResource[];
-}
-
-async function fetchFromOrd(): Promise<PredefinedServer[]> {
-  const ordUrl = getConfigOrdUrl();
-  if (!ordUrl) return [];
-
-  try {
-    // Step 1: fetch ORD config
-    let configUrl = ordUrl;
-    if (!configUrl.includes(".well-known/open-resource-discovery")) {
-      configUrl = configUrl.replace(/\/$/, "") + "/.well-known/open-resource-discovery";
-    }
-
-    const configRes = await fetch(configUrl);
-    if (!configRes.ok) return [];
-    const config: ORDConfig = await configRes.json();
-
-    const baseUrl = config.baseUrl || new URL(configUrl).origin;
-    const docUrls = config.openResourceDiscoveryV1?.documents?.map((d) => d.url) ?? [];
-
-    // Step 2: fetch each ORD document and collect MCP apiResources
-    const servers: PredefinedServer[] = [];
-
-    for (const docPath of docUrls) {
-      const docUrl = docPath.startsWith("http") ? docPath : `${baseUrl.replace(/\/$/, "")}${docPath}`;
-      const docRes = await fetch(docUrl);
-      if (!docRes.ok) continue;
-      const doc: ORDDocument = await docRes.json();
-
-      const mcpResources = (doc.apiResources ?? []).filter(
-        (r) => r.apiProtocol === "mcp" && r.entryPoints?.length,
-      );
-
-      for (const r of mcpResources) {
-        servers.push({
-          id: r.ordId,
-          name: r.ordId.split(":").slice(-2).join(":"),
-          title: r.title,
-          description: r.shortDescription || r.description || "",
-          url: r.entryPoints![0],
-          transportType: "streamable-http",
-          tags: ["ORD"],
-        });
-      }
-    }
-
-    return servers;
-  } catch {
-    return [];
-  }
 }
 
 /* ---------- Store ---------- */
@@ -122,7 +51,7 @@ export const usePredefinedServersStore = create<PredefinedServersState>((set) =>
     }
 
     // Fetch servers from ORD endpoint and deduplicate by URL
-    const ordServers = await fetchFromOrd();
+    const ordServers = await discoverServersFromOrd(getConfigOrdUrl());
     const knownUrls = new Set(defaults.map((s) => s.url));
     const newOrdServers = ordServers.filter((s) => !knownUrls.has(s.url));
 

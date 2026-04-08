@@ -9,15 +9,18 @@ export function MCPSettingsPanel() {
       <div className="flex h-10 flex-none items-center border-b bg-muted/30 px-3">
         <span className="text-xs font-medium text-muted-foreground">Settings</span>
       </div>
-      <ScrollArea className="flex-1">
-        <div className="p-4 space-y-4">
+
+      {/* Connection settings (URL, transport, auth, connect) */}
+      <div className="flex-none p-3">
+        <MCPConnectionSettings />
+      </div>
+
+      <Separator />
+
+      {/* Scrollable server list */}
+      <ScrollArea className="flex-1 min-h-0">
+        <div className="p-3">
           <MCPServerSelector />
-          <Separator />
-          <MCPConnectionSettings />
-          <Separator />
-          <div className="text-xs text-muted-foreground">
-            Configure connection settings to test your MCP server.
-          </div>
         </div>
       </ScrollArea>
     </div>

@@ -24,12 +24,12 @@ export function ResourceCard({ resource }: ResourceCardProps) {
         <div className="flex flex-1 flex-col gap-0.5 text-left min-w-0">
           {resource.mimeType && (
             <div className="flex gap-1.5">
-              <Badge variant="secondary" size="sm">
+              <Badge variant="secondary">
                 {resource.mimeType}
               </Badge>
             </div>
           )}
-          <span className="text-sm font-medium truncate">{displayName}</span>
+          <span className="text-xs font-medium truncate">{displayName}</span>
           {displayName !== resource.name && (
             <span className="font-mono text-[11px] text-muted-foreground truncate">
               {resource.name}
@@ -61,7 +61,7 @@ export function ResourceCard({ resource }: ResourceCardProps) {
                   <span className="text-xs text-muted-foreground">Audience:</span>
                   <div className="flex gap-1.5">
                     {resource.annotations.audience.map((role) => (
-                      <Badge key={role} variant="secondary" size="sm">
+                      <Badge key={role} variant="secondary">
                         {role}
                       </Badge>
                     ))}
