@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>MCP Playground</title>
+    <meta
+      name="description"
+      content="Analyze, validate, and interact with MCP (Model Context Protocol) Server Cards. Connect to MCP servers, inspect their capabilities, and test tools and prompts in real-time."
+    />
+    <meta property="og:title" content="MCP Playground" />
+    <meta
+      property="og:description"
+      content="Analyze, validate, and interact with MCP Server Cards. Connect to MCP servers, inspect capabilities, and test tools and prompts."
+    />
+    <meta property="og:type" content="website" />
+    <script>
+      // GitHub Pages SPA redirect handler
+      (function () {
+        var redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        if (redirect && redirect !== location.href) {
+          history.replaceState(null, null, redirect);
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

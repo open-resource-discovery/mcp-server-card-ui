@@ -1,0 +1,219 @@
+import { useState, useCallback, useEffect } from "react";
+import { useFunctionsStore } from "@lib/stores/functionsStore";
+import { useMCPConnectionStore } from "@lib/stores/mcpConnectionStore";
+import { useServerCardStore } from "@lib/stores/serverCardStore";
+import type { Tool, Prompt } from "@sap/mcp-protocol";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@lib/components/ui/select";
+import { Button } from "@lib/components/ui/button";
+import { Play, Loader2 } from "lucide-react";
+
+/**
+ * Generate a sample JSON object from a tool's inputSchema.
+ * Uses defaults when available, otherwise picks a sensible placeholder
+ * based on the property type.
+ */
+function generateToolInput(tool: Tool): string {
+  const schema = tool.inputSchema as {
+    properties?: Record<string, { type?: string; default?: unknown; enum?: unknown[] }>;
+    required?: string[];
+  } | undefined;
+  if (!schema?.properties) return "{}";
+
+  const obj: Record<string, unknown> = {};
+  for (const [key, prop] of Object.entries(schema.properties)) {
+    if (prop.default !== undefined) {
+      obj[key] = prop.default;
+    } else if (prop.enum && prop.enum.length > 0) {
+      obj[key] = prop.enum[0];
+    } else {
+      switch (prop.type) {
+        case "number":
+        case "integer":
+          obj[key] = 0;
+          break;
+        case "boolean":
+          obj[key] = false;
+          break;
+        case "array":
+          obj[key] = [];
+          break;
+        case "object":
+          obj[key] = {};
+          break;
+        default:
+          obj[key] = "";
+      }
+    }
+  }
+  return JSON.stringify(obj, null, 2);
+}
+
+/**
+ * Generate a sample JSON object from a prompt's arguments definition.
+ */
+function generatePromptInput(prompt: Prompt): string {
+  if (!prompt.arguments || prompt.arguments.length === 0) return "{}";
+  const obj: Record<string, string> = {};
+  for (const arg of prompt.arguments) {
+    obj[arg.name] = "";
+  }
+  return JSON.stringify(obj, null, 2);
+}
+
+export function FunctionInput() {
+  const {
+    callTool,
+    getPrompt,
+    selectedToolName,
+    selectedPromptName,
+    pendingPrefill,
+    setSelectedToolName,
+    setSelectedPromptName,
+  } = useFunctionsStore();
+  const connectionStatus = useMCPConnectionStore((s) => s.connectionStatus);
+  const parsedCard = useServerCardStore((s) => s.parsedCard);
+
+  const [mode, setMode] = useState<"tool" | "prompt">("tool");
+  const [inputJson, setInputJson] = useState("{}");
+  const [isExecuting, setIsExecuting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const tools = parsedCard?.tools ?? [];
+  const prompts = parsedCard?.prompts ?? [];
+  const isConnected = connectionStatus === "connected";
+
+  // Pre-fill input when "Try it" is clicked (pendingPrefill increments)
+  useEffect(() => {
+    if (pendingPrefill === 0) return;
+    if (selectedToolName) {
+      setMode("tool");
+      const tool = tools.find((t) => t.name === selectedToolName);
+      setInputJson(tool ? generateToolInput(tool) : "{}");
+      setError(null);
+    } else if (selectedPromptName) {
+      setMode("prompt");
+      const prompt = prompts.find((p) => p.name === selectedPromptName);
+      setInputJson(prompt ? generatePromptInput(prompt) : "{}");
+      setError(null);
+    }
+  }, [pendingPrefill, selectedToolName, selectedPromptName, tools, prompts]);
+
+  const selectedName = mode === "tool" ? selectedToolName : selectedPromptName;
+
+  const handleSelectName = useCallback(
+    (name: string) => {
+      if (mode === "tool") {
+        setSelectedToolName(name);
+        const tool = tools.find((t) => t.name === name);
+        setInputJson(tool ? generateToolInput(tool) : "{}");
+      } else {
+        setSelectedPromptName(name);
+        const prompt = prompts.find((p) => p.name === name);
+        setInputJson(prompt ? generatePromptInput(prompt) : "{}");
+      }
+      setError(null);
+    },
+    [mode, tools, prompts, setSelectedToolName, setSelectedPromptName],
+  );
+
+  const handleExecute = useCallback(async () => {
+    if (!selectedName) return;
+
+    let parsedInput: Record<string, unknown>;
+    try {
+      parsedInput = JSON.parse(inputJson);
+    } catch {
+      setError("Invalid JSON input");
+      return;
+    }
+
+    setError(null);
+    setIsExecuting(true);
+
+    try {
+      if (mode === "tool") {
+        await callTool(selectedName, parsedInput);
+      } else {
+        await getPrompt(selectedName, parsedInput);
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Execution failed");
+    } finally {
+      setIsExecuting(false);
+    }
+  }, [selectedName, inputJson, mode, callTool, getPrompt]);
+
+  return (
+    <div className="border-t p-4 space-y-3">
+      <div className="flex gap-2">
+        <Select
+          value={mode}
+          onValueChange={(v) => setMode(v as "tool" | "prompt")}
+        >
+          <SelectTrigger className="h-8 w-24 text-xs">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="tool">Tool</SelectItem>
+            <SelectItem value="prompt">Prompt</SelectItem>
+          </SelectContent>
+        </Select>
+
+        <Select value={selectedName ?? ""} onValueChange={handleSelectName}>
+          <SelectTrigger className="h-8 flex-1 text-xs">
+            <SelectValue placeholder={`Select ${mode}...`} />
+          </SelectTrigger>
+          <SelectContent>
+            {mode === "tool"
+              ? tools.map((t) => (
+                  <SelectItem key={t.name} value={t.name}>
+                    {t.title || t.name}
+                  </SelectItem>
+                ))
+              : prompts.map((p) => (
+                  <SelectItem key={p.name} value={p.name}>
+                    {p.title || p.name}
+                  </SelectItem>
+                ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      <textarea
+        value={inputJson}
+        onChange={(e) => setInputJson(e.target.value)}
+        className="w-full h-32 font-mono text-[11px] bg-muted p-2 rounded border resize-y focus:outline-none focus:ring-2 focus:ring-primary"
+        spellCheck={false}
+        placeholder='{"key": "value"}'
+      />
+
+      {error && <p className="text-xs text-destructive">{error}</p>}
+
+      <Button
+        size="sm"
+        onClick={handleExecute}
+        disabled={!isConnected || !selectedName || isExecuting}
+        className="w-full"
+      >
+        {isExecuting ? (
+          <Loader2 className="h-4 w-4 mr-1 animate-spin" />
+        ) : (
+          <Play className="h-4 w-4 mr-1" />
+        )}
+        {isExecuting ? "Executing..." : "Execute"}
+      </Button>
+
+      {!isConnected && (
+        <p className="text-xs text-muted-foreground text-center">
+          Connect to a server to execute functions
+        </p>
+      )}
+    </div>
+  );
+}

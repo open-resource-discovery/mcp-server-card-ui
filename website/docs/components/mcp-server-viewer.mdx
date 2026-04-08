@@ -1,0 +1,63 @@
+---
+id: mcp-server-viewer
+title: MCPServerViewer
+sidebar_position: 4
+---
+
+import { ComponentDemo } from "@site/src/components/ComponentDemo";
+
+# MCPServerViewer
+
+Lightweight viewer using a simple textarea instead of Monaco editor, paired with an overview panel.
+
+## Live Demo
+
+<ComponentDemo type="viewer" height="500px" />
+
+## Import
+
+```tsx
+import { MCPServerViewer } from "@sap/mcp-editor-react/viewer";
+import "@sap/mcp-editor-react/styles";
+```
+
+## Usage
+
+```tsx
+function App() {
+  return (
+    <div style={{ height: "100vh" }}>
+      <MCPServerViewer
+        initialServerUrl="https://example.com/mcp-server-card.json"
+      />
+    </div>
+  );
+}
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `initialServerCard` | `string` | - | Initial server card JSON string |
+| `initialServerUrl` | `string` | - | Initial MCP server URL |
+| `showValidation` | `boolean` | `true` | Show the Validation tab |
+| `defaultTab` | `"overview" \| "validation"` | `"overview"` | Default tab to show |
+| `onServerCardChange` | `(json: string, parsed: MCPServerCardDefinition \| null) => void` | - | Callback when server card changes |
+| `onValidationComplete` | `(results: ValidationResult[]) => void` | - | Callback when validation completes |
+| `className` | `string` | - | Additional CSS class |
+
+## When to Use
+
+Use `MCPServerViewer` when:
+
+- You need the smallest possible bundle size with editing capability
+- Monaco editor features aren't required
+- You want basic JSON editing with a textarea
+- You're building a simple viewer or embed
+
+## Bundle Size
+
+Entry point: ~0.4 kB (gzip: ~0.25 kB)
+
+This is the lightest editor component as it uses a simple textarea instead of Monaco editor. The total bundle size is approximately ~80 kB including all shared chunks.

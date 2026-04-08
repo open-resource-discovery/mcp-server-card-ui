@@ -1,0 +1,69 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: github-pages
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build standalone bundle
+        run: npm run build:standalone
+        env:
+          NODE_ENV: production
+          VITE_PLAYGROUND_CONFIG: ${{ vars.VITE_PLAYGROUND_CONFIG }}
+
+      - name: Copy standalone assets to website
+        run: npm run copy:website-standalone
+
+      - name: Install website dependencies
+        run: cd website && npm ci
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Build Docusaurus website
+        run: cd website && npm run build
+        env:
+          NODE_ENV: production
+          BASE_URL: /mcp-server-card-ui/
+          VITE_PLAYGROUND_CONFIG: ${{ vars.VITE_PLAYGROUND_CONFIG }}
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: website/build
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

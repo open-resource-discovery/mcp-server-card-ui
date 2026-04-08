@@ -1,0 +1,66 @@
+---
+id: mcp-server-editor
+title: MCPServerEditor
+sidebar_position: 3
+---
+
+import { ComponentDemo } from "@site/src/components/ComponentDemo";
+
+# MCPServerEditor
+
+Monaco-based JSON editor with an overview panel. Includes auto-validation and a visual display of the parsed server card.
+
+## Live Demo
+
+<ComponentDemo type="editor" height="500px" />
+
+## Import
+
+```tsx
+import { MCPServerEditor } from "@sap/mcp-editor-react/editor";
+import "@sap/mcp-editor-react/styles";
+```
+
+## Usage
+
+```tsx
+function App() {
+  return (
+    <div style={{ height: "100vh" }}>
+      <MCPServerEditor
+        onServerCardChange={(json, parsed) => {
+          console.log("Card changed:", parsed);
+        }}
+      />
+    </div>
+  );
+}
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `initialServerCard` | `string` | - | Initial server card JSON string |
+| `initialServerUrl` | `string` | - | Initial MCP server URL |
+| `showSettings` | `boolean` | `true` | Show the settings panel |
+| `showValidation` | `boolean` | `true` | Show the Validation tab |
+| `readOnly` | `boolean` | `false` | Make the editor read-only |
+| `defaultTab` | `"overview" \| "validation"` | `"overview"` | Default tab to show |
+| `onServerCardChange` | `(json: string, parsed: MCPServerCardDefinition \| null) => void` | - | Callback when server card changes |
+| `onValidationComplete` | `(results: ValidationResult[]) => void` | - | Callback when validation completes |
+| `className` | `string` | - | Additional CSS class |
+
+## When to Use
+
+Use `MCPServerEditor` when:
+
+- You need a two-panel layout with Monaco editor and overview side-by-side
+- You want JSON editing with syntax highlighting and real-time validation
+- You don't need connection, function calling, or the settings panel
+
+## Bundle Size
+
+Entry point: ~0.5 kB (gzip: ~0.3 kB)
+
+Note: Monaco editor is loaded as a shared chunk.

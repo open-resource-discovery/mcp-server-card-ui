@@ -1,0 +1,66 @@
+---
+id: mcp-server-playground-lite
+title: MCPServerPlaygroundLite
+sidebar_position: 2
+---
+
+import { ComponentDemo } from "@site/src/components/ComponentDemo";
+
+# MCPServerPlaygroundLite
+
+A lighter version of MCPServerPlayground without the Functions tab or connection system.
+
+## Live Demo
+
+<ComponentDemo type="playground-lite" height="500px" />
+
+## Import
+
+```tsx
+import { MCPServerPlaygroundLite } from "@sap/mcp-editor-react/playground-lite";
+import "@sap/mcp-editor-react/styles";
+```
+
+## Usage
+
+```tsx
+function App() {
+  return (
+    <div style={{ height: "100vh" }}>
+      <MCPServerPlaygroundLite
+        onServerCardChange={(json, parsed) => {
+          // Save to backend
+        }}
+      />
+    </div>
+  );
+}
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `initialServerCard` | `string` | - | Initial server card JSON string |
+| `initialServerUrl` | `string` | - | Initial MCP server URL |
+| `showValidation` | `boolean` | `true` | Show the Validation tab |
+| `readOnly` | `boolean` | `false` | Make the editor read-only |
+| `defaultTab` | `"overview" \| "validation"` | `"overview"` | Default tab to show |
+| `onServerCardChange` | `(json: string, parsed: MCPServerCardDefinition \| null) => void` | - | Callback when server card changes |
+| `onValidationComplete` | `(results: ValidationResult[]) => void` | - | Callback when validation completes |
+| `className` | `string` | - | Additional CSS class |
+
+## When to Use
+
+Use `MCPServerPlaygroundLite` when:
+
+- You need the Monaco editor but don't need connection or function calling
+- You want a smaller bundle size than the full playground
+- You're building an editor-only experience for authoring server cards
+- You don't need the Settings panel, Functions tab, or Raw HTTP tab
+
+## Bundle Size
+
+Entry point: ~4.6 kB (gzip: ~1.5 kB)
+
+Note: Monaco editor is loaded as a shared chunk, so the total loaded size will be larger.

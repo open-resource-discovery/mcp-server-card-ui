@@ -1,0 +1,22 @@
+[
+  {
+    "id": "mock-echo",
+    "name": "echo",
+    "title": "Echo Server",
+    "description": "A simple echo server for testing connectivity.",
+    "url": "mock://echo",
+    "transportType": "streamable-http",
+    "mocked": true,
+    "tags": ["test", "debug"]
+  },
+  {
+    "id": "mock-weather",
+    "name": "weather",
+    "title": "Weather Server",
+    "description": "Mock weather data and forecasts with tools, resources, and prompts.",
+    "url": "mock://weather",
+    "transportType": "streamable-http",
+    "mocked": true,
+    "tags": ["weather", "demo"]
+  }
+]

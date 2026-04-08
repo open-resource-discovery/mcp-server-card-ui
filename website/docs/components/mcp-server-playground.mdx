@@ -1,0 +1,77 @@
+---
+id: mcp-server-playground
+title: MCPServerPlayground
+sidebar_position: 1
+---
+
+import { ComponentDemo } from "@site/src/components/ComponentDemo";
+
+# MCPServerPlayground
+
+The full-featured playground component with Monaco editor, connection settings, and function calling.
+
+## Live Demo
+
+<ComponentDemo type="playground" height="600px" />
+
+## Import
+
+```tsx
+import { MCPServerPlayground } from "@sap/mcp-editor-react";
+import "@sap/mcp-editor-react/styles";
+```
+
+## Usage
+
+```tsx
+function App() {
+  return (
+    <div style={{ height: "100vh" }}>
+      <MCPServerPlayground
+        showSettings={true}
+        showFunctions={true}
+        showEditor={true}
+        onServerCardChange={(json, parsed) => {
+          console.log("Server card changed:", parsed?.name);
+        }}
+      />
+    </div>
+  );
+}
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `initialServerCard` | `string` | - | Initial server card JSON string |
+| `initialServerUrl` | `string` | - | Initial MCP server URL to connect to |
+| `showSettings` | `boolean` | `true` | Show the settings panel |
+| `showFunctions` | `boolean` | `true` | Show the Functions tab |
+| `showRawHttp` | `boolean` | `true` | Show the Raw HTTP tab |
+| `showValidation` | `boolean` | `true` | Show the Validation tab |
+| `showEditor` | `boolean` | `true` | Show the JSON editor |
+| `readOnly` | `boolean` | `false` | Make the editor read-only |
+| `defaultTab` | `"overview" \| "functions" \| "rawhttp" \| "validation"` | `"overview"` | Default tab to show |
+| `forceDesktop` | `boolean` | `false` | Force desktop layout on mobile |
+| `predefinedServers` | `PredefinedServer[]` | - | Override sidebar predefined servers |
+| `onServerCardChange` | `(json: string, parsed: MCPServerCardDefinition \| null) => void` | - | Callback when server card changes |
+| `onConnect` | `(url: string) => void` | - | Callback when connected to server |
+| `onValidationComplete` | `(results: ValidationResult[]) => void` | - | Callback when validation completes |
+| `className` | `string` | - | Additional CSS class |
+
+## Features
+
+- **Monaco Editor** — Full JSON editing with syntax highlighting and auto-completion
+- **Settings Panel** — Configure connection URL, transport type, and authentication
+- **Functions Tab** — Call tools and execute prompts on a connected MCP server
+- **Raw HTTP Tab** — Inspect JSON-RPC request and response payloads
+- **Overview Tab** — Visual display of server capabilities, tools, resources, and prompts
+- **Validation Tab** — Real-time schema validation with error details
+- **Mock Servers** — Built-in echo and weather mock servers for testing
+
+## Bundle Size
+
+Entry point: ~502 kB (gzip: ~158 kB)
+
+This is the largest component as it includes Monaco editor, connection system, and function calling. If you don't need all features, consider using one of the lighter alternatives.

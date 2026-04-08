@@ -1,0 +1,87 @@
+---
+id: mcp-server-card-view
+title: MCPServerCardView
+sidebar_position: 5
+---
+
+import { ComponentDemo } from "@site/src/components/ComponentDemo";
+
+# MCPServerCardView
+
+Display a server card overview without any editor. Ideal for read-only views, catalogs, and detail pages.
+
+## Live Demo
+
+<ComponentDemo type="card-view" height="500px" />
+
+## Import
+
+```tsx
+import { MCPServerCardView } from "@sap/mcp-editor-react/card-view";
+import "@sap/mcp-editor-react/styles";
+```
+
+## Usage
+
+```tsx
+function App() {
+  return (
+    <div style={{ height: "400px" }}>
+      <MCPServerCardView defaultTab="overview" />
+    </div>
+  );
+}
+```
+
+### Read-Only Mode
+
+Pass `readOnly` to hide all interactive elements ("Try it" buttons) and display the server card as a pure informational view:
+
+```tsx
+function ServerDetail({ serverCardJson }: { serverCardJson: string }) {
+  return (
+    <div style={{ height: "400px" }}>
+      <MCPServerCardView initialServerCard={serverCardJson} readOnly />
+    </div>
+  );
+}
+```
+
+In read-only mode:
+
+- **Tool "Try it" buttons** are hidden
+- **Prompt "Try it" buttons** are hidden
+- The card is displayed as a pure informational view
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `initialServerCard` | `string` | - | Initial server card JSON string |
+| `initialServerUrl` | `string` | - | Initial MCP server URL |
+| `showValidation` | `boolean` | `true` | Show the Validation tab |
+| `defaultTab` | `"overview" \| "validation"` | `"overview"` | Default tab to show |
+| `readOnly` | `boolean` | `false` | Hides interactive elements for a pure display |
+| `onServerCardChange` | `(json: string, parsed: MCPServerCardDefinition \| null) => void` | - | Callback when server card changes |
+| `onValidationComplete` | `(results: ValidationResult[]) => void` | - | Callback when validation completes |
+| `className` | `string` | - | Additional CSS class |
+
+## When to Use
+
+Use `MCPServerCardView` when:
+
+- You want to display server card information without an editor
+- You need a read-only view of a server's capabilities, tools, resources, and prompts
+- You're building a listing or detail page for MCP servers
+
+Use `readOnly` mode when:
+
+- You want a pure display with no interactive elements at all
+- You're embedding the card in a catalog or documentation page
+- Users should only view the server card, not interact with it
+
+## Bundle Size
+
+Entry point: ~1.7 kB (gzip: ~0.6 kB)
+
+This component does not include Monaco editor, making it much lighter than editor-based components.
