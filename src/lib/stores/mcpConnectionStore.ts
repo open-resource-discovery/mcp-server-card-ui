@@ -7,7 +7,7 @@ import type {
   ConnectionStatus,
   PredefinedServer,
 } from "@lib/types/connection";
-import type { MCPServerCardDefinition } from "@sap/mcp-protocol";
+import type { MCPServerCardDefinition } from "../types/mcp-protocol";
 import { getConfigAuth } from "@lib/utils/playground-config";
 import { sendRequest, sendNotification, deleteSession, type MCPTransportConfig, type MCPTransportResult } from "@lib/utils/mcp-transport";
 import { resetIdCounter, isErrorResponse } from "@lib/utils/mcp-jsonrpc";

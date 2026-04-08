@@ -1,4 +1,4 @@
-import type { Prompt } from "@sap/mcp-protocol";
+import type { Prompt } from "../../types/mcp-protocol";
 import {
   AccordionItem,
   AccordionTrigger,

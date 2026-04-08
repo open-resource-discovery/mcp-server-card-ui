@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { Tool } from "@sap/mcp-protocol";
+import type { Tool } from "../../types/mcp-protocol";
 import { AccordionItem, AccordionTrigger, AccordionContent } from "@lib/components/ui/accordion";
 import { Badge } from "@lib/components/ui/badge";
 import { Button } from "@lib/components/ui/button";

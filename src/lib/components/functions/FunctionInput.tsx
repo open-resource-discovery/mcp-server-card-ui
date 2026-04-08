@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect } from "react";
 import { useFunctionsStore } from "@lib/stores/functionsStore";
 import { useMCPConnectionStore } from "@lib/stores/mcpConnectionStore";
 import { useServerCardStore } from "@lib/stores/serverCardStore";
-import type { Tool, Prompt } from "@sap/mcp-protocol";
+import type { Tool, Prompt } from "../../types/mcp-protocol";
 import {
   Select,
   SelectTrigger,

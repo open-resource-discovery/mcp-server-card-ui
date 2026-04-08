@@ -1,4 +1,4 @@
-import type { Prompt } from "@sap/mcp-protocol";
+import type { Prompt } from "../../../types/mcp-protocol";
 import { Card, CardContent, CardHeader, CardTitle } from "@lib/components/ui/card";
 import { Accordion } from "@lib/components/ui/accordion";
 import { PromptCard } from "@lib/components/overview/PromptCard";

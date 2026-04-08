@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { RemoteTransport } from "@sap/mcp-protocol";
+import type { RemoteTransport } from "../../../types/mcp-protocol";
 import { Card, CardContent, CardHeader, CardTitle } from "@lib/components/ui/card";
 import { Badge } from "@lib/components/ui/badge";
 import { Globe, Copy, Check } from "lucide-react";

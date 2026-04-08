@@ -1,4 +1,4 @@
-import type { Tool } from "@sap/mcp-protocol";
+import type { Tool } from "../../../types/mcp-protocol";
 import { Card, CardContent, CardHeader, CardTitle } from "@lib/components/ui/card";
 import { Accordion } from "@lib/components/ui/accordion";
 import { ToolCard } from "@lib/components/overview/ToolCard";

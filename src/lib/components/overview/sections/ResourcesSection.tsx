@@ -1,4 +1,4 @@
-import type { Resource } from "@sap/mcp-protocol";
+import type { Resource } from "../../../types/mcp-protocol";
 import { Card, CardContent, CardHeader, CardTitle } from "@lib/components/ui/card";
 import { Accordion } from "@lib/components/ui/accordion";
 import { ResourceCard } from "@lib/components/overview/ResourceCard";

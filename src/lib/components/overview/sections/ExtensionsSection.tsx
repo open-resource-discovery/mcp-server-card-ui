@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { MetaObject } from "@sap/mcp-protocol";
+import type { MetaObject } from "../../../types/mcp-protocol";
 import { Card, CardContent, CardHeader, CardTitle } from "@lib/components/ui/card";
 import { JsonHighlight } from "@lib/components/ui/JsonHighlight";
 import { Braces, Copy, Check, ExternalLink } from "lucide-react";

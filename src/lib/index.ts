@@ -41,7 +41,7 @@ export type {
   ServerCapabilities,
   Authentication,
   Icon,
-} from "@sap/mcp-protocol";
+} from "./types/mcp-protocol";
 
 // Connection types
 export type {

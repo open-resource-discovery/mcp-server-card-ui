@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import type { MCPServerCardDefinition } from "@sap/mcp-protocol";
+import type { MCPServerCardDefinition } from "../types/mcp-protocol";
 import type { ValidationResult } from "@lib/types/validation";
 import type { PredefinedServer } from "@lib/types/connection";
 import { useServerCardStore } from "@lib/stores/serverCardStore";

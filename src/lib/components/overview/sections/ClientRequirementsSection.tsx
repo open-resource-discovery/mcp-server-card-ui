@@ -1,4 +1,4 @@
-import type { ClientCapabilities } from "@sap/mcp-protocol";
+import type { ClientCapabilities } from "../../../types/mcp-protocol";
 import { Card, CardContent, CardHeader, CardTitle } from "@lib/components/ui/card";
 import { Badge } from "@lib/components/ui/badge";
 import { Monitor } from "lucide-react";

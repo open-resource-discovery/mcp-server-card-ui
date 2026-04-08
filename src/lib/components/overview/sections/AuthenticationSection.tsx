@@ -1,4 +1,4 @@
-import type { Authentication } from "@sap/mcp-protocol";
+import type { Authentication } from "../../../types/mcp-protocol";
 import { Card, CardContent, CardHeader, CardTitle } from "@lib/components/ui/card";
 import { Badge } from "@lib/components/ui/badge";
 import { ShieldCheck } from "lucide-react";

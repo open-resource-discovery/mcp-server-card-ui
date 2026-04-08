@@ -1,4 +1,4 @@
-import type { MCPServerCardDefinition } from "@sap/mcp-protocol";
+import type { MCPServerCardDefinition } from "../../../types/mcp-protocol";
 import { Badge } from "@lib/components/ui/badge";
 import { MarkdownText } from "@lib/components/ui/MarkdownText";
 import { ExternalLink, Server } from "lucide-react";

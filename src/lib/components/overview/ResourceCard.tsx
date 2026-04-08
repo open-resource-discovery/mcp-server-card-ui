@@ -1,4 +1,4 @@
-import type { Resource } from "@sap/mcp-protocol";
+import type { Resource } from "../../types/mcp-protocol";
 import { AccordionItem, AccordionTrigger, AccordionContent } from "@lib/components/ui/accordion";
 import { Badge } from "@lib/components/ui/badge";
 import { MarkdownText } from "@lib/components/ui/MarkdownText";

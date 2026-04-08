@@ -8,7 +8,7 @@ import { ResourcesSection } from "@lib/components/overview/sections/ResourcesSec
 import { PromptsSection } from "@lib/components/overview/sections/PromptsSection";
 import { ClientRequirementsSection } from "@lib/components/overview/sections/ClientRequirementsSection";
 import { ExtensionsSection } from "@lib/components/overview/sections/ExtensionsSection";
-import type { MCPServerCardDefinition } from "@sap/mcp-protocol";
+import type { MCPServerCardDefinition } from "../../types/mcp-protocol";
 import { AlertTriangle, FileJson } from "lucide-react";
 
 interface MCPServerOverviewProps {

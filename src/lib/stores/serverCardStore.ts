@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { MCPServerCardDefinition } from "@sap/mcp-protocol";
+import type { MCPServerCardDefinition } from "../types/mcp-protocol";
 
 interface ServerCardState {
   rawJson: string;

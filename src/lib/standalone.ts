@@ -25,7 +25,7 @@ import { useMCPConnectionStore } from "./stores/mcpConnectionStore";
 import { useValidationStore } from "./stores/validationStore";
 import { useUIStore } from "./stores/uiStore";
 import { useFunctionsStore } from "./stores/functionsStore";
-import type { MCPServerCardDefinition } from "@sap/mcp-protocol";
+import type { MCPServerCardDefinition } from "./types/mcp-protocol";
 import type { ValidationResult } from "./types/validation";
 import type { AuthType, PredefinedServer } from "./types/connection";
 import { useThemeStore } from "./hooks/useTheme";
