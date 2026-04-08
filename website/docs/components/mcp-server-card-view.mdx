@@ -17,8 +17,8 @@ Display a server card overview without any editor. Ideal for read-only views, ca
 ## Import
 
 ```tsx
-import { MCPServerCardView } from "@sap/mcp-editor-react/card-view";
-import "@sap/mcp-editor-react/styles";
+import { MCPServerCardView } from "@open-resource-discovery/mcp-server-card-ui/card-view";
+import "@open-resource-discovery/mcp-server-card-ui/styles";
 ```
 
 ## Usage
@@ -55,16 +55,16 @@ In read-only mode:
 
 ## Props
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `initialServerCard` | `string` | - | Initial server card JSON string |
-| `initialServerUrl` | `string` | - | Initial MCP server URL |
-| `showValidation` | `boolean` | `true` | Show the Validation tab |
-| `defaultTab` | `"overview" \| "validation"` | `"overview"` | Default tab to show |
-| `readOnly` | `boolean` | `false` | Hides interactive elements for a pure display |
-| `onServerCardChange` | `(json: string, parsed: MCPServerCardDefinition \| null) => void` | - | Callback when server card changes |
-| `onValidationComplete` | `(results: ValidationResult[]) => void` | - | Callback when validation completes |
-| `className` | `string` | - | Additional CSS class |
+| Prop                   | Type                                                              | Default      | Description                                   |
+| ---------------------- | ----------------------------------------------------------------- | ------------ | --------------------------------------------- |
+| `initialServerCard`    | `string`                                                          | -            | Initial server card JSON string               |
+| `initialServerUrl`     | `string`                                                          | -            | Initial MCP server URL                        |
+| `showValidation`       | `boolean`                                                         | `true`       | Show the Validation tab                       |
+| `defaultTab`           | `"overview" \| "validation"`                                      | `"overview"` | Default tab to show                           |
+| `readOnly`             | `boolean`                                                         | `false`      | Hides interactive elements for a pure display |
+| `onServerCardChange`   | `(json: string, parsed: MCPServerCardDefinition \| null) => void` | -            | Callback when server card changes             |
+| `onValidationComplete` | `(results: ValidationResult[]) => void`                           | -            | Callback when validation completes            |
+| `className`            | `string`                                                          | -            | Additional CSS class                          |
 
 ## When to Use
 

@@ -17,8 +17,8 @@ The full-featured playground component with Monaco editor, connection settings, 
 ## Import
 
 ```tsx
-import { MCPServerPlayground } from "@sap/mcp-editor-react";
-import "@sap/mcp-editor-react/styles";
+import { MCPServerPlayground } from "@open-resource-discovery/mcp-server-card-ui";
+import "@open-resource-discovery/mcp-server-card-ui/styles";
 ```
 
 ## Usage
@@ -42,23 +42,23 @@ function App() {
 
 ## Props
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `initialServerCard` | `string` | - | Initial server card JSON string |
-| `initialServerUrl` | `string` | - | Initial MCP server URL to connect to |
-| `showSettings` | `boolean` | `true` | Show the settings panel |
-| `showFunctions` | `boolean` | `true` | Show the Functions tab |
-| `showRawHttp` | `boolean` | `true` | Show the Raw HTTP tab |
-| `showValidation` | `boolean` | `true` | Show the Validation tab |
-| `showEditor` | `boolean` | `true` | Show the JSON editor |
-| `readOnly` | `boolean` | `false` | Make the editor read-only |
-| `defaultTab` | `"overview" \| "functions" \| "rawhttp" \| "validation"` | `"overview"` | Default tab to show |
-| `forceDesktop` | `boolean` | `false` | Force desktop layout on mobile |
-| `predefinedServers` | `PredefinedServer[]` | - | Override sidebar predefined servers |
-| `onServerCardChange` | `(json: string, parsed: MCPServerCardDefinition \| null) => void` | - | Callback when server card changes |
-| `onConnect` | `(url: string) => void` | - | Callback when connected to server |
-| `onValidationComplete` | `(results: ValidationResult[]) => void` | - | Callback when validation completes |
-| `className` | `string` | - | Additional CSS class |
+| Prop                   | Type                                                              | Default      | Description                          |
+| ---------------------- | ----------------------------------------------------------------- | ------------ | ------------------------------------ |
+| `initialServerCard`    | `string`                                                          | -            | Initial server card JSON string      |
+| `initialServerUrl`     | `string`                                                          | -            | Initial MCP server URL to connect to |
+| `showSettings`         | `boolean`                                                         | `true`       | Show the settings panel              |
+| `showFunctions`        | `boolean`                                                         | `true`       | Show the Functions tab               |
+| `showRawHttp`          | `boolean`                                                         | `true`       | Show the Raw HTTP tab                |
+| `showValidation`       | `boolean`                                                         | `true`       | Show the Validation tab              |
+| `showEditor`           | `boolean`                                                         | `true`       | Show the JSON editor                 |
+| `readOnly`             | `boolean`                                                         | `false`      | Make the editor read-only            |
+| `defaultTab`           | `"overview" \| "functions" \| "rawhttp" \| "validation"`          | `"overview"` | Default tab to show                  |
+| `forceDesktop`         | `boolean`                                                         | `false`      | Force desktop layout on mobile       |
+| `predefinedServers`    | `PredefinedServer[]`                                              | -            | Override sidebar predefined servers  |
+| `onServerCardChange`   | `(json: string, parsed: MCPServerCardDefinition \| null) => void` | -            | Callback when server card changes    |
+| `onConnect`            | `(url: string) => void`                                           | -            | Callback when connected to server    |
+| `onValidationComplete` | `(results: ValidationResult[]) => void`                           | -            | Callback when validation completes   |
+| `className`            | `string`                                                          | -            | Additional CSS class                 |
 
 ## Features
 

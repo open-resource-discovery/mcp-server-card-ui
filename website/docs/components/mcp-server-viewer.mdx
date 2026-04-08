@@ -17,8 +17,8 @@ Lightweight viewer using a simple textarea instead of Monaco editor, paired with
 ## Import
 
 ```tsx
-import { MCPServerViewer } from "@sap/mcp-editor-react/viewer";
-import "@sap/mcp-editor-react/styles";
+import { MCPServerViewer } from "@open-resource-discovery/mcp-server-card-ui/viewer";
+import "@open-resource-discovery/mcp-server-card-ui/styles";
 ```
 
 ## Usage
@@ -27,9 +27,7 @@ import "@sap/mcp-editor-react/styles";
 function App() {
   return (
     <div style={{ height: "100vh" }}>
-      <MCPServerViewer
-        initialServerUrl="https://example.com/mcp-server-card.json"
-      />
+      <MCPServerViewer initialServerUrl="https://example.com/mcp-server-card.json" />
     </div>
   );
 }
@@ -37,15 +35,15 @@ function App() {
 
 ## Props
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `initialServerCard` | `string` | - | Initial server card JSON string |
-| `initialServerUrl` | `string` | - | Initial MCP server URL |
-| `showValidation` | `boolean` | `true` | Show the Validation tab |
-| `defaultTab` | `"overview" \| "validation"` | `"overview"` | Default tab to show |
-| `onServerCardChange` | `(json: string, parsed: MCPServerCardDefinition \| null) => void` | - | Callback when server card changes |
-| `onValidationComplete` | `(results: ValidationResult[]) => void` | - | Callback when validation completes |
-| `className` | `string` | - | Additional CSS class |
+| Prop                   | Type                                                              | Default      | Description                        |
+| ---------------------- | ----------------------------------------------------------------- | ------------ | ---------------------------------- |
+| `initialServerCard`    | `string`                                                          | -            | Initial server card JSON string    |
+| `initialServerUrl`     | `string`                                                          | -            | Initial MCP server URL             |
+| `showValidation`       | `boolean`                                                         | `true`       | Show the Validation tab            |
+| `defaultTab`           | `"overview" \| "validation"`                                      | `"overview"` | Default tab to show                |
+| `onServerCardChange`   | `(json: string, parsed: MCPServerCardDefinition \| null) => void` | -            | Callback when server card changes  |
+| `onValidationComplete` | `(results: ValidationResult[]) => void`                           | -            | Callback when validation completes |
+| `className`            | `string`                                                          | -            | Additional CSS class               |
 
 ## When to Use
 

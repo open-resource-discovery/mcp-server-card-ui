@@ -1,5 +1,5 @@
 {
-  "name": "@sap/mcp-editor-react",
+  "name": "@open-resource-discovery/mcp-server-card-ui",
   "version": "0.1.0",
   "description": "A UI component for visualizing and validating MCP Server Cards, and for testing MCP server capabilities using the server card definition.",
   "license": "Apache-2.0",

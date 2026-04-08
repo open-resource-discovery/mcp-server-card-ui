@@ -6,19 +6,19 @@ sidebar_position: 1
 
 # Getting Started
 
-`@sap/mcp-editor-react` is a React component library for viewing, editing, validating, and testing MCP Server Cards.
+`@open-resource-discovery/mcp-server-card-ui` is a React component library for viewing, editing, validating, and testing MCP Server Cards.
 
 ## Installation
 
 ```bash
-npm install @sap/mcp-editor-react
+npm install @open-resource-discovery/mcp-server-card-ui
 ```
 
 ## Quick Start
 
 ```tsx
-import { MCPServerEditor } from "@sap/mcp-editor-react";
-import "@sap/mcp-editor-react/styles";
+import { MCPServerEditor } from "@open-resource-discovery/mcp-server-card-ui";
+import "@open-resource-discovery/mcp-server-card-ui/styles";
 
 function App() {
   return (

@@ -17,8 +17,8 @@ Monaco-based JSON editor with an overview panel. Includes auto-validation and a 
 ## Import
 
 ```tsx
-import { MCPServerEditor } from "@sap/mcp-editor-react/editor";
-import "@sap/mcp-editor-react/styles";
+import { MCPServerEditor } from "@open-resource-discovery/mcp-server-card-ui/editor";
+import "@open-resource-discovery/mcp-server-card-ui/styles";
 ```
 
 ## Usage
@@ -39,17 +39,17 @@ function App() {
 
 ## Props
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `initialServerCard` | `string` | - | Initial server card JSON string |
-| `initialServerUrl` | `string` | - | Initial MCP server URL |
-| `showSettings` | `boolean` | `true` | Show the settings panel |
-| `showValidation` | `boolean` | `true` | Show the Validation tab |
-| `readOnly` | `boolean` | `false` | Make the editor read-only |
-| `defaultTab` | `"overview" \| "validation"` | `"overview"` | Default tab to show |
-| `onServerCardChange` | `(json: string, parsed: MCPServerCardDefinition \| null) => void` | - | Callback when server card changes |
-| `onValidationComplete` | `(results: ValidationResult[]) => void` | - | Callback when validation completes |
-| `className` | `string` | - | Additional CSS class |
+| Prop                   | Type                                                              | Default      | Description                        |
+| ---------------------- | ----------------------------------------------------------------- | ------------ | ---------------------------------- |
+| `initialServerCard`    | `string`                                                          | -            | Initial server card JSON string    |
+| `initialServerUrl`     | `string`                                                          | -            | Initial MCP server URL             |
+| `showSettings`         | `boolean`                                                         | `true`       | Show the settings panel            |
+| `showValidation`       | `boolean`                                                         | `true`       | Show the Validation tab            |
+| `readOnly`             | `boolean`                                                         | `false`      | Make the editor read-only          |
+| `defaultTab`           | `"overview" \| "validation"`                                      | `"overview"` | Default tab to show                |
+| `onServerCardChange`   | `(json: string, parsed: MCPServerCardDefinition \| null) => void` | -            | Callback when server card changes  |
+| `onValidationComplete` | `(results: ValidationResult[]) => void`                           | -            | Callback when validation completes |
+| `className`            | `string`                                                          | -            | Additional CSS class               |
 
 ## When to Use
 
