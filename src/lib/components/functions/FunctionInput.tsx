@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useMemo } from "react";
 import { useFunctionsStore } from "@lib/stores/functionsStore";
 import { useMCPConnectionStore } from "@lib/stores/mcpConnectionStore";
 import { useServerCardStore } from "@lib/stores/serverCardStore";
@@ -19,10 +19,15 @@ import { Play, Loader2 } from "lucide-react";
  * based on the property type.
  */
 function generateToolInput(tool: Tool): string {
-  const schema = tool.inputSchema as {
-    properties?: Record<string, { type?: string; default?: unknown; enum?: unknown[] }>;
-    required?: string[];
-  } | undefined;
+  const schema = tool.inputSchema as
+    | {
+        properties?: Record<
+          string,
+          { type?: string; default?: unknown; enum?: unknown[] }
+        >;
+        required?: string[];
+      }
+    | undefined;
   if (!schema?.properties) return "{}";
 
   const obj: Record<string, unknown> = {};
@@ -78,29 +83,34 @@ export function FunctionInput() {
   } = useFunctionsStore();
   const connectionStatus = useMCPConnectionStore((s) => s.connectionStatus);
   const parsedCard = useServerCardStore((s) => s.parsedCard);
+  const lastValidCard = useServerCardStore((s) => s.lastValidCard);
+  const card = parsedCard ?? lastValidCard;
 
   const [mode, setMode] = useState<"tool" | "prompt">("tool");
   const [inputJson, setInputJson] = useState("{}");
   const [isExecuting, setIsExecuting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const tools = parsedCard?.tools ?? [];
-  const prompts = parsedCard?.prompts ?? [];
+  const tools = useMemo(() => card?.tools ?? [], [card?.tools]);
+  const prompts = useMemo(() => card?.prompts ?? [], [card?.prompts]);
   const isConnected = connectionStatus === "connected";
 
-  // Pre-fill input when "Try it" is clicked (pendingPrefill increments)
+  // Pre-fill input when "Try it" is clicked or selected tool/prompt changes
   useEffect(() => {
-    if (pendingPrefill === 0) return;
     if (selectedToolName) {
       setMode("tool");
       const tool = tools.find((t) => t.name === selectedToolName);
-      setInputJson(tool ? generateToolInput(tool) : "{}");
-      setError(null);
+      if (tool) {
+        setInputJson(generateToolInput(tool));
+        setError(null);
+      }
     } else if (selectedPromptName) {
       setMode("prompt");
       const prompt = prompts.find((p) => p.name === selectedPromptName);
-      setInputJson(prompt ? generatePromptInput(prompt) : "{}");
-      setError(null);
+      if (prompt) {
+        setInputJson(generatePromptInput(prompt));
+        setError(null);
+      }
     }
   }, [pendingPrefill, selectedToolName, selectedPromptName, tools, prompts]);
 
