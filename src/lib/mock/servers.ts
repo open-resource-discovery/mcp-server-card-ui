@@ -38,7 +38,9 @@ const echoServer: MockServerDef = {
               description: "Echoes back the input text",
               inputSchema: {
                 type: "object",
-                properties: { text: { type: "string", description: "Text to echo" } },
+                properties: {
+                  text: { type: "string", description: "Text to echo" },
+                },
                 required: ["text"],
               },
             },
@@ -53,7 +55,10 @@ const echoServer: MockServerDef = {
             isError: false,
           };
         }
-        return { content: [{ type: "text", text: `Unknown tool: ${name}` }], isError: true };
+        return {
+          content: [{ type: "text", text: `Unknown tool: ${name}` }],
+          isError: true,
+        };
       }
       default:
         return null;
@@ -81,7 +86,11 @@ const weatherServer: MockServerDef = {
                 type: "object",
                 properties: {
                   city: { type: "string", description: "City name" },
-                  units: { type: "string", enum: ["celsius", "fahrenheit"], default: "celsius" },
+                  units: {
+                    type: "string",
+                    enum: ["celsius", "fahrenheit"],
+                    default: "celsius",
+                  },
                 },
                 required: ["city"],
               },
@@ -106,8 +115,15 @@ const weatherServer: MockServerDef = {
         const args = params?.arguments as Record<string, unknown> | undefined;
         const city = (args?.city as string) ?? "Unknown";
         const temp = Math.floor(Math.random() * 35) - 5;
-        const conditions = ["Sunny", "Cloudy", "Rainy", "Partly Cloudy", "Snowy"];
-        const condition = conditions[Math.floor(Math.random() * conditions.length)];
+        const conditions = [
+          "Sunny",
+          "Cloudy",
+          "Rainy",
+          "Partly Cloudy",
+          "Snowy",
+        ];
+        const condition =
+          conditions[Math.floor(Math.random() * conditions.length)];
 
         if (name === "get_weather") {
           return {
@@ -132,14 +148,20 @@ const weatherServer: MockServerDef = {
             day: i + 1,
             high: temp + Math.floor(Math.random() * 5),
             low: temp - Math.floor(Math.random() * 5),
-            condition: conditions[Math.floor(Math.random() * conditions.length)],
+            condition:
+              conditions[Math.floor(Math.random() * conditions.length)],
           }));
           return {
-            content: [{ type: "text", text: JSON.stringify({ city, forecast }) }],
+            content: [
+              { type: "text", text: JSON.stringify({ city, forecast }) },
+            ],
             isError: false,
           };
         }
-        return { content: [{ type: "text", text: `Unknown tool: ${name}` }], isError: true };
+        return {
+          content: [{ type: "text", text: `Unknown tool: ${name}` }],
+          isError: true,
+        };
       }
       case "resources/list":
         return {
@@ -161,7 +183,14 @@ const weatherServer: MockServerDef = {
               {
                 uri,
                 mimeType: "application/json",
-                text: JSON.stringify(["Berlin", "Tokyo", "Paris", "London", "New York", "Sydney"]),
+                text: JSON.stringify([
+                  "Berlin",
+                  "Tokyo",
+                  "Paris",
+                  "London",
+                  "New York",
+                  "Sydney",
+                ]),
               },
             ],
           };
@@ -176,15 +205,25 @@ const weatherServer: MockServerDef = {
               title: "Weather Report",
               description: "Generates a formatted weather report for a city.",
               arguments: [
-                { name: "city", description: "The city to report on", required: true },
-                { name: "format", description: "'brief' or 'detailed'", required: false },
+                {
+                  name: "city",
+                  description: "The city to report on",
+                  required: true,
+                },
+                {
+                  name: "format",
+                  description: "'brief' or 'detailed'",
+                  required: false,
+                },
               ],
             },
           ],
         };
       case "prompts/get": {
         const promptName = params?.name as string;
-        const promptArgs = params?.arguments as Record<string, string> | undefined;
+        const promptArgs = params?.arguments as
+          | Record<string, string>
+          | undefined;
         if (promptName === "weather_report") {
           const city = promptArgs?.city ?? "Unknown";
           const format = promptArgs?.format ?? "brief";
@@ -217,7 +256,10 @@ const weatherServer: MockServerDef = {
               },
               {
                 role: "assistant",
-                content: { type: "text", text: `${city}: ${temp}°C, Partly Cloudy` },
+                content: {
+                  type: "text",
+                  text: `${city}: ${temp}°C, Partly Cloudy`,
+                },
               },
             ],
           };
@@ -238,7 +280,10 @@ const MOCK_SERVERS: Record<string, MockServerDef> = {
 /**
  * Handle a mock JSON-RPC request and return a response.
  */
-export function handleMockRequest(url: string, request: JsonRpcRequest): JsonRpcResponse {
+export function handleMockRequest(
+  url: string,
+  request: JsonRpcRequest,
+): JsonRpcResponse {
   const serverId = getMockServerId(url);
   const server = MOCK_SERVERS[serverId];
 
@@ -293,7 +338,8 @@ export function getMockServerCard(serverId: string): string | null {
   if (!server) return null;
 
   const card = {
-    $schema: "https://pages.github.tools.sap/CPA/mcp-protocol/spec-v1/mcp-server-card-spec.schema.json",
+    $schema:
+      "https://pages.github.tools.sap/CPA/mcp-protocol/spec-v1/mcp-server-card-spec.schema.json",
     name: `mock/${serverId}`,
     title: server.serverInfo.name,
     version: server.serverInfo.version,

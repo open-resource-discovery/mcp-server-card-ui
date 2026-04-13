@@ -65,9 +65,7 @@ function CardSections({
 }) {
   return (
     <>
-      {card._meta && (
-        <ExtensionsSection meta={card._meta} />
-      )}
+      {card._meta && <ExtensionsSection meta={card._meta} />}
 
       {card.remotes && card.remotes.length > 0 && (
         <RemotesSection remotes={card.remotes} />
@@ -93,9 +91,7 @@ function CardSections({
         <PromptsSection prompts={card.prompts} />
       )}
 
-      {card.requires && (
-        <ClientRequirementsSection requires={card.requires} />
-      )}
+      {card.requires && <ClientRequirementsSection requires={card.requires} />}
     </>
   );
 }

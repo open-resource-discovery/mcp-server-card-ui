@@ -9,7 +9,13 @@ import type {
 } from "@lib/types/connection";
 import type { MCPServerCardDefinition } from "../types/mcp-protocol";
 import { getConfigAuth } from "@lib/utils/playground-config";
-import { sendRequest, sendNotification, deleteSession, type MCPTransportConfig, type MCPTransportResult } from "@lib/utils/mcp-transport";
+import {
+  sendRequest,
+  sendNotification,
+  deleteSession,
+  type MCPTransportConfig,
+  type MCPTransportResult,
+} from "@lib/utils/mcp-transport";
 import { resetIdCounter, isErrorResponse } from "@lib/utils/mcp-jsonrpc";
 import { useMCPLogStore } from "./mcpLogStore";
 import { useServerCardStore } from "./serverCardStore";
@@ -158,7 +164,12 @@ function getEnvAuthStrategies(): AuthStrategy[] {
   if (auth.oauth) {
     strategies.push({
       authType: "oauth2",
-      oauth2Credentials: { clientId: auth.oauth.clientId, clientSecret: auth.oauth.clientSecret, tokenUrl: auth.oauth.tokenUrl, scopes: "" },
+      oauth2Credentials: {
+        clientId: auth.oauth.clientId,
+        clientSecret: auth.oauth.clientSecret,
+        tokenUrl: auth.oauth.tokenUrl,
+        scopes: "",
+      },
       authHeaders: {},
     });
   }
@@ -167,8 +178,13 @@ function getEnvAuthStrategies(): AuthStrategy[] {
   if (auth.basic) {
     strategies.push({
       authType: "basic",
-      basicCredentials: { username: auth.basic.username, password: auth.basic.password },
-      authHeaders: { Authorization: `Basic ${btoa(`${auth.basic.username}:${auth.basic.password}`)}` },
+      basicCredentials: {
+        username: auth.basic.username,
+        password: auth.basic.password,
+      },
+      authHeaders: {
+        Authorization: `Basic ${btoa(`${auth.basic.username}:${auth.basic.password}`)}`,
+      },
     });
   }
 
@@ -218,28 +234,48 @@ export const useMCPConnectionStore = create<MCPConnectionState>((set, get) => ({
 
   setAuthType: (authType) => {
     const state = get();
-    const authHeaders = computeAuthHeaders(authType, state.basicCredentials, state.bearerCredentials, state.oauth2Credentials);
+    const authHeaders = computeAuthHeaders(
+      authType,
+      state.basicCredentials,
+      state.bearerCredentials,
+      state.oauth2Credentials,
+    );
     set({ authType, authHeaders });
   },
 
   setBasicCredentials: (creds) => {
     const state = get();
     const basicCredentials = { ...state.basicCredentials, ...creds };
-    const authHeaders = computeAuthHeaders(state.authType, basicCredentials, state.bearerCredentials, state.oauth2Credentials);
+    const authHeaders = computeAuthHeaders(
+      state.authType,
+      basicCredentials,
+      state.bearerCredentials,
+      state.oauth2Credentials,
+    );
     set({ basicCredentials, authHeaders });
   },
 
   setBearerCredentials: (creds) => {
     const state = get();
     const bearerCredentials = { ...state.bearerCredentials, ...creds };
-    const authHeaders = computeAuthHeaders(state.authType, state.basicCredentials, bearerCredentials, state.oauth2Credentials);
+    const authHeaders = computeAuthHeaders(
+      state.authType,
+      state.basicCredentials,
+      bearerCredentials,
+      state.oauth2Credentials,
+    );
     set({ bearerCredentials, authHeaders });
   },
 
   setOAuth2Credentials: (creds) => {
     const state = get();
     const oauth2Credentials = { ...state.oauth2Credentials, ...creds };
-    const authHeaders = computeAuthHeaders(state.authType, state.basicCredentials, state.bearerCredentials, oauth2Credentials);
+    const authHeaders = computeAuthHeaders(
+      state.authType,
+      state.basicCredentials,
+      state.bearerCredentials,
+      oauth2Credentials,
+    );
     set({ oauth2Credentials, authHeaders });
   },
 
@@ -297,12 +333,16 @@ export const useMCPConnectionStore = create<MCPConnectionState>((set, get) => ({
 
       if (isErrorResponse(initResult.response)) {
         const err = initResult.response.error!;
-        throw new Error(`Initialize failed: ${err.message} (code: ${err.code})`);
+        throw new Error(
+          `Initialize failed: ${err.message} (code: ${err.code})`,
+        );
       }
 
       const result = initResult.response.result as Record<string, unknown>;
       const serverInfo = result.serverInfo as ServerInfo | undefined;
-      const capabilities = result.capabilities as ServerCapabilities | undefined;
+      const capabilities = result.capabilities as
+        | ServerCapabilities
+        | undefined;
       const sessionId = initResult.sessionId ?? null;
 
       // Update config with session ID for the notification
@@ -323,7 +363,11 @@ export const useMCPConnectionStore = create<MCPConnectionState>((set, get) => ({
 
       // Step 3: Fetch capabilities and build server card (best-effort, don't fail connection)
       try {
-        await buildServerCardFromConnection(connectedConfig, serverInfo, capabilities);
+        await buildServerCardFromConnection(
+          connectedConfig,
+          serverInfo,
+          capabilities,
+        );
       } catch {
         // Non-fatal: connection succeeded but card generation failed
       }
@@ -335,7 +379,10 @@ export const useMCPConnectionStore = create<MCPConnectionState>((set, get) => ({
         const strategies = getEnvAuthStrategies();
         for (const strategy of strategies) {
           try {
-            set({ connectionStatus: "connecting", errorMessage: `Trying ${strategy.authType} authentication...` });
+            set({
+              connectionStatus: "connecting",
+              errorMessage: `Trying ${strategy.authType} authentication...`,
+            });
             resetIdCounter();
 
             let authHeaders = strategy.authHeaders;
@@ -352,7 +399,9 @@ export const useMCPConnectionStore = create<MCPConnectionState>((set, get) => ({
 
               const tokenResp = await fetch(creds.tokenUrl, {
                 method: "POST",
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                },
                 body: body.toString(),
               });
               if (!tokenResp.ok) continue;
@@ -363,9 +412,13 @@ export const useMCPConnectionStore = create<MCPConnectionState>((set, get) => ({
                 ...creds,
                 accessToken: tokenData.access_token,
                 refreshToken: tokenData.refresh_token,
-                expiresAt: tokenData.expires_in ? Date.now() + tokenData.expires_in * 1000 : undefined,
+                expiresAt: tokenData.expires_in
+                  ? Date.now() + tokenData.expires_in * 1000
+                  : undefined,
               };
-              authHeaders = { Authorization: `Bearer ${tokenData.access_token}` };
+              authHeaders = {
+                Authorization: `Bearer ${tokenData.access_token}`,
+              };
             }
 
             const retryUrl = strategy.urlSuffix
@@ -386,9 +439,16 @@ export const useMCPConnectionStore = create<MCPConnectionState>((set, get) => ({
 
             if (isErrorResponse(retryResult.response)) continue;
 
-            const retryData = retryResult.response.result as Record<string, unknown>;
-            const retryServerInfo = retryData.serverInfo as ServerInfo | undefined;
-            const retryCaps = retryData.capabilities as ServerCapabilities | undefined;
+            const retryData = retryResult.response.result as Record<
+              string,
+              unknown
+            >;
+            const retryServerInfo = retryData.serverInfo as
+              | ServerInfo
+              | undefined;
+            const retryCaps = retryData.capabilities as
+              | ServerCapabilities
+              | undefined;
             const retrySessionId = retryResult.sessionId ?? null;
 
             const retryConnConfig: MCPTransportConfig = {
@@ -396,7 +456,10 @@ export const useMCPConnectionStore = create<MCPConnectionState>((set, get) => ({
               sessionId: retrySessionId ?? undefined,
             };
 
-            await sendNotification(retryConnConfig, "notifications/initialized");
+            await sendNotification(
+              retryConnConfig,
+              "notifications/initialized",
+            );
 
             // Success — persist the working credentials and update URL if query param was used
             set({
@@ -408,13 +471,23 @@ export const useMCPConnectionStore = create<MCPConnectionState>((set, get) => ({
               sessionId: retrySessionId,
               authType: strategy.authType,
               authHeaders,
-              ...(strategy.basicCredentials ? { basicCredentials: strategy.basicCredentials } : {}),
-              ...(strategy.bearerCredentials ? { bearerCredentials: strategy.bearerCredentials } : {}),
-              ...(strategy.oauth2Credentials ? { oauth2Credentials: strategy.oauth2Credentials } : {}),
+              ...(strategy.basicCredentials
+                ? { basicCredentials: strategy.basicCredentials }
+                : {}),
+              ...(strategy.bearerCredentials
+                ? { bearerCredentials: strategy.bearerCredentials }
+                : {}),
+              ...(strategy.oauth2Credentials
+                ? { oauth2Credentials: strategy.oauth2Credentials }
+                : {}),
             });
 
             try {
-              await buildServerCardFromConnection(retryConnConfig, retryServerInfo, retryCaps);
+              await buildServerCardFromConnection(
+                retryConnConfig,
+                retryServerInfo,
+                retryCaps,
+              );
             } catch {
               // Non-fatal
             }
@@ -487,7 +560,12 @@ export const useMCPConnectionStore = create<MCPConnectionState>((set, get) => ({
   setFromPredefined: (server) => {
     let basicCredentials: BasicCredentials = { username: "", password: "" };
     let bearerCredentials: BearerCredentials = { token: "" };
-    let oauth2Credentials: OAuth2Credentials = { clientId: "", clientSecret: "", tokenUrl: "", scopes: "" };
+    let oauth2Credentials: OAuth2Credentials = {
+      clientId: "",
+      clientSecret: "",
+      tokenUrl: "",
+      scopes: "",
+    };
     const authType = server.authType ?? "none";
 
     if (server.authConfig) {
@@ -505,7 +583,12 @@ export const useMCPConnectionStore = create<MCPConnectionState>((set, get) => ({
     }
 
     const authHeaders = {
-      ...computeAuthHeaders(authType, basicCredentials, bearerCredentials, oauth2Credentials),
+      ...computeAuthHeaders(
+        authType,
+        basicCredentials,
+        bearerCredentials,
+        oauth2Credentials,
+      ),
       ...server.authHeaders,
     };
 
@@ -544,17 +627,32 @@ export const useMCPConnectionStore = create<MCPConnectionState>((set, get) => ({
 
     switch (firstSchema) {
       case "basic": {
-        const authHeaders = computeAuthHeaders("basic", state.basicCredentials, state.bearerCredentials, state.oauth2Credentials);
+        const authHeaders = computeAuthHeaders(
+          "basic",
+          state.basicCredentials,
+          state.bearerCredentials,
+          state.oauth2Credentials,
+        );
         set({ authType: "basic", authHeaders });
         break;
       }
       case "bearer": {
-        const authHeaders = computeAuthHeaders("bearer", state.basicCredentials, state.bearerCredentials, state.oauth2Credentials);
+        const authHeaders = computeAuthHeaders(
+          "bearer",
+          state.basicCredentials,
+          state.bearerCredentials,
+          state.oauth2Credentials,
+        );
         set({ authType: "bearer", authHeaders });
         break;
       }
       case "oauth2": {
-        const authHeaders = computeAuthHeaders("oauth2", state.basicCredentials, state.bearerCredentials, state.oauth2Credentials);
+        const authHeaders = computeAuthHeaders(
+          "oauth2",
+          state.basicCredentials,
+          state.bearerCredentials,
+          state.oauth2Credentials,
+        );
         set({ authType: "oauth2", authHeaders });
         break;
       }
@@ -565,7 +663,8 @@ export const useMCPConnectionStore = create<MCPConnectionState>((set, get) => ({
 
   fetchOAuth2Token: async () => {
     const state = get();
-    const { clientId, clientSecret, tokenUrl, scopes } = state.oauth2Credentials;
+    const { clientId, clientSecret, tokenUrl, scopes } =
+      state.oauth2Credentials;
 
     if (!tokenUrl) {
       set({ tokenError: "Token URL is required" });
@@ -612,10 +711,17 @@ export const useMCPConnectionStore = create<MCPConnectionState>((set, get) => ({
         ...state.oauth2Credentials,
         accessToken,
         refreshToken: data.refresh_token,
-        expiresAt: data.expires_in ? Date.now() + data.expires_in * 1000 : undefined,
+        expiresAt: data.expires_in
+          ? Date.now() + data.expires_in * 1000
+          : undefined,
       };
 
-      const authHeaders = computeAuthHeaders("oauth2", state.basicCredentials, state.bearerCredentials, oauth2Credentials);
+      const authHeaders = computeAuthHeaders(
+        "oauth2",
+        state.basicCredentials,
+        state.bearerCredentials,
+        oauth2Credentials,
+      );
 
       set({
         oauth2Credentials,
@@ -628,7 +734,8 @@ export const useMCPConnectionStore = create<MCPConnectionState>((set, get) => ({
     } catch (err) {
       set({
         isTokenLoading: false,
-        tokenError: err instanceof Error ? err.message : "Failed to fetch token",
+        tokenError:
+          err instanceof Error ? err.message : "Failed to fetch token",
       });
       return false;
     }
@@ -674,10 +781,16 @@ export const useMCPConnectionStore = create<MCPConnectionState>((set, get) => ({
     }
 
     const authUrl = `${authorizationUrl}?${params.toString()}`;
-    const popup = window.open(authUrl, "oauth_popup", "width=600,height=700,scrollbars=yes,resizable=yes");
+    const popup = window.open(
+      authUrl,
+      "oauth_popup",
+      "width=600,height=700,scrollbars=yes,resizable=yes",
+    );
 
     if (!popup) {
-      set({ tokenError: "Failed to open authorization popup. Please allow popups." });
+      set({
+        tokenError: "Failed to open authorization popup. Please allow popups.",
+      });
       clearOAuthParams();
       return;
     }
@@ -694,7 +807,9 @@ export const useMCPConnectionStore = create<MCPConnectionState>((set, get) => ({
         if (currentState.isAuthFlowInProgress) {
           set({
             isAuthFlowInProgress: false,
-            tokenError: popup.closed ? "Authorization was cancelled" : "Authorization timed out",
+            tokenError: popup.closed
+              ? "Authorization was cancelled"
+              : "Authorization timed out",
           });
           oauthPopup = null;
           clearOAuthParams();
@@ -708,7 +823,10 @@ export const useMCPConnectionStore = create<MCPConnectionState>((set, get) => ({
     const stored = getStoredOAuthParams();
 
     if (!stored.state || stored.state !== returnedState) {
-      set({ tokenError: "Invalid state parameter", isAuthFlowInProgress: false });
+      set({
+        tokenError: "Invalid state parameter",
+        isAuthFlowInProgress: false,
+      });
       clearOAuthParams();
       return false;
     }
@@ -763,10 +881,17 @@ export const useMCPConnectionStore = create<MCPConnectionState>((set, get) => ({
         ...state.oauth2Credentials,
         accessToken,
         refreshToken: data.refresh_token,
-        expiresAt: data.expires_in ? Date.now() + data.expires_in * 1000 : undefined,
+        expiresAt: data.expires_in
+          ? Date.now() + data.expires_in * 1000
+          : undefined,
       };
 
-      const authHeaders = computeAuthHeaders("oauth2", state.basicCredentials, state.bearerCredentials, oauth2Credentials);
+      const authHeaders = computeAuthHeaders(
+        "oauth2",
+        state.basicCredentials,
+        state.bearerCredentials,
+        oauth2Credentials,
+      );
 
       if (oauthPopup && !oauthPopup.closed) {
         oauthPopup.close();
@@ -786,7 +911,10 @@ export const useMCPConnectionStore = create<MCPConnectionState>((set, get) => ({
       set({
         isTokenLoading: false,
         isAuthFlowInProgress: false,
-        tokenError: err instanceof Error ? err.message : "Failed to exchange code for token",
+        tokenError:
+          err instanceof Error
+            ? err.message
+            : "Failed to exchange code for token",
       });
       clearOAuthParams();
       return false;
@@ -852,7 +980,8 @@ async function buildServerCardFromConnection(
   }
 
   const card: Record<string, unknown> = {
-    $schema: "https://raw.githubusercontent.com/anthropics/model-context-protocol/refs/heads/main/schema/2025-03-26/schema.json",
+    $schema:
+      "https://raw.githubusercontent.com/anthropics/model-context-protocol/refs/heads/main/schema/2025-03-26/schema.json",
     name: serverInfo?.name ?? "unknown/server",
     version: serverInfo?.version ?? "0.0.0",
     supportedProtocolVersions: [config.protocolVersion ?? "2025-03-26"],
@@ -870,5 +999,8 @@ async function buildServerCardFromConnection(
 }
 
 // Selectors
-export const selectAuthHeaders = (state: MCPConnectionState): Record<string, string> => state.authHeaders;
-export const selectIsConnected = (state: MCPConnectionState): boolean => state.connectionStatus === "connected";
+export const selectAuthHeaders = (
+  state: MCPConnectionState,
+): Record<string, string> => state.authHeaders;
+export const selectIsConnected = (state: MCPConnectionState): boolean =>
+  state.connectionStatus === "connected";

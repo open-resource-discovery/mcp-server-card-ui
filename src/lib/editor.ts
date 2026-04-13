@@ -1,5 +1,8 @@
 // Editor entry point — Monaco editor + overview (no Functions)
-export { MCPServerEditor, type MCPServerEditorProps } from "./components/MCPServerEditor";
+export {
+  MCPServerEditor,
+  type MCPServerEditorProps,
+} from "./components/MCPServerEditor";
 export { ThemeRoot } from "./components/ThemeRoot";
 export { useServerCardStore } from "./stores/serverCardStore";
 export { useValidationStore } from "./stores/validationStore";

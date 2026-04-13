@@ -8,7 +8,12 @@ interface TextareaEditorProps {
   className?: string;
 }
 
-export function TextareaEditor({ value, onChange, readOnly = false, className }: TextareaEditorProps) {
+export function TextareaEditor({
+  value,
+  onChange,
+  readOnly = false,
+  className,
+}: TextareaEditorProps) {
   const [localValue, setLocalValue] = useState(value);
   const [error, setError] = useState<string | null>(null);
 

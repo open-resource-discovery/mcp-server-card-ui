@@ -1,5 +1,10 @@
 import { ScrollArea } from "@lib/components/ui/scroll-area";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@lib/components/ui/tabs";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@lib/components/ui/tabs";
 import { MCPServerOverview } from "@lib/components/overview/MCPServerOverview";
 import { ValidationPanel } from "@lib/components/validation/ValidationPanel";
 import { useValidationStore } from "@lib/stores/validationStore";
@@ -10,7 +15,10 @@ interface ViewerRightPanelProps {
   defaultTab?: "overview" | "validation";
 }
 
-export function ViewerRightPanel({ showValidation = true, defaultTab = "overview" }: ViewerRightPanelProps) {
+export function ViewerRightPanel({
+  showValidation = true,
+  defaultTab = "overview",
+}: ViewerRightPanelProps) {
   const summary = useValidationStore((s) => s.summary);
 
   return (
@@ -19,7 +27,10 @@ export function ViewerRightPanel({ showValidation = true, defaultTab = "overview
         <TabsList className="h-10">
           <TabsTrigger value="overview">Overview</TabsTrigger>
           {showValidation && (
-            <TabsTrigger value="validation" className="flex items-center gap-1.5">
+            <TabsTrigger
+              value="validation"
+              className="flex items-center gap-1.5"
+            >
               Validation
               {summary.fail > 0 && (
                 <Badge variant="error" className="h-5 min-w-5 px-1 text-xs">

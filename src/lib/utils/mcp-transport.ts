@@ -9,7 +9,13 @@
  */
 
 import { parseSSEStream } from "./sse-parser";
-import { createRequest, createNotification, parseResponse, type JsonRpcRequest, type JsonRpcResponse } from "./mcp-jsonrpc";
+import {
+  createRequest,
+  createNotification,
+  parseResponse,
+  type JsonRpcRequest,
+  type JsonRpcResponse,
+} from "./mcp-jsonrpc";
 import { useMCPLogStore } from "@lib/stores/mcpLogStore";
 import { v4 as uuidv4 } from "uuid";
 import type { MCPLogEntry } from "@lib/types/mcpLog";
@@ -32,7 +38,7 @@ const DEFAULT_PROTOCOL_VERSION = "2025-03-26";
 function buildHeaders(config: MCPTransportConfig): Record<string, string> {
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
-    "Accept": "application/json, text/event-stream",
+    Accept: "application/json, text/event-stream",
     "MCP-Protocol-Version": config.protocolVersion ?? DEFAULT_PROTOCOL_VERSION,
     ...config.authHeaders,
   };
@@ -92,7 +98,8 @@ export async function sendRequest(
     });
 
     const durationMs = Date.now() - startTime;
-    const sessionId = response.headers.get("MCP-Session-Id") ?? config.sessionId;
+    const sessionId =
+      response.headers.get("MCP-Session-Id") ?? config.sessionId;
     const contentType = response.headers.get("Content-Type") ?? "";
 
     if (!response.ok) {
@@ -190,7 +197,9 @@ export async function sendNotification(
         responseBody: errorBody,
         error: `HTTP ${response.status}`,
       });
-      throw new Error(`MCP notification failed: ${response.status} ${errorBody}`);
+      throw new Error(
+        `MCP notification failed: ${response.status} ${errorBody}`,
+      );
     }
   } catch (err) {
     const durationMs = Date.now() - startTime;

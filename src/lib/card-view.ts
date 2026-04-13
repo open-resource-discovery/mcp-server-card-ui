@@ -1,5 +1,8 @@
 // Card View entry point — read-only card display
-export { MCPServerCardView, type MCPServerCardViewProps } from "./components/MCPServerCardView";
+export {
+  MCPServerCardView,
+  type MCPServerCardViewProps,
+} from "./components/MCPServerCardView";
 export { ThemeRoot } from "./components/ThemeRoot";
 export { useServerCardStore } from "./stores/serverCardStore";
 export { useValidationStore } from "./stores/validationStore";

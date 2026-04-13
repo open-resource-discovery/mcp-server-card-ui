@@ -25,7 +25,10 @@ export interface MCPServerPlaygroundProps {
 
   predefinedServers?: PredefinedServer[];
 
-  onServerCardChange?: (json: string, parsed: MCPServerCardDefinition | null) => void;
+  onServerCardChange?: (
+    json: string,
+    parsed: MCPServerCardDefinition | null,
+  ) => void;
   onConnect?: (url: string) => void;
   onValidationComplete?: (results: ValidationResult[]) => void;
 

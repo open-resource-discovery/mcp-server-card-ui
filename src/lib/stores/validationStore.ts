@@ -1,5 +1,8 @@
 import { create } from "zustand";
-import type { ValidationResult, ValidationSummary } from "@lib/types/validation";
+import type {
+  ValidationResult,
+  ValidationSummary,
+} from "@lib/types/validation";
 import { validateMCPServerCardSchema } from "@lib/utils/mcp-schema";
 
 interface ValidationState {
@@ -43,7 +46,12 @@ export const useValidationStore = create<ValidationState>((set) => ({
     try {
       const results = validateMCPServerCardSchema(rawJson);
       const summary = computeSummary(results);
-      set({ results, summary, isValidating: false, lastValidatedAt: Date.now() });
+      set({
+        results,
+        summary,
+        isValidating: false,
+        lastValidatedAt: Date.now(),
+      });
     } catch {
       set({ isValidating: false });
     }
@@ -54,4 +62,5 @@ export const useValidationStore = create<ValidationState>((set) => ({
   },
 }));
 
-export const selectValidationSummary = (state: ValidationState) => state.summary;
+export const selectValidationSummary = (state: ValidationState) =>
+  state.summary;

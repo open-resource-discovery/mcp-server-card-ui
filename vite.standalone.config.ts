@@ -2,7 +2,13 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import { resolve } from "path";
-import { copyFileSync, mkdirSync, existsSync, readFileSync, writeFileSync } from "fs";
+import {
+  copyFileSync,
+  mkdirSync,
+  existsSync,
+  readFileSync,
+  writeFileSync,
+} from "fs";
 
 /**
  * Strip all @layer wrappers from CSS output and scope loose selectors to .mcp-root.
@@ -43,7 +49,10 @@ function stripCssLayers(css: string): string {
     const { start, end } = matches[j];
     const layerHeader = result.slice(start, result.indexOf("{", start) + 1);
     // Remove the @layer header and closing brace, keep inner content
-    result = result.slice(0, start) + result.slice(start + layerHeader.length, end) + result.slice(end + 1);
+    result =
+      result.slice(0, start) +
+      result.slice(start + layerHeader.length, end) +
+      result.slice(end + 1);
   }
 
   // Remove bare @layer order declarations like "@layer components;"
@@ -52,10 +61,7 @@ function stripCssLayers(css: string): string {
   // Scope zero-specificity :where() selectors to .mcp-root
   // e.g. :where(.space-y-2>:not(:last-child)){...} → .mcp-root :where(.space-y-2>:not(:last-child)){...}
   // Match :where(...){  at start of a rule (not already preceded by .mcp-root)
-  result = result.replace(
-    /(?<![.\w])(:where\(\.[a-zA-Z])/g,
-    ".mcp-root $1",
-  );
+  result = result.replace(/(?<![.\w])(:where\(\.[a-zA-Z])/g, ".mcp-root $1");
 
   // Scope the @supports properties block: *, ::before, ::after, ::backdrop → .mcp-root scoped
   // The minified format is: @supports (...){*,:before,:after,::backdrop{--tw-...}}
@@ -139,7 +145,9 @@ export default defineConfig({
   },
   define: {
     // Replace version placeholder with actual version
-    "__VERSION__": JSON.stringify(process.env.npm_package_version || "0.0.0-standalone"),
+    __VERSION__: JSON.stringify(
+      process.env.npm_package_version || "0.0.0-standalone",
+    ),
     // Define process.env for browser compatibility
     "process.env.NODE_ENV": JSON.stringify("production"),
     "process.env": JSON.stringify({}),

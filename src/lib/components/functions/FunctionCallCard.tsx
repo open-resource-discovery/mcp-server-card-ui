@@ -1,11 +1,28 @@
 import { useState, useEffect } from "react";
-import { ChevronDown, Clock, AlertCircle, CheckCircle, Loader2, RotateCcw, Wrench, MessageSquare } from "lucide-react";
+import {
+  ChevronDown,
+  Clock,
+  AlertCircle,
+  CheckCircle,
+  Loader2,
+  RotateCcw,
+  Wrench,
+  MessageSquare,
+} from "lucide-react";
 import { Badge } from "@lib/components/ui/badge";
 import { Button } from "@lib/components/ui/button";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@lib/components/ui/collapsible";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@lib/components/ui/collapsible";
 import { JsonHighlight } from "@lib/components/ui/JsonHighlight";
 import { cn } from "@lib/utils/cn";
-import type { FunctionCall, ToolCallResult, PromptResult } from "@lib/types/functions";
+import type {
+  FunctionCall,
+  ToolCallResult,
+  PromptResult,
+} from "@lib/types/functions";
 import { ToolCallResultView } from "./ToolCallResult";
 import { PromptResultView } from "./PromptResult";
 import { useFunctionsStore } from "@lib/stores/functionsStore";
@@ -16,7 +33,9 @@ interface FunctionCallCardProps {
 }
 
 export function FunctionCallCard({ call }: FunctionCallCardProps) {
-  const [open, setOpen] = useState(call.status === "completed" || call.status === "error");
+  const [open, setOpen] = useState(
+    call.status === "completed" || call.status === "error",
+  );
   const { retryCall } = useFunctionsStore();
 
   useEffect(() => {
@@ -40,9 +59,15 @@ export function FunctionCallCard({ call }: FunctionCallCardProps) {
       <Collapsible open={open} onOpenChange={setOpen}>
         <CollapsibleTrigger className="flex w-full items-center justify-between p-3 text-left hover:bg-accent/50 cursor-pointer">
           <div className="flex items-center gap-2 flex-1 min-w-0">
-            {isPending && <Loader2 className="h-4 w-4 shrink-0 animate-spin text-muted-foreground" />}
-            {isCompleted && <CheckCircle className="h-4 w-4 text-success shrink-0" />}
-            {isError && <AlertCircle className="h-4 w-4 text-destructive shrink-0" />}
+            {isPending && (
+              <Loader2 className="h-4 w-4 shrink-0 animate-spin text-muted-foreground" />
+            )}
+            {isCompleted && (
+              <CheckCircle className="h-4 w-4 text-success shrink-0" />
+            )}
+            {isError && (
+              <AlertCircle className="h-4 w-4 text-destructive shrink-0" />
+            )}
 
             {call.type === "tool" ? (
               <Wrench className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
@@ -54,7 +79,9 @@ export function FunctionCallCard({ call }: FunctionCallCardProps) {
               {call.name}
             </Badge>
 
-            <span className="text-xs text-muted-foreground capitalize shrink-0">{call.type}</span>
+            <span className="text-xs text-muted-foreground capitalize shrink-0">
+              {call.type}
+            </span>
           </div>
 
           <div className="flex items-center gap-2 shrink-0">
@@ -67,7 +94,12 @@ export function FunctionCallCard({ call }: FunctionCallCardProps) {
               )}
               <span className="text-[10px]">{time}</span>
             </div>
-            <ChevronDown className={cn("h-4 w-4 transition-transform", open && "rotate-180")} />
+            <ChevronDown
+              className={cn(
+                "h-4 w-4 transition-transform",
+                open && "rotate-180",
+              )}
+            />
           </div>
         </CollapsibleTrigger>
 
@@ -97,13 +129,21 @@ export function FunctionCallCard({ call }: FunctionCallCardProps) {
 
             <div className="flex gap-2">
               {(isCompleted || isError) && (
-                <Button variant="ghost" size="sm" onClick={() => retryCall(call.id)}>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => retryCall(call.id)}
+                >
                   <RotateCcw className="h-3 w-3 mr-1" />
                   Retry
                 </Button>
               )}
               {call.logId && (
-                <Button variant="ghost" size="sm" onClick={() => switchToRawHttp(call.logId)}>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => switchToRawHttp(call.logId)}
+                >
                   View HTTP
                 </Button>
               )}

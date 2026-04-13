@@ -40,8 +40,13 @@ export function ThemeRoot({ className, children }: ThemeRootProps) {
   const [container, setContainer] = useState<HTMLElement | null>(null);
 
   return (
-    <div ref={setContainer} className={cn("mcp-root", resolvedTheme === "dark" && "dark", className)}>
-      <PortalContainerContext.Provider value={container}>{children}</PortalContainerContext.Provider>
+    <div
+      ref={setContainer}
+      className={cn("mcp-root", resolvedTheme === "dark" && "dark", className)}
+    >
+      <PortalContainerContext.Provider value={container}>
+        {children}
+      </PortalContainerContext.Provider>
     </div>
   );
 }

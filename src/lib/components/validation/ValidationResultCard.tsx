@@ -41,7 +41,11 @@ export function ValidationResultCard({ result }: ValidationResultCardProps) {
           <div className="flex-1 min-w-0 space-y-1">
             <div className="flex items-center gap-2 flex-wrap">
               <span className="font-medium text-sm">{result.rule}</span>
-              {result.path && <code className="text-xs bg-muted px-1 rounded">{result.path}</code>}
+              {result.path && (
+                <code className="text-xs bg-muted px-1 rounded">
+                  {result.path}
+                </code>
+              )}
             </div>
             <p className="text-sm text-muted-foreground">{result.message}</p>
           </div>

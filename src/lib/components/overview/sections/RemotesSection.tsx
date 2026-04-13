@@ -1,6 +1,11 @@
 import { useState } from "react";
 import type { RemoteTransport } from "../../../types/mcp-protocol";
-import { Card, CardContent, CardHeader, CardTitle } from "@lib/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@lib/components/ui/card";
 import { Badge } from "@lib/components/ui/badge";
 import { Globe, Copy, Check } from "lucide-react";
 
@@ -64,7 +69,9 @@ export function RemotesSection({ remotes }: RemotesSectionProps) {
 
               {remote.headers && remote.headers.length > 0 && (
                 <div className="flex flex-col gap-1 pl-2 border-l-2 border-muted mt-0.5">
-                  <p className="text-xs font-medium text-muted-foreground">Headers</p>
+                  <p className="text-xs font-medium text-muted-foreground">
+                    Headers
+                  </p>
                   {remote.headers.map((header, hIdx) => (
                     <div key={hIdx} className="font-mono text-xs">
                       {Object.entries(header).map(([key, value]) => (

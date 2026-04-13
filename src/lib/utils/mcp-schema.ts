@@ -4,7 +4,9 @@ import type { ValidationResult } from "@lib/types/validation";
  * Validate an MCP Server Card JSON string against the MCP Server Card schema.
  * Returns an array of validation results.
  */
-export function validateMCPServerCardSchema(rawJson: string): ValidationResult[] {
+export function validateMCPServerCardSchema(
+  rawJson: string,
+): ValidationResult[] {
   const results: ValidationResult[] = [];
 
   if (!rawJson.trim()) {
@@ -34,7 +36,10 @@ export function validateMCPServerCardSchema(rawJson: string): ValidationResult[]
     { field: "name", label: "Server name" },
     { field: "version", label: "Version" },
     { field: "description", label: "Description" },
-    { field: "supportedProtocolVersions", label: "Supported protocol versions" },
+    {
+      field: "supportedProtocolVersions",
+      label: "Supported protocol versions",
+    },
     { field: "remotes", label: "Remote transports" },
     { field: "capabilities", label: "Server capabilities" },
   ];
@@ -71,7 +76,8 @@ export function validateMCPServerCardSchema(rawJson: string): ValidationResult[]
       results.push({
         id: "name-format",
         rule: "Name format",
-        description: 'Name must be in reverse-DNS format (e.g., "sap.com/weather")',
+        description:
+          'Name must be in reverse-DNS format (e.g., "sap.com/weather")',
         status: "fail",
         severity: "error",
         message: `Invalid name format: '${parsed.name}'. Expected format: 'namespace/name' (e.g., 'sap.com/weather')`,
@@ -81,7 +87,8 @@ export function validateMCPServerCardSchema(rawJson: string): ValidationResult[]
       results.push({
         id: "name-format",
         rule: "Name format",
-        description: 'Name must be in reverse-DNS format (e.g., "sap.com/weather")',
+        description:
+          'Name must be in reverse-DNS format (e.g., "sap.com/weather")',
         status: "pass",
         severity: "error",
         message: "Name format is valid",
@@ -91,7 +98,12 @@ export function validateMCPServerCardSchema(rawJson: string): ValidationResult[]
   }
 
   // Step 4: Validate supportedProtocolVersions
-  const validVersions = ["2024-11-05", "2025-03-26", "2025-06-18", "2025-11-25"];
+  const validVersions = [
+    "2024-11-05",
+    "2025-03-26",
+    "2025-06-18",
+    "2025-11-25",
+  ];
   if (Array.isArray(parsed.supportedProtocolVersions)) {
     if (parsed.supportedProtocolVersions.length === 0) {
       results.push({
@@ -238,21 +250,29 @@ export function validateMCPServerCardSchema(rawJson: string): ValidationResult[]
   // Step 8: Validate authentication consistency
   if (parsed.authentication && typeof parsed.authentication === "object") {
     const auth = parsed.authentication as Record<string, unknown>;
-    if (Array.isArray(auth.schemas) && auth.schemas.length > 0 && auth.required !== true) {
+    if (
+      Array.isArray(auth.schemas) &&
+      auth.schemas.length > 0 &&
+      auth.required !== true
+    ) {
       results.push({
         id: "auth-consistency",
         rule: "Authentication consistency",
         description: "Auth schemas without required=true is inconsistent",
         status: "warning",
         severity: "warning",
-        message: "Authentication schemas are defined but 'required' is not set to true",
+        message:
+          "Authentication schemas are defined but 'required' is not set to true",
         path: "authentication",
       });
     }
   }
 
   // Step 9: Validate description length
-  if (typeof parsed.description === "string" && parsed.description.length > 100) {
+  if (
+    typeof parsed.description === "string" &&
+    parsed.description.length > 100
+  ) {
     results.push({
       id: "description-length",
       rule: "Description length",

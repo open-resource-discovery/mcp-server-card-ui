@@ -6,7 +6,12 @@ import { useAutoValidate } from "@lib/hooks/useAutoValidate";
 import { TextareaEditor } from "@lib/components/editor/TextareaEditor";
 import { useServerCardStore } from "@lib/stores/serverCardStore";
 import { ViewerRightPanel } from "./ViewerRightPanel";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@lib/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@lib/components/ui/sheet";
 import { cn } from "@lib/utils/cn";
 
 interface ViewerLayoutProps {
@@ -25,10 +30,15 @@ function ResizeHandle() {
   );
 }
 
-export function ViewerLayout({ showValidation = true, defaultTab = "overview", className }: ViewerLayoutProps) {
+export function ViewerLayout({
+  showValidation = true,
+  defaultTab = "overview",
+  className,
+}: ViewerLayoutProps) {
   const isLargeScreen = useIsLargeScreen();
   const { rawJson, setRawJson } = useServerCardStore();
-  const { validationPanelOpen, setValidationPanelOpen, closeAllPanels } = useUIStore();
+  const { validationPanelOpen, setValidationPanelOpen, closeAllPanels } =
+    useUIStore();
 
   useAutoValidate();
 
@@ -47,7 +57,10 @@ export function ViewerLayout({ showValidation = true, defaultTab = "overview", c
           </Panel>
           <ResizeHandle />
           <Panel defaultSize={50} minSize={20}>
-            <ViewerRightPanel showValidation={showValidation} defaultTab={defaultTab} />
+            <ViewerRightPanel
+              showValidation={showValidation}
+              defaultTab={defaultTab}
+            />
           </Panel>
         </PanelGroup>
       </div>
@@ -64,7 +77,10 @@ export function ViewerLayout({ showValidation = true, defaultTab = "overview", c
           <SheetHeader className="sr-only">
             <SheetTitle>Overview & Validation</SheetTitle>
           </SheetHeader>
-          <ViewerRightPanel showValidation={showValidation} defaultTab={defaultTab} />
+          <ViewerRightPanel
+            showValidation={showValidation}
+            defaultTab={defaultTab}
+          />
         </SheetContent>
       </Sheet>
     </div>

@@ -1,6 +1,11 @@
 import { useState } from "react";
 import type { MetaObject } from "../../../types/mcp-protocol";
-import { Card, CardContent, CardHeader, CardTitle } from "@lib/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@lib/components/ui/card";
 import { JsonHighlight } from "@lib/components/ui/JsonHighlight";
 import { Braces, Copy, Check, ExternalLink } from "lucide-react";
 
@@ -85,9 +90,7 @@ function renderStringWithLinks(value: string) {
 }
 
 export function ExtensionsSection({ meta }: ExtensionsSectionProps) {
-  const entries = Object.entries(meta).filter(
-    ([, v]) => v !== undefined,
-  );
+  const entries = Object.entries(meta).filter(([, v]) => v !== undefined);
 
   if (entries.length === 0) return null;
 
@@ -114,10 +117,7 @@ export function ExtensionsSection({ meta }: ExtensionsSectionProps) {
                 />
               </div>
               {typeof value === "object" && value !== null ? (
-                <JsonHighlight
-                  code={JSON.stringify(value, null, 2)}
-                  showCopy
-                />
+                <JsonHighlight code={JSON.stringify(value, null, 2)} showCopy />
               ) : (
                 <span className="text-sm text-muted-foreground break-all">
                   {renderStringWithLinks(String(value))}

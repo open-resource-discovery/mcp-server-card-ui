@@ -1,5 +1,10 @@
 import { ScrollArea } from "@lib/components/ui/scroll-area";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@lib/components/ui/tabs";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@lib/components/ui/tabs";
 import { MCPServerOverview } from "@lib/components/overview/MCPServerOverview";
 import { FunctionsPanel } from "@lib/components/functions/FunctionsPanel";
 import { MCPLogPanel } from "@lib/components/rawhttp/MCPLogPanel";
@@ -38,12 +43,19 @@ export function MCPRightPanel({
   }, [activeTab, defaultTab]);
 
   return (
-    <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as typeof activeTab)} className="flex h-full flex-col">
+    <Tabs
+      value={activeTab}
+      onValueChange={(v) => setActiveTab(v as typeof activeTab)}
+      className="flex h-full flex-col"
+    >
       <div className="flex-none border-b px-4 bg-background">
         <TabsList className="h-10">
           <TabsTrigger value="overview">Overview</TabsTrigger>
           {showFunctions && (
-            <TabsTrigger value="functions" className="flex items-center gap-1.5">
+            <TabsTrigger
+              value="functions"
+              className="flex items-center gap-1.5"
+            >
               Tools
               {callCount > 0 && (
                 <Badge variant="outline" className="h-5 min-w-5 px-1 text-xs">
@@ -63,7 +75,10 @@ export function MCPRightPanel({
             </TabsTrigger>
           )}
           {showValidation && (
-            <TabsTrigger value="validation" className="flex items-center gap-1.5">
+            <TabsTrigger
+              value="validation"
+              className="flex items-center gap-1.5"
+            >
               Validation
               {summary.fail > 0 && (
                 <Badge variant="error" className="h-5 min-w-5 px-1 text-xs">

@@ -45,7 +45,8 @@ export async function discoverServersFromOrd(
   try {
     let configUrl = ordUrl;
     if (!configUrl.includes(".well-known/open-resource-discovery")) {
-      configUrl = configUrl.replace(/\/$/, "") + "/.well-known/open-resource-discovery";
+      configUrl =
+        configUrl.replace(/\/$/, "") + "/.well-known/open-resource-discovery";
     }
 
     const configRes = await fetch(configUrl);
@@ -53,12 +54,15 @@ export async function discoverServersFromOrd(
     const config: ORDConfig = await configRes.json();
 
     const baseUrl = config.baseUrl || new URL(configUrl).origin;
-    const docUrls = config.openResourceDiscoveryV1?.documents?.map((d) => d.url) ?? [];
+    const docUrls =
+      config.openResourceDiscoveryV1?.documents?.map((d) => d.url) ?? [];
 
     const servers: PredefinedServer[] = [];
 
     for (const docPath of docUrls) {
-      const docUrl = docPath.startsWith("http") ? docPath : `${baseUrl.replace(/\/$/, "")}${docPath}`;
+      const docUrl = docPath.startsWith("http")
+        ? docPath
+        : `${baseUrl.replace(/\/$/, "")}${docPath}`;
       const docRes = await fetch(docUrl);
       if (!docRes.ok) continue;
       const doc: ORDDocument = await docRes.json();

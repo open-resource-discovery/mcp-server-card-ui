@@ -23,7 +23,8 @@ export function MCPServerSelector() {
   const loadDefaults = usePredefinedServersStore((s) => s.loadDefaults);
   const select = usePredefinedServersStore((s) => s.select);
   const removeServer = usePredefinedServersStore((s) => s.removeServer);
-  const { setFromPredefined, connect, disconnect, connectionStatus } = useMCPConnectionStore();
+  const { setFromPredefined, connect, disconnect, connectionStatus } =
+    useMCPConnectionStore();
   const { setRawJson } = useServerCardStore();
 
   useEffect(() => {
@@ -40,7 +41,11 @@ export function MCPServerSelector() {
 
   const handleSelect = async (id: string) => {
     // Skip if already selected and connected/connecting
-    if (id === selectedId && (connectionStatus === "connected" || connectionStatus === "connecting")) return;
+    if (
+      id === selectedId &&
+      (connectionStatus === "connected" || connectionStatus === "connecting")
+    )
+      return;
 
     const server = servers.find((s) => s.id === id);
     if (!server) return;
@@ -112,14 +117,23 @@ export function MCPServerSelector() {
               }}
             >
               <div className="flex items-center gap-1.5">
-                <p className="text-sm font-medium truncate flex-1">{server.title || server.name}</p>
+                <p className="text-sm font-medium truncate flex-1">
+                  {server.title || server.name}
+                </p>
                 {server.mocked && (
-                  <Badge variant="outline" className="text-[9px] h-3.5 border-warning/50 text-warning shrink-0">
+                  <Badge
+                    variant="outline"
+                    className="text-[9px] h-3.5 border-warning/50 text-warning shrink-0"
+                  >
                     Mock
                   </Badge>
                 )}
                 {server.tags?.slice(0, 1).map((tag) => (
-                  <Badge key={tag} variant="outline" className="text-[9px] h-3.5 shrink-0">
+                  <Badge
+                    key={tag}
+                    variant="outline"
+                    className="text-[9px] h-3.5 shrink-0"
+                  >
                     {tag}
                   </Badge>
                 ))}
@@ -133,7 +147,9 @@ export function MCPServerSelector() {
                   </button>
                 )}
               </div>
-              <p className="text-xs text-muted-foreground truncate mt-0.5">{getHostname(server.url)}</p>
+              <p className="text-xs text-muted-foreground truncate mt-0.5">
+                {getHostname(server.url)}
+              </p>
             </div>
           );
         })}

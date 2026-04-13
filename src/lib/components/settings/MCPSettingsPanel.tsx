@@ -7,7 +7,9 @@ export function MCPSettingsPanel() {
   return (
     <div className="flex h-full flex-col bg-sidebar">
       <div className="flex h-10 flex-none items-center border-b bg-muted/30 px-3">
-        <span className="text-xs font-medium text-muted-foreground">Settings</span>
+        <span className="text-xs font-medium text-muted-foreground">
+          Settings
+        </span>
       </div>
 
       {/* Connection settings (URL, transport, auth, connect) */}

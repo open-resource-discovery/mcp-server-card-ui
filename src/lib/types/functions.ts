@@ -16,7 +16,11 @@ export interface ToolCallResult {
   isError: boolean;
 }
 
-export type ContentItem = TextContent | ImageContent | AudioContent | EmbeddedResource;
+export type ContentItem =
+  | TextContent
+  | ImageContent
+  | AudioContent
+  | EmbeddedResource;
 
 export interface TextContent {
   type: "text";

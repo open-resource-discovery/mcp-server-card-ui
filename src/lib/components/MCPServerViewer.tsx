@@ -13,7 +13,10 @@ export interface MCPServerViewerProps {
   initialServerUrl?: string;
   showValidation?: boolean;
   defaultTab?: "overview" | "validation";
-  onServerCardChange?: (json: string, parsed: MCPServerCardDefinition | null) => void;
+  onServerCardChange?: (
+    json: string,
+    parsed: MCPServerCardDefinition | null,
+  ) => void;
   onValidationComplete?: (results: ValidationResult[]) => void;
   className?: string;
 }
@@ -52,7 +55,11 @@ export function MCPServerViewer({
   return (
     <ErrorBoundary>
       <ThemeRoot className={cn("h-full", className)}>
-        <ViewerLayout showValidation={showValidation} defaultTab={defaultTab} className="h-full" />
+        <ViewerLayout
+          showValidation={showValidation}
+          defaultTab={defaultTab}
+          className="h-full"
+        />
       </ThemeRoot>
     </ErrorBoundary>
   );

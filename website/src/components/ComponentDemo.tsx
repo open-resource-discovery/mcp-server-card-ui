@@ -1,7 +1,12 @@
 import React, { useEffect, useRef, useId, useState } from "react";
 import useBaseUrl from "@docusaurus/useBaseUrl";
 
-type DemoType = "playground" | "playground-lite" | "editor" | "viewer" | "card-view";
+type DemoType =
+  | "playground"
+  | "playground-lite"
+  | "editor"
+  | "viewer"
+  | "card-view";
 
 interface ComponentDemoProps {
   type: DemoType;
@@ -59,8 +64,7 @@ const mockServerCard = JSON.stringify(
       {
         name: "get_forecast",
         title: "Get Weather Forecast",
-        description:
-          "Returns a multi-day weather forecast for a given city.",
+        description: "Returns a multi-day weather forecast for a given city.",
         annotations: {
           readOnlyHint: true,
           openWorldHint: true,
@@ -95,8 +99,7 @@ const mockServerCard = JSON.stringify(
       {
         name: "weather_report",
         title: "Weather Report",
-        description:
-          "Generates a natural language weather report for a city.",
+        description: "Generates a natural language weather report for a city.",
         arguments: [
           {
             name: "city",
@@ -244,9 +247,7 @@ function ComponentBasedDemo({
         if (mounted) setIsLoading(false);
       } catch (err) {
         if (mounted) {
-          setError(
-            err instanceof Error ? err.message : "Failed to load demo",
-          );
+          setError(err instanceof Error ? err.message : "Failed to load demo");
           setIsLoading(false);
         }
       }
@@ -292,7 +293,8 @@ function ComponentBasedDemo({
           justifyContent: "center",
           color: "var(--ifm-color-danger)",
           background: "var(--ifm-background-surface-color)",
-        }}>
+        }}
+      >
         Error: {error}
       </div>
     );
@@ -314,7 +316,8 @@ function ComponentBasedDemo({
             background: "var(--ifm-background-surface-color)",
             borderRadius: "8px",
             zIndex: 1,
-          }}>
+          }}
+        >
           Loading demo...
         </div>
       )}

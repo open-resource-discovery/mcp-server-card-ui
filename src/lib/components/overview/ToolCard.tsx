@@ -1,9 +1,17 @@
 import { useState } from "react";
 import type { Tool } from "../../types/mcp-protocol";
-import { AccordionItem, AccordionTrigger, AccordionContent } from "@lib/components/ui/accordion";
+import {
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@lib/components/ui/accordion";
 import { Badge } from "@lib/components/ui/badge";
 import { Button } from "@lib/components/ui/button";
-import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@lib/components/ui/collapsible";
+import {
+  Collapsible,
+  CollapsibleTrigger,
+  CollapsibleContent,
+} from "@lib/components/ui/collapsible";
 import { JsonHighlight } from "@lib/components/ui/JsonHighlight";
 import { MarkdownText } from "@lib/components/ui/MarkdownText";
 import { useUIStore } from "@lib/stores/uiStore";
@@ -34,12 +42,17 @@ export function ToolCard({ tool, readOnly }: ToolCardProps) {
       <AccordionContent>
         <div className="flex flex-col gap-2 pl-2">
           {tool.description && (
-            <MarkdownText text={tool.description} className="text-xs text-muted-foreground" />
+            <MarkdownText
+              text={tool.description}
+              className="text-xs text-muted-foreground"
+            />
           )}
 
           {tool.execution?.taskSupport && (
             <div className="flex items-center gap-2">
-              <span className="text-xs text-muted-foreground">Task Support:</span>
+              <span className="text-xs text-muted-foreground">
+                Task Support:
+              </span>
               <Badge
                 variant={
                   tool.execution.taskSupport === "required"
@@ -57,16 +70,22 @@ export function ToolCard({ tool, readOnly }: ToolCardProps) {
           <SchemaCollapsible label="Input Schema" schema={tool.inputSchema} />
 
           {tool.outputSchema && (
-            <SchemaCollapsible label="Output Schema" schema={tool.outputSchema} />
+            <SchemaCollapsible
+              label="Output Schema"
+              schema={tool.outputSchema}
+            />
           )}
 
           {tool._meta && Object.keys(tool._meta).length > 0 && (
             <div className="flex flex-col gap-1">
-              <span className="text-xs font-medium text-muted-foreground">Metadata</span>
+              <span className="text-xs font-medium text-muted-foreground">
+                Metadata
+              </span>
               <div className="flex flex-wrap gap-1.5">
                 {Object.entries(tool._meta).map(([key, value]) => (
                   <Badge key={key} variant="outline">
-                    {key}: {typeof value === "string" ? value : JSON.stringify(value)}
+                    {key}:{" "}
+                    {typeof value === "string" ? value : JSON.stringify(value)}
                   </Badge>
                 ))}
               </div>
@@ -78,7 +97,9 @@ export function ToolCard({ tool, readOnly }: ToolCardProps) {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => useUIStore.getState().switchToFunctions(tool.name)}
+                onClick={() =>
+                  useUIStore.getState().switchToFunctions(tool.name)
+                }
               >
                 <Play className="h-3 w-3" />
                 Try it
@@ -91,10 +112,17 @@ export function ToolCard({ tool, readOnly }: ToolCardProps) {
   );
 }
 
-function AnnotationBadges({ annotations }: { annotations?: Tool["annotations"] }) {
+function AnnotationBadges({
+  annotations,
+}: {
+  annotations?: Tool["annotations"];
+}) {
   if (!annotations) return null;
 
-  const badges: { label: string; variant: "success" | "warning" | "secondary" | "outline" }[] = [];
+  const badges: {
+    label: string;
+    variant: "success" | "warning" | "secondary" | "outline";
+  }[] = [];
 
   if (annotations.readOnlyHint === true) {
     badges.push({ label: "read-only", variant: "outline" });

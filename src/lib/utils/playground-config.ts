@@ -46,7 +46,11 @@ function parse(): PlaygroundConfig {
   const oauthClientSecret = import.meta.env.VITE_OAUTH_CLIENT_SECRET;
   const oauthTokenUrl = import.meta.env.VITE_OAUTH_TOKEN_URL;
   if (oauthClientId && oauthClientSecret && oauthTokenUrl) {
-    auth.oauth = { clientId: oauthClientId, clientSecret: oauthClientSecret, tokenUrl: oauthTokenUrl };
+    auth.oauth = {
+      clientId: oauthClientId,
+      clientSecret: oauthClientSecret,
+      tokenUrl: oauthTokenUrl,
+    };
   }
 
   const basicUser = import.meta.env.VITE_AUTH_BASIC_USER;

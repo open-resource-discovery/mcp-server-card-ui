@@ -1,5 +1,8 @@
 // Viewer entry point — textarea editor + overview (no Monaco)
-export { MCPServerViewer, type MCPServerViewerProps } from "./components/MCPServerViewer";
+export {
+  MCPServerViewer,
+  type MCPServerViewerProps,
+} from "./components/MCPServerViewer";
 export { ThemeRoot } from "./components/ThemeRoot";
 export { useServerCardStore } from "./stores/serverCardStore";
 export { useValidationStore } from "./stores/validationStore";

@@ -25,7 +25,9 @@ export const useServerCardStore = create<ServerCardState>((set, get) => ({
 
   setRawJson: (json: string) => {
     try {
-      const parsed = json.trim() ? (JSON.parse(json) as MCPServerCardDefinition) : null;
+      const parsed = json.trim()
+        ? (JSON.parse(json) as MCPServerCardDefinition)
+        : null;
       set({
         rawJson: json,
         parsedCard: parsed,

@@ -6,9 +6,18 @@ import { usePredefinedServersStore } from "@lib/stores/predefinedServersStore";
 import { Input } from "@lib/components/ui/input";
 import { PasswordInput } from "@lib/components/ui/PasswordInput";
 import { Button } from "@lib/components/ui/button";
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@lib/components/ui/select";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@lib/components/ui/select";
 import { Loader2, Plug, Plus, Unplug } from "lucide-react";
-import { type ConnAuthType, mapStoreAuthType } from "@lib/utils/connection-auth";
+import {
+  type ConnAuthType,
+  mapStoreAuthType,
+} from "@lib/utils/connection-auth";
 import { cn } from "@lib/utils/cn";
 import { isOrdUrl, discoverServersFromOrd } from "@lib/utils/ord-discovery";
 
@@ -36,8 +45,12 @@ export function MCPConnectionSettings() {
   const addCustomServer = usePredefinedServersStore((s) => s.addCustomServer);
   const select = usePredefinedServersStore((s) => s.select);
 
-  const [manualAuthType, setManualAuthType] = useState<ConnAuthType | null>(null);
-  const connAuthType = manualAuthType ?? mapStoreAuthType(storeAuthType, !!storeOAuth2Creds.accessToken);
+  const [manualAuthType, setManualAuthType] = useState<ConnAuthType | null>(
+    null,
+  );
+  const connAuthType =
+    manualAuthType ??
+    mapStoreAuthType(storeAuthType, !!storeOAuth2Creds.accessToken);
 
   const username = storeBasicCreds.username;
   const password = storeBasicCreds.password;
@@ -70,7 +83,9 @@ export function MCPConnectionSettings() {
       });
       useMCPConnectionStore.getState().setAuthType("basic");
     } else if (connAuthType === "bearer" && localToken) {
-      useMCPConnectionStore.getState().setBearerCredentials({ token: effectiveToken });
+      useMCPConnectionStore
+        .getState()
+        .setBearerCredentials({ token: effectiveToken });
       useMCPConnectionStore.getState().setAuthType("bearer");
     }
 
@@ -78,7 +93,18 @@ export function MCPConnectionSettings() {
     if (success && parsedCard) {
       autoConfigureAuth(parsedCard);
     }
-  }, [connAuthType, effectiveUsername, effectivePassword, effectiveToken, localUsername, localPassword, localToken, connect, parsedCard, autoConfigureAuth]);
+  }, [
+    connAuthType,
+    effectiveUsername,
+    effectivePassword,
+    effectiveToken,
+    localUsername,
+    localPassword,
+    localToken,
+    connect,
+    parsedCard,
+    autoConfigureAuth,
+  ]);
 
   const handleAdd = useCallback(async () => {
     const trimmedUrl = url.trim();
@@ -129,11 +155,24 @@ export function MCPConnectionSettings() {
     } finally {
       setIsAdding(false);
     }
-  }, [url, transportType, addCustomServer, select, setFromPredefined, setRawJson, setUrl, connect]);
+  }, [
+    url,
+    transportType,
+    addCustomServer,
+    select,
+    setFromPredefined,
+    setRawJson,
+    setUrl,
+    connect,
+  ]);
 
   const handleUrlKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
-      if (e.key === "Enter" && url.trim() && connectionStatus !== "connecting") {
+      if (
+        e.key === "Enter" &&
+        url.trim() &&
+        connectionStatus !== "connecting"
+      ) {
         if (showAddButton) {
           handleAdd();
         } else {
@@ -154,10 +193,14 @@ export function MCPConnectionSettings() {
   return (
     <div className="space-y-3">
       <div className="flex items-center gap-2">
-        <h3 className="text-xs font-medium text-muted-foreground">Connection</h3>
+        <h3 className="text-xs font-medium text-muted-foreground">
+          Connection
+        </h3>
         <div className="flex items-center gap-1.5">
           <div className={`h-2 w-2 rounded-full ${statusColor}`} />
-          <span className="text-[10px] text-muted-foreground capitalize">{connectionStatus}</span>
+          <span className="text-[10px] text-muted-foreground capitalize">
+            {connectionStatus}
+          </span>
         </div>
       </div>
 
@@ -188,7 +231,12 @@ export function MCPConnectionSettings() {
           )}
         </div>
 
-        <Select value={transportType} onValueChange={(v) => setTransportType(v as "streamable-http" | "sse")}>
+        <Select
+          value={transportType}
+          onValueChange={(v) =>
+            setTransportType(v as "streamable-http" | "sse")
+          }
+        >
           <SelectTrigger className="h-8 text-xs">
             <SelectValue />
           </SelectTrigger>
@@ -198,7 +246,10 @@ export function MCPConnectionSettings() {
           </SelectContent>
         </Select>
 
-        <Select value={connAuthType} onValueChange={(v) => setManualAuthType(v as ConnAuthType)}>
+        <Select
+          value={connAuthType}
+          onValueChange={(v) => setManualAuthType(v as ConnAuthType)}
+        >
           <SelectTrigger className="h-8 text-xs">
             <SelectValue />
           </SelectTrigger>
@@ -239,8 +290,14 @@ export function MCPConnectionSettings() {
         )}
 
         <div className="flex gap-2">
-          {connectionStatus === "connected" || (connectionStatus === "connecting" && serverInfo) ? (
-            <Button variant="outline" size="sm" onClick={() => disconnect()} disabled={connectionStatus === "connecting"}>
+          {connectionStatus === "connected" ||
+          (connectionStatus === "connecting" && serverInfo) ? (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => disconnect()}
+              disabled={connectionStatus === "connecting"}
+            >
               {connectionStatus === "connecting" ? (
                 <Loader2 className="h-4 w-4 mr-1 animate-spin" />
               ) : (
@@ -249,7 +306,11 @@ export function MCPConnectionSettings() {
               {connectionStatus === "connecting" ? "Connecting…" : "Disconnect"}
             </Button>
           ) : (
-            <Button size="sm" onClick={handleConnect} disabled={!url || connectionStatus === "connecting"}>
+            <Button
+              size="sm"
+              onClick={handleConnect}
+              disabled={!url || connectionStatus === "connecting"}
+            >
               {connectionStatus === "connecting" ? (
                 <Loader2 className="h-4 w-4 mr-1 animate-spin" />
               ) : (
@@ -260,13 +321,17 @@ export function MCPConnectionSettings() {
           )}
         </div>
 
-        {errorMessage && <p className="text-xs text-destructive">{errorMessage}</p>}
+        {errorMessage && (
+          <p className="text-xs text-destructive">{errorMessage}</p>
+        )}
 
         {serverInfo && (
-          <div className={cn(
-            "rounded-md border p-3 space-y-1 transition-opacity",
-            connectionStatus === "connecting" && "opacity-50",
-          )}>
+          <div
+            className={cn(
+              "rounded-md border p-3 space-y-1 transition-opacity",
+              connectionStatus === "connecting" && "opacity-50",
+            )}
+          >
             <p className="text-xs font-medium">
               {serverInfo.name} v{serverInfo.version}
             </p>

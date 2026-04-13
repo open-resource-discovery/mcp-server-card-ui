@@ -1,8 +1,23 @@
 import { useState, useEffect, useRef } from "react";
-import { ChevronDown, Copy, Check, Clock, AlertCircle, CheckCircle, Play, X, GitBranch, Loader2 } from "lucide-react";
+import {
+  ChevronDown,
+  Copy,
+  Check,
+  Clock,
+  AlertCircle,
+  CheckCircle,
+  Play,
+  X,
+  GitBranch,
+  Loader2,
+} from "lucide-react";
 import { Badge } from "@lib/components/ui/badge";
 import { Button } from "@lib/components/ui/button";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@lib/components/ui/collapsible";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@lib/components/ui/collapsible";
 import { JsonHighlight } from "@lib/components/ui/JsonHighlight";
 import { cn } from "@lib/utils/cn";
 import type { MCPLogEntry } from "@lib/types/mcpLog";
@@ -34,7 +49,10 @@ function CopyIconButton({ text }: { text: string }) {
   );
 }
 
-export function MCPLogEntryCard({ entry, isHighlighted }: MCPLogEntryCardProps) {
+export function MCPLogEntryCard({
+  entry,
+  isHighlighted,
+}: MCPLogEntryCardProps) {
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -53,8 +71,13 @@ export function MCPLogEntryCard({ entry, isHighlighted }: MCPLogEntryCardProps) 
     }
   }, [isHighlighted]);
 
-  const isSuccess = entry.responseStatus !== undefined && entry.responseStatus >= 200 && entry.responseStatus < 300;
-  const isError = !!entry.error || (entry.responseStatus !== undefined && entry.responseStatus >= 400);
+  const isSuccess =
+    entry.responseStatus !== undefined &&
+    entry.responseStatus >= 200 &&
+    entry.responseStatus < 300;
+  const isError =
+    !!entry.error ||
+    (entry.responseStatus !== undefined && entry.responseStatus >= 400);
   const isPending = entry.responseStatus === undefined && !entry.error;
 
   const formatJson = (str: string) => {
@@ -135,7 +158,9 @@ export function MCPLogEntryCard({ entry, isHighlighted }: MCPLogEntryCardProps) 
   };
 
   const time = new Date(entry.timestamp).toLocaleTimeString();
-  const headerCount = entry.requestHeaders ? Object.keys(entry.requestHeaders).length : 0;
+  const headerCount = entry.requestHeaders
+    ? Object.keys(entry.requestHeaders).length
+    : 0;
 
   return (
     <div
@@ -150,12 +175,21 @@ export function MCPLogEntryCard({ entry, isHighlighted }: MCPLogEntryCardProps) 
         <CollapsibleTrigger className="flex w-full items-center justify-between p-3 text-left hover:bg-accent/50 cursor-pointer">
           <div className="flex flex-wrap items-center gap-2 flex-1 min-w-0">
             <div className="flex items-center gap-2 min-w-0 flex-1">
-              {isSuccess && <CheckCircle className="h-4 w-4 text-success shrink-0" />}
-              {isError && <AlertCircle className="h-4 w-4 text-destructive shrink-0" />}
-              {isPending && <Loader2 className="h-4 w-4 shrink-0 animate-spin text-muted-foreground" />}
+              {isSuccess && (
+                <CheckCircle className="h-4 w-4 text-success shrink-0" />
+              )}
+              {isError && (
+                <AlertCircle className="h-4 w-4 text-destructive shrink-0" />
+              )}
+              {isPending && (
+                <Loader2 className="h-4 w-4 shrink-0 animate-spin text-muted-foreground" />
+              )}
 
               {entry.responseStatus && (
-                <Badge variant={isSuccess ? "success" : "destructive"} className="text-xs shrink-0">
+                <Badge
+                  variant={isSuccess ? "success" : "destructive"}
+                  className="text-xs shrink-0"
+                >
                   {entry.responseStatus}
                 </Badge>
               )}
@@ -170,7 +204,9 @@ export function MCPLogEntryCard({ entry, isHighlighted }: MCPLogEntryCardProps) 
                 </span>
               )}
 
-              <span className="text-xs text-muted-foreground truncate">{entry.url}</span>
+              <span className="text-xs text-muted-foreground truncate">
+                {entry.url}
+              </span>
             </div>
           </div>
 
@@ -184,7 +220,12 @@ export function MCPLogEntryCard({ entry, isHighlighted }: MCPLogEntryCardProps) 
               )}
               <span className="text-[10px]">{time}</span>
             </div>
-            <ChevronDown className={cn("h-4 w-4 transition-transform", open && "rotate-180")} />
+            <ChevronDown
+              className={cn(
+                "h-4 w-4 transition-transform",
+                open && "rotate-180",
+              )}
+            />
           </div>
         </CollapsibleTrigger>
 
@@ -193,12 +234,21 @@ export function MCPLogEntryCard({ entry, isHighlighted }: MCPLogEntryCardProps) 
             <div className="flex justify-end gap-2">
               {!isEditing && (
                 <>
-                  <Button variant="outline" size="sm" onClick={handleStartEdit} disabled={!url}>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleStartEdit}
+                    disabled={!url}
+                  >
                     <Play className="h-3 w-3 mr-1" />
                     Edit & Resend
                   </Button>
                   <Button variant="outline" size="sm" onClick={handleCopyCurl}>
-                    {copied ? <Check className="h-3 w-3 mr-1" /> : <Copy className="h-3 w-3 mr-1" />}
+                    {copied ? (
+                      <Check className="h-3 w-3 mr-1" />
+                    ) : (
+                      <Copy className="h-3 w-3 mr-1" />
+                    )}
                     {copied ? "Copied" : "Copy as cURL"}
                   </Button>
                 </>
@@ -218,7 +268,9 @@ export function MCPLogEntryCard({ entry, isHighlighted }: MCPLogEntryCardProps) 
                   />
                 </div>
                 <div>
-                  <h4 className="text-xs font-semibold mb-2">Edit Request Body</h4>
+                  <h4 className="text-xs font-semibold mb-2">
+                    Edit Request Body
+                  </h4>
                   <textarea
                     value={editedBody}
                     onChange={(e) => setEditedBody(e.target.value)}
@@ -226,13 +278,25 @@ export function MCPLogEntryCard({ entry, isHighlighted }: MCPLogEntryCardProps) 
                     spellCheck={false}
                   />
                 </div>
-                {editError && <p className="text-xs text-destructive">{editError}</p>}
+                {editError && (
+                  <p className="text-xs text-destructive">{editError}</p>
+                )}
                 <div className="flex justify-end gap-2">
-                  <Button variant="ghost" size="sm" onClick={handleCancelEdit} disabled={isSending}>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleCancelEdit}
+                    disabled={isSending}
+                  >
                     <X className="h-3 w-3 mr-1" />
                     Cancel
                   </Button>
-                  <Button variant="default" size="sm" onClick={handleSendEdited} disabled={isSending}>
+                  <Button
+                    variant="default"
+                    size="sm"
+                    onClick={handleSendEdited}
+                    disabled={isSending}
+                  >
                     <Play className="h-3 w-3 mr-1" />
                     {isSending ? "Sending..." : "Send"}
                   </Button>
@@ -252,13 +316,19 @@ export function MCPLogEntryCard({ entry, isHighlighted }: MCPLogEntryCardProps) 
                           Headers ({headerCount})
                         </summary>
                         <div className="relative mt-1">
-                          <CopyIconButton text={JSON.stringify(entry.requestHeaders, null, 2)} />
-                          <JsonHighlight code={JSON.stringify(entry.requestHeaders, null, 2)} />
+                          <CopyIconButton
+                            text={JSON.stringify(entry.requestHeaders, null, 2)}
+                          />
+                          <JsonHighlight
+                            code={JSON.stringify(entry.requestHeaders, null, 2)}
+                          />
                         </div>
                       </details>
                     )}
                     <details open className="text-xs">
-                      <summary className="cursor-pointer text-muted-foreground hover:text-foreground">Body</summary>
+                      <summary className="cursor-pointer text-muted-foreground hover:text-foreground">
+                        Body
+                      </summary>
                       <div className="relative mt-1">
                         <CopyIconButton text={formatJson(entry.requestBody)} />
                         <JsonHighlight code={formatJson(entry.requestBody)} />
@@ -272,15 +342,26 @@ export function MCPLogEntryCard({ entry, isHighlighted }: MCPLogEntryCardProps) 
                     <h4 className="text-xs font-semibold mb-2">Response</h4>
                     <div className="space-y-2">
                       {entry.responseStatus && (
-                        <div className={cn("text-xs font-mono p-2 rounded", isSuccess ? "bg-success/10" : "bg-destructive/10")}>
+                        <div
+                          className={cn(
+                            "text-xs font-mono p-2 rounded",
+                            isSuccess ? "bg-success/10" : "bg-destructive/10",
+                          )}
+                        >
                           HTTP {entry.responseStatus}
                         </div>
                       )}
                       <details open className="text-xs">
-                        <summary className="cursor-pointer text-muted-foreground hover:text-foreground">Body</summary>
+                        <summary className="cursor-pointer text-muted-foreground hover:text-foreground">
+                          Body
+                        </summary>
                         <div className="relative mt-1">
-                          <CopyIconButton text={formatJson(entry.responseBody)} />
-                          <JsonHighlight code={formatJson(entry.responseBody)} />
+                          <CopyIconButton
+                            text={formatJson(entry.responseBody)}
+                          />
+                          <JsonHighlight
+                            code={formatJson(entry.responseBody)}
+                          />
                         </div>
                       </details>
                     </div>

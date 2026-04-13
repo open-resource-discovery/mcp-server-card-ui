@@ -128,7 +128,9 @@
 
             var store = window.opener.useConnectionStore;
             if (store) {
-              var success = await store.getState().handleAuthCallback(code, state);
+              var success = await store
+                .getState()
+                .handleAuthCallback(code, state);
               if (success) {
                 showSuccess();
               } else {

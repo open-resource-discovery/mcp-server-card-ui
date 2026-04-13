@@ -54,9 +54,16 @@ export const OAUTH_STORAGE_KEYS = {
 /**
  * Store PKCE and state parameters in sessionStorage
  */
-export function storeOAuthParams(params: { codeVerifier: string; state: string; redirectUri: string }): void {
+export function storeOAuthParams(params: {
+  codeVerifier: string;
+  state: string;
+  redirectUri: string;
+}): void {
   try {
-    sessionStorage.setItem(OAUTH_STORAGE_KEYS.CODE_VERIFIER, params.codeVerifier);
+    sessionStorage.setItem(
+      OAUTH_STORAGE_KEYS.CODE_VERIFIER,
+      params.codeVerifier,
+    );
     sessionStorage.setItem(OAUTH_STORAGE_KEYS.STATE, params.state);
     sessionStorage.setItem(OAUTH_STORAGE_KEYS.REDIRECT_URI, params.redirectUri);
   } catch {
@@ -119,7 +126,10 @@ export function getDefaultOAuthRedirectUri(): string {
         const scriptUrl = new URL(src);
         // Only use same-origin scripts (ignore CDN-loaded bundles)
         if (scriptUrl.origin === origin) {
-          const scriptDir = scriptUrl.pathname.substring(0, scriptUrl.pathname.lastIndexOf("/") + 1);
+          const scriptDir = scriptUrl.pathname.substring(
+            0,
+            scriptUrl.pathname.lastIndexOf("/") + 1,
+          );
           return `${origin}${scriptDir}oauth/callback`;
         }
       }
@@ -134,7 +144,9 @@ export function getDefaultOAuthRedirectUri(): string {
     if (baseTag?.href) {
       const base = new URL(baseTag.href);
       if (base.origin === origin) {
-        const basePath = base.pathname.endsWith("/") ? base.pathname : base.pathname + "/";
+        const basePath = base.pathname.endsWith("/")
+          ? base.pathname
+          : base.pathname + "/";
         return `${origin}${basePath}oauth/callback`;
       }
     }

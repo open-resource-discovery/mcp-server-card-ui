@@ -1,5 +1,10 @@
 import type { ServerCapabilities } from "../../../types/mcp-protocol";
-import { Card, CardContent, CardHeader, CardTitle } from "@lib/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@lib/components/ui/card";
 import { Badge } from "@lib/components/ui/badge";
 import { Puzzle } from "lucide-react";
 
@@ -18,7 +23,8 @@ const CAPABILITY_LABELS: Record<string, string> = {
 };
 
 function renderSubProps(value: unknown): string | null {
-  if (value === null || value === undefined || typeof value !== "object") return null;
+  if (value === null || value === undefined || typeof value !== "object")
+    return null;
   const entries = Object.entries(value as Record<string, unknown>).filter(
     ([, v]) => v !== undefined,
   );
@@ -32,7 +38,9 @@ function renderSubProps(value: unknown): string | null {
     .join(", ");
 }
 
-export function CapabilitiesSection({ capabilities }: CapabilitiesSectionProps) {
+export function CapabilitiesSection({
+  capabilities,
+}: CapabilitiesSectionProps) {
   const entries = Object.entries(capabilities).filter(
     ([, v]) => v !== undefined && v !== null,
   );

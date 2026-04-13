@@ -34,7 +34,10 @@ export function resetIdCounter(): void {
   nextId = 1;
 }
 
-export function createRequest(method: string, params?: Record<string, unknown>): JsonRpcRequest {
+export function createRequest(
+  method: string,
+  params?: Record<string, unknown>,
+): JsonRpcRequest {
   return {
     jsonrpc: "2.0",
     id: nextId++,
@@ -43,7 +46,10 @@ export function createRequest(method: string, params?: Record<string, unknown>):
   };
 }
 
-export function createNotification(method: string, params?: Record<string, unknown>): JsonRpcNotification {
+export function createNotification(
+  method: string,
+  params?: Record<string, unknown>,
+): JsonRpcNotification {
   return {
     jsonrpc: "2.0",
     method,

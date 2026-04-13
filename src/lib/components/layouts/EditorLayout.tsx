@@ -5,7 +5,12 @@ import { useUIStore } from "@lib/stores/uiStore";
 import { useAutoValidate } from "@lib/hooks/useAutoValidate";
 import { ServerCardEditor } from "@lib/components/editor/ServerCardEditor";
 import { EditorRightPanel } from "./EditorRightPanel";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@lib/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@lib/components/ui/sheet";
 import { cn } from "@lib/utils/cn";
 
 interface EditorLayoutProps {
@@ -33,7 +38,8 @@ export function EditorLayout({
   className,
 }: EditorLayoutProps) {
   const isLargeScreen = useIsLargeScreen();
-  const { validationPanelOpen, setValidationPanelOpen, closeAllPanels } = useUIStore();
+  const { validationPanelOpen, setValidationPanelOpen, closeAllPanels } =
+    useUIStore();
 
   useAutoValidate();
 
@@ -50,7 +56,10 @@ export function EditorLayout({
           </Panel>
           <ResizeHandle />
           <Panel defaultSize={50} minSize={20}>
-            <EditorRightPanel showValidation={showValidation} defaultTab={defaultTab} />
+            <EditorRightPanel
+              showValidation={showValidation}
+              defaultTab={defaultTab}
+            />
           </Panel>
         </PanelGroup>
       </div>
@@ -67,7 +76,10 @@ export function EditorLayout({
           <SheetHeader className="sr-only">
             <SheetTitle>Overview & Validation</SheetTitle>
           </SheetHeader>
-          <EditorRightPanel showValidation={showValidation} defaultTab={defaultTab} />
+          <EditorRightPanel
+            showValidation={showValidation}
+            defaultTab={defaultTab}
+          />
         </SheetContent>
       </Sheet>
     </div>

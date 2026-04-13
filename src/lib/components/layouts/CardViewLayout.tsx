@@ -1,5 +1,10 @@
 import { ScrollArea } from "@lib/components/ui/scroll-area";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@lib/components/ui/tabs";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@lib/components/ui/tabs";
 import { MCPServerOverview } from "@lib/components/overview/MCPServerOverview";
 import { ValidationPanel } from "@lib/components/validation/ValidationPanel";
 import { useAutoValidate } from "@lib/hooks/useAutoValidate";

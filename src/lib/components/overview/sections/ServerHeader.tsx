@@ -26,18 +26,25 @@ export function ServerHeader({ card }: ServerHeaderProps) {
         )}
 
         <div className="flex flex-1 flex-col gap-0.5 min-w-0">
-          <p className="font-mono text-[11px] text-muted-foreground leading-none">{card.name}</p>
+          <p className="font-mono text-[11px] text-muted-foreground leading-none">
+            {card.name}
+          </p>
           <div className="flex items-center gap-2">
             <h2 className="text-base font-semibold leading-tight truncate">
               {card.title ?? card.name}
             </h2>
-            <Badge variant="outline" size="sm" className="shrink-0">{card.version}</Badge>
+            <Badge variant="outline" size="sm" className="shrink-0">
+              {card.version}
+            </Badge>
           </div>
         </div>
       </div>
 
       {card.description && (
-        <MarkdownText text={card.description} className="text-sm text-muted-foreground" />
+        <MarkdownText
+          text={card.description}
+          className="text-sm text-muted-foreground"
+        />
       )}
 
       <div className="flex flex-wrap items-center gap-1.5">
@@ -62,7 +69,9 @@ export function ServerHeader({ card }: ServerHeaderProps) {
 
       {card.instructions && (
         <div className="rounded-md border bg-muted/50 px-3 py-2">
-          <p className="text-[11px] font-medium text-muted-foreground mb-0.5">Instructions</p>
+          <p className="text-[11px] font-medium text-muted-foreground mb-0.5">
+            Instructions
+          </p>
           <MarkdownText text={card.instructions} className="text-sm" />
         </div>
       )}

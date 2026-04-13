@@ -1,5 +1,8 @@
 // Lite entry point — playground without Functions tab
-export { MCPServerPlaygroundLite, type MCPServerPlaygroundLiteProps } from "./components/MCPServerPlaygroundLite";
+export {
+  MCPServerPlaygroundLite,
+  type MCPServerPlaygroundLiteProps,
+} from "./components/MCPServerPlaygroundLite";
 export { ThemeRoot } from "./components/ThemeRoot";
 export { useServerCardStore } from "./stores/serverCardStore";
 export { useValidationStore } from "./stores/validationStore";

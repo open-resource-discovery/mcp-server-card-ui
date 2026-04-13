@@ -15,7 +15,10 @@ export interface MCPServerEditorProps {
   showValidation?: boolean;
   readOnly?: boolean;
   defaultTab?: "overview" | "validation";
-  onServerCardChange?: (json: string, parsed: MCPServerCardDefinition | null) => void;
+  onServerCardChange?: (
+    json: string,
+    parsed: MCPServerCardDefinition | null,
+  ) => void;
   onValidationComplete?: (results: ValidationResult[]) => void;
   className?: string;
 }

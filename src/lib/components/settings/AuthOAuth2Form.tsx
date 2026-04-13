@@ -38,7 +38,9 @@ export function AuthOAuth2Form() {
       <Input
         placeholder="Authorization URL (for auth code flow)"
         value={oauth2Credentials.authorizationUrl ?? ""}
-        onChange={(e) => setOAuth2Credentials({ authorizationUrl: e.target.value })}
+        onChange={(e) =>
+          setOAuth2Credentials({ authorizationUrl: e.target.value })
+        }
       />
       <Input
         placeholder="Scopes (space-separated)"

@@ -11,9 +11,7 @@ export function ToolCallResultView({ result }: ToolCallResultViewProps) {
     return (
       <div className="text-xs text-destructive bg-destructive/10 p-2 rounded">
         {result.content.map((item, i) => (
-          <div key={i}>
-            {item.type === "text" && <span>{item.text}</span>}
-          </div>
+          <div key={i}>{item.type === "text" && <span>{item.text}</span>}</div>
         ))}
       </div>
     );
@@ -35,7 +33,10 @@ export function ToolCallResultView({ result }: ToolCallResultViewProps) {
               }
             }
             return (
-              <div key={i} className="text-xs bg-muted p-2 rounded whitespace-pre-wrap font-mono">
+              <div
+                key={i}
+                className="text-xs bg-muted p-2 rounded whitespace-pre-wrap font-mono"
+              >
                 {item.text}
               </div>
             );
@@ -43,7 +44,9 @@ export function ToolCallResultView({ result }: ToolCallResultViewProps) {
           case "image":
             return (
               <div key={i} className="space-y-1">
-                <Badge variant="outline" className="text-[10px]">{item.mimeType}</Badge>
+                <Badge variant="outline" className="text-[10px]">
+                  {item.mimeType}
+                </Badge>
                 <img
                   src={`data:${item.mimeType};base64,${item.data}`}
                   alt="Tool result"
@@ -54,9 +57,14 @@ export function ToolCallResultView({ result }: ToolCallResultViewProps) {
           case "audio":
             return (
               <div key={i} className="space-y-1">
-                <Badge variant="outline" className="text-[10px]">{item.mimeType}</Badge>
+                <Badge variant="outline" className="text-[10px]">
+                  {item.mimeType}
+                </Badge>
                 <audio controls className="w-full">
-                  <source src={`data:${item.mimeType};base64,${item.data}`} type={item.mimeType} />
+                  <source
+                    src={`data:${item.mimeType};base64,${item.data}`}
+                    type={item.mimeType}
+                  />
                 </audio>
               </div>
             );
@@ -64,8 +72,12 @@ export function ToolCallResultView({ result }: ToolCallResultViewProps) {
             return (
               <div key={i} className="border rounded p-2 space-y-1">
                 <div className="flex items-center gap-2">
-                  <Badge variant="outline" className="text-[10px]">Resource</Badge>
-                  <span className="text-xs font-mono truncate">{item.resource.uri}</span>
+                  <Badge variant="outline" className="text-[10px]">
+                    Resource
+                  </Badge>
+                  <span className="text-xs font-mono truncate">
+                    {item.resource.uri}
+                  </span>
                 </div>
                 {item.resource.text && (
                   <div className="text-xs bg-muted p-2 rounded whitespace-pre-wrap font-mono">

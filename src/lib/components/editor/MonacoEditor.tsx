@@ -43,9 +43,14 @@ function getCssColor(varName: string, fallback: string): string {
   }
 
   // color(srgb r g b) — values are 0-1 floats
-  const srgbMatch = computed.match(/color\(srgb\s+([\d.]+)\s+([\d.]+)\s+([\d.]+)/);
+  const srgbMatch = computed.match(
+    /color\(srgb\s+([\d.]+)\s+([\d.]+)\s+([\d.]+)/,
+  );
   if (srgbMatch) {
-    const hex = (n: string) => Math.round(parseFloat(n) * 255).toString(16).padStart(2, "0");
+    const hex = (n: string) =>
+      Math.round(parseFloat(n) * 255)
+        .toString(16)
+        .padStart(2, "0");
     return `#${hex(srgbMatch[1])}${hex(srgbMatch[2])}${hex(srgbMatch[3])}`;
   }
 
@@ -74,12 +79,30 @@ export function MonacoEditor({
     const monaco = monacoRef.current;
     if (!monaco) return;
 
-    const bg = getCssColor("--background", resolvedTheme === "dark" ? "#1e1e1e" : "#ffffff");
-    const fg = getCssColor("--foreground", resolvedTheme === "dark" ? "#d4d4d4" : "#1e1e1e");
-    const muted = getCssColor("--muted", resolvedTheme === "dark" ? "#2d2d30" : "#f5f5f5");
-    const mutedFg = getCssColor("--muted-foreground", resolvedTheme === "dark" ? "#858585" : "#237893");
-    const primary = getCssColor("--primary", resolvedTheme === "dark" ? "#0098ff" : "#005fb8");
-    const border = getCssColor("--border", resolvedTheme === "dark" ? "#3e3e42" : "#e0e0e0");
+    const bg = getCssColor(
+      "--background",
+      resolvedTheme === "dark" ? "#1e1e1e" : "#ffffff",
+    );
+    const fg = getCssColor(
+      "--foreground",
+      resolvedTheme === "dark" ? "#d4d4d4" : "#1e1e1e",
+    );
+    const muted = getCssColor(
+      "--muted",
+      resolvedTheme === "dark" ? "#2d2d30" : "#f5f5f5",
+    );
+    const mutedFg = getCssColor(
+      "--muted-foreground",
+      resolvedTheme === "dark" ? "#858585" : "#237893",
+    );
+    const primary = getCssColor(
+      "--primary",
+      resolvedTheme === "dark" ? "#0098ff" : "#005fb8",
+    );
+    const border = getCssColor(
+      "--border",
+      resolvedTheme === "dark" ? "#3e3e42" : "#e0e0e0",
+    );
 
     monaco.editor.defineTheme("app-dark", {
       base: "vs-dark",
@@ -133,7 +156,10 @@ export function MonacoEditor({
     if (!root) return;
     const observer = new MutationObserver((mutations) => {
       for (const mutation of mutations) {
-        if (mutation.type === "attributes" && mutation.attributeName === "style") {
+        if (
+          mutation.type === "attributes" &&
+          mutation.attributeName === "style"
+        ) {
           defineThemes();
           return;
         }

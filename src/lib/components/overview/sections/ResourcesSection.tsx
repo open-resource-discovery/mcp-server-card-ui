@@ -1,5 +1,10 @@
 import type { Resource } from "../../../types/mcp-protocol";
-import { Card, CardContent, CardHeader, CardTitle } from "@lib/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@lib/components/ui/card";
 import { Accordion } from "@lib/components/ui/accordion";
 import { ResourceCard } from "@lib/components/overview/ResourceCard";
 import { FileText } from "lucide-react";

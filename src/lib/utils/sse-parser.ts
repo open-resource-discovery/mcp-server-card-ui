@@ -15,7 +15,9 @@ export interface SSEEvent {
  * Parse an SSE stream into individual events.
  * Handles buffering, multi-line data fields, and comment lines.
  */
-export async function* parseSSEStream(body: ReadableStream<Uint8Array>): AsyncGenerator<SSEEvent> {
+export async function* parseSSEStream(
+  body: ReadableStream<Uint8Array>,
+): AsyncGenerator<SSEEvent> {
   const decoder = new TextDecoder();
   const reader = body.getReader();
   let buffer = "";
@@ -71,7 +73,10 @@ function parseSSEBlock(block: string): SSEEvent | null {
     } else {
       field = line.slice(0, colonIndex);
       // Spec: if the character immediately after the colon is a space, skip it
-      value = line[colonIndex + 1] === " " ? line.slice(colonIndex + 2) : line.slice(colonIndex + 1);
+      value =
+        line[colonIndex + 1] === " "
+          ? line.slice(colonIndex + 2)
+          : line.slice(colonIndex + 1);
     }
 
     switch (field) {

@@ -13,7 +13,10 @@ export interface MCPServerCardViewProps {
   showValidation?: boolean;
   defaultTab?: "overview" | "validation";
   readOnly?: boolean;
-  onServerCardChange?: (json: string, parsed: MCPServerCardDefinition | null) => void;
+  onServerCardChange?: (
+    json: string,
+    parsed: MCPServerCardDefinition | null,
+  ) => void;
   onValidationComplete?: (results: ValidationResult[]) => void;
   className?: string;
 }

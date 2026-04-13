@@ -1,5 +1,9 @@
 import type { Resource } from "../../types/mcp-protocol";
-import { AccordionItem, AccordionTrigger, AccordionContent } from "@lib/components/ui/accordion";
+import {
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@lib/components/ui/accordion";
 import { Badge } from "@lib/components/ui/badge";
 import { MarkdownText } from "@lib/components/ui/MarkdownText";
 
@@ -24,9 +28,7 @@ export function ResourceCard({ resource }: ResourceCardProps) {
         <div className="flex flex-1 flex-col gap-0.5 text-left min-w-0">
           {resource.mimeType && (
             <div className="flex gap-1.5">
-              <Badge variant="secondary">
-                {resource.mimeType}
-              </Badge>
+              <Badge variant="secondary">{resource.mimeType}</Badge>
             </div>
           )}
           <span className="text-xs font-medium truncate">{displayName}</span>
@@ -45,7 +47,10 @@ export function ResourceCard({ resource }: ResourceCardProps) {
           </div>
 
           {resource.description && (
-            <MarkdownText text={resource.description} className="text-xs text-muted-foreground" />
+            <MarkdownText
+              text={resource.description}
+              className="text-xs text-muted-foreground"
+            />
           )}
 
           <div className="flex flex-wrap items-center gap-2">
@@ -56,22 +61,27 @@ export function ResourceCard({ resource }: ResourceCardProps) {
 
           {resource.annotations && (
             <div className="flex flex-col gap-1.5 mt-1">
-              {resource.annotations.audience && resource.annotations.audience.length > 0 && (
-                <div className="flex items-center gap-1.5">
-                  <span className="text-xs text-muted-foreground">Audience:</span>
-                  <div className="flex gap-1.5">
-                    {resource.annotations.audience.map((role) => (
-                      <Badge key={role} variant="secondary">
-                        {role}
-                      </Badge>
-                    ))}
+              {resource.annotations.audience &&
+                resource.annotations.audience.length > 0 && (
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-xs text-muted-foreground">
+                      Audience:
+                    </span>
+                    <div className="flex gap-1.5">
+                      {resource.annotations.audience.map((role) => (
+                        <Badge key={role} variant="secondary">
+                          {role}
+                        </Badge>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
 
               {resource.annotations.priority !== undefined && (
                 <div className="flex items-center gap-1.5">
-                  <span className="text-xs text-muted-foreground">Priority:</span>
+                  <span className="text-xs text-muted-foreground">
+                    Priority:
+                  </span>
                   <span className="text-xs font-mono">
                     {resource.annotations.priority}
                   </span>
@@ -80,7 +90,9 @@ export function ResourceCard({ resource }: ResourceCardProps) {
 
               {resource.annotations.lastModified && (
                 <div className="flex items-center gap-1.5">
-                  <span className="text-xs text-muted-foreground">Last Modified:</span>
+                  <span className="text-xs text-muted-foreground">
+                    Last Modified:
+                  </span>
                   <span className="text-xs font-mono">
                     {resource.annotations.lastModified}
                   </span>

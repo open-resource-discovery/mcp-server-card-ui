@@ -1,5 +1,10 @@
 import type { Authentication } from "../../../types/mcp-protocol";
-import { Card, CardContent, CardHeader, CardTitle } from "@lib/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@lib/components/ui/card";
 import { Badge } from "@lib/components/ui/badge";
 import { ShieldCheck } from "lucide-react";
 
@@ -7,7 +12,9 @@ interface AuthenticationSectionProps {
   authentication: Authentication;
 }
 
-export function AuthenticationSection({ authentication }: AuthenticationSectionProps) {
+export function AuthenticationSection({
+  authentication,
+}: AuthenticationSectionProps) {
   return (
     <Card>
       <CardHeader className="p-4 pb-2">
@@ -28,7 +35,9 @@ export function AuthenticationSection({ authentication }: AuthenticationSectionP
 
           {authentication.schemas && authentication.schemas.length > 0 && (
             <div className="flex flex-col gap-1.5">
-              <span className="text-sm text-muted-foreground">Supported Schemas</span>
+              <span className="text-sm text-muted-foreground">
+                Supported Schemas
+              </span>
               <div className="flex flex-wrap gap-2">
                 {authentication.schemas.map((schema) => (
                   <Badge key={schema} variant="outline">

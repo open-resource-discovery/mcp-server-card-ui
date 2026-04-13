@@ -16,7 +16,12 @@ export function MobileBottomBar({ showSettings = true }: MobileBottomBarProps) {
   return (
     <div className="flex items-center justify-center gap-2 border-t bg-background px-4 py-2 pb-[max(0.5rem,env(safe-area-inset-bottom))]">
       {showSettings && (
-        <Button variant="ghost" size="sm" onClick={() => setSettingsPanelOpen(true)} aria-label="Settings">
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => setSettingsPanelOpen(true)}
+          aria-label="Settings"
+        >
           <Menu className="h-5 w-5" />
           <span className="ml-1 text-xs">Settings</span>
         </Button>

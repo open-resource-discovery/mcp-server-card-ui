@@ -7,7 +7,12 @@ import { useAutoValidate } from "@lib/hooks/useAutoValidate";
 import { ServerCardEditor } from "@lib/components/editor/ServerCardEditor";
 import { MCPRightPanel } from "@lib/components/MCPRightPanel";
 import { MobileBottomBar } from "@lib/components/MobileBottomBar";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@lib/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@lib/components/ui/sheet";
 import { cn } from "@lib/utils/cn";
 
 const MCPSettingsPanel = lazy(() =>
@@ -83,7 +88,12 @@ export function MCPPlaygroundLayout({
         <PanelGroup orientation="horizontal" className="h-full">
           {showSettings && (
             <>
-              <Panel defaultSize={20} minSize={15} collapsible collapsedSize={0}>
+              <Panel
+                defaultSize={20}
+                minSize={15}
+                collapsible
+                collapsedSize={0}
+              >
                 <Suspense fallback={<SettingsPanelFallback />}>
                   <MCPSettingsPanel />
                 </Suspense>
@@ -137,7 +147,9 @@ export function MCPPlaygroundLayout({
 
   return (
     <div className={cn("flex h-full flex-col", className)}>
-      <div className="min-h-0 flex-1 overflow-hidden">{renderMobileContent()}</div>
+      <div className="min-h-0 flex-1 overflow-hidden">
+        {renderMobileContent()}
+      </div>
       <MobileBottomBar showSettings={showSettings} />
 
       {showSettings && (

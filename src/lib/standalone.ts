@@ -16,10 +16,22 @@
  */
 import React from "react";
 import { createRoot, type Root } from "react-dom/client";
-import { MCPServerPlayground, type MCPServerPlaygroundProps } from "./components/MCPServerPlayground";
-import { MCPServerCardView, type MCPServerCardViewProps } from "./components/MCPServerCardView";
-import { MCPServerViewer, type MCPServerViewerProps } from "./components/MCPServerViewer";
-import { MCPServerEditor, type MCPServerEditorProps } from "./components/MCPServerEditor";
+import {
+  MCPServerPlayground,
+  type MCPServerPlaygroundProps,
+} from "./components/MCPServerPlayground";
+import {
+  MCPServerCardView,
+  type MCPServerCardViewProps,
+} from "./components/MCPServerCardView";
+import {
+  MCPServerViewer,
+  type MCPServerViewerProps,
+} from "./components/MCPServerViewer";
+import {
+  MCPServerEditor,
+  type MCPServerEditorProps,
+} from "./components/MCPServerEditor";
 import { useServerCardStore } from "./stores/serverCardStore";
 import { useMCPConnectionStore } from "./stores/mcpConnectionStore";
 import { useValidationStore } from "./stores/validationStore";
@@ -59,7 +71,10 @@ export interface MCPPlaygroundOptions {
   theme?: "light" | "dark" | "system";
   predefinedServers?: PredefinedServer[];
   onReady?: (instance: MCPPlaygroundInstance) => void;
-  onServerCardChange?: (json: string, parsed: MCPServerCardDefinition | null) => void;
+  onServerCardChange?: (
+    json: string,
+    parsed: MCPServerCardDefinition | null,
+  ) => void;
   onConnect?: (url: string) => void;
   onValidationComplete?: (results: ValidationResult[]) => void;
   onError?: (error: Error) => void;
@@ -87,7 +102,10 @@ export interface MCPComponentOptions {
   showValidation?: boolean;
   defaultTab?: "overview" | "validation";
   readOnly?: boolean;
-  onServerCardChange?: (json: string, parsed: MCPServerCardDefinition | null) => void;
+  onServerCardChange?: (
+    json: string,
+    parsed: MCPServerCardDefinition | null,
+  ) => void;
   onValidationComplete?: (results: ValidationResult[]) => void;
 }
 
@@ -116,21 +134,30 @@ export interface MCPPlaygroundAPI {
 // ============================================================================
 
 const roots = new Map<HTMLElement, Root>();
-const instances = new Map<HTMLElement, MCPPlaygroundInstance | MCPComponentInstance>();
+const instances = new Map<
+  HTMLElement,
+  MCPPlaygroundInstance | MCPComponentInstance
+>();
 
 function getElement(container: HTMLElement | string): HTMLElement {
   if (typeof container === "string") {
     const el = document.querySelector(container);
-    if (!el) throw new Error(`MCPPlayground: Container not found: ${container}`);
+    if (!el)
+      throw new Error(`MCPPlayground: Container not found: ${container}`);
     return el as HTMLElement;
   }
   return container;
 }
 
-function applyThemeToContainer(element: HTMLElement, theme: "light" | "dark" | "system") {
+function applyThemeToContainer(
+  element: HTMLElement,
+  theme: "light" | "dark" | "system",
+) {
   element.classList.add("mcp-root");
   if (theme === "system") {
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)",
+    ).matches;
     element.classList.toggle("dark", prefersDark);
   } else {
     element.classList.toggle("dark", theme === "dark");
@@ -160,7 +187,10 @@ function mountContainer(
   return { element, root };
 }
 
-function createComponentInstance(element: HTMLElement, options: MCPComponentOptions): MCPComponentInstance {
+function createComponentInstance(
+  element: HTMLElement,
+  options: MCPComponentOptions,
+): MCPComponentInstance {
   const inst: MCPComponentInstance = {
     setServerCard(json) {
       useServerCardStore.getState().setRawJson(json);
@@ -201,7 +231,10 @@ function destroyContainer(container: HTMLElement | string) {
   }
 }
 
-function createInstance(element: HTMLElement, options: MCPPlaygroundOptions): MCPPlaygroundInstance {
+function createInstance(
+  element: HTMLElement,
+  options: MCPPlaygroundOptions,
+): MCPPlaygroundInstance {
   const instance: MCPPlaygroundInstance = {
     setServerCard(json) {
       useServerCardStore.getState().setRawJson(json);
@@ -265,7 +298,10 @@ const MCPPlayground: MCPPlaygroundAPI = {
       if (options.auth.credentials) {
         const creds = options.auth.credentials;
         if (options.auth.type === "basic" && creds.username) {
-          connStore.setBasicCredentials({ username: creds.username, password: creds.password || "" });
+          connStore.setBasicCredentials({
+            username: creds.username,
+            password: creds.password || "",
+          });
         } else if (options.auth.type === "bearer" && creds.token) {
           connStore.setBearerCredentials({ token: creds.token });
         } else if (options.auth.type === "oauth2" && creds.token) {
@@ -304,7 +340,9 @@ const MCPPlayground: MCPPlaygroundAPI = {
         try {
           await instance.connect(options.serverUrl!);
         } catch (err) {
-          options.onError?.(err instanceof Error ? err : new Error(String(err)));
+          options.onError?.(
+            err instanceof Error ? err : new Error(String(err)),
+          );
         }
       }, 0);
     }

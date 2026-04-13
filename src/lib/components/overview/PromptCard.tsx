@@ -67,13 +67,9 @@ export function PromptCard({ prompt }: PromptCardProps) {
                         </span>
                       )}
                       {arg.required ? (
-                        <Badge variant="warning">
-                          required
-                        </Badge>
+                        <Badge variant="warning">required</Badge>
                       ) : (
-                        <Badge variant="secondary">
-                          optional
-                        </Badge>
+                        <Badge variant="secondary">optional</Badge>
                       )}
                     </div>
                     {arg.description && (

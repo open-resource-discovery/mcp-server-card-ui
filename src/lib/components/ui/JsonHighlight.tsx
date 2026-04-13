@@ -17,7 +17,11 @@ interface JsonHighlightProps {
   showCopy?: boolean;
 }
 
-export function JsonHighlight({ code, className, showCopy = false }: JsonHighlightProps) {
+export function JsonHighlight({
+  code,
+  className,
+  showCopy = false,
+}: JsonHighlightProps) {
   const [copied, setCopied] = useState(false);
 
   const highlighted = useMemo(() => {
@@ -41,12 +45,25 @@ export function JsonHighlight({ code, className, showCopy = false }: JsonHighlig
           type="button"
           onClick={handleCopy}
           className="absolute top-1.5 right-1.5 inline-flex items-center text-muted-foreground hover:text-foreground cursor-pointer z-10 rounded p-1 hover:bg-accent/50 opacity-0 group-hover/code:opacity-100 transition-opacity"
-          title="Copy">
-          {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+          title="Copy"
+        >
+          {copied ? (
+            <Check className="h-3.5 w-3.5" />
+          ) : (
+            <Copy className="h-3.5 w-3.5" />
+          )}
         </button>
       )}
-      <pre className={cn("overflow-x-auto rounded bg-muted! p-2 text-[10px]", className)}>
-        <code className="hljs language-json" dangerouslySetInnerHTML={{ __html: highlighted }} />
+      <pre
+        className={cn(
+          "overflow-x-auto rounded bg-muted! p-2 text-[10px]",
+          className,
+        )}
+      >
+        <code
+          className="hljs language-json"
+          dangerouslySetInnerHTML={{ __html: highlighted }}
+        />
       </pre>
     </div>
   );

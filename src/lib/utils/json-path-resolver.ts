@@ -17,7 +17,10 @@ export interface JsonPosition {
 /**
  * Convert a 0-based character offset to 1-based line/column.
  */
-function offsetToLineCol(text: string, offset: number): { line: number; col: number } {
+function offsetToLineCol(
+  text: string,
+  offset: number,
+): { line: number; col: number } {
   let line = 1;
   let col = 1;
   for (let i = 0; i < offset && i < text.length; i++) {
@@ -42,12 +45,18 @@ function parsePathSegments(path: string): (string | number)[] {
  * Resolve a JSON path to an editor position. Falls back to parent paths or
  * line 1 if the path is not found (e.g. for missing required fields).
  */
-export function resolveJsonPathToPosition(jsonText: string, path: string | undefined): JsonPosition {
+export function resolveJsonPathToPosition(
+  jsonText: string,
+  path: string | undefined,
+): JsonPosition {
   const fallback: JsonPosition = {
     startLineNumber: 1,
     startColumn: 1,
     endLineNumber: 1,
-    endColumn: jsonText.indexOf("\n") > 0 ? jsonText.indexOf("\n") + 1 : jsonText.length + 1,
+    endColumn:
+      jsonText.indexOf("\n") > 0
+        ? jsonText.indexOf("\n") + 1
+        : jsonText.length + 1,
   };
 
   if (!path) return fallback;

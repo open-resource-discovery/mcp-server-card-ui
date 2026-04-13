@@ -10,7 +10,11 @@ interface MarkdownTextProps {
   className?: string;
 }
 
-export function MarkdownText({ text, clampLines = 3, className }: MarkdownTextProps) {
+export function MarkdownText({
+  text,
+  clampLines = 3,
+  className,
+}: MarkdownTextProps) {
   const [expanded, setExpanded] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const [isClamped, setIsClamped] = useState(false);

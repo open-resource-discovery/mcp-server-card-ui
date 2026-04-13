@@ -15,7 +15,9 @@ export function FunctionsPanel() {
         <div className="flex items-center justify-between p-4 pb-2">
           <div className="flex items-center gap-2">
             <Wrench className="h-4 w-4 text-muted-foreground" />
-            <span className="text-sm font-medium">Function Calls ({calls.length})</span>
+            <span className="text-sm font-medium">
+              Function Calls ({calls.length})
+            </span>
           </div>
           {calls.length > 0 && (
             <Button variant="ghost" size="sm" onClick={clearCalls}>
@@ -36,7 +38,9 @@ export function FunctionsPanel() {
             <div className="flex flex-col items-center justify-center py-8 text-center text-muted-foreground">
               <Wrench className="h-8 w-8 mb-2 opacity-50" />
               <p className="text-sm font-medium">No function calls yet</p>
-              <p className="text-xs">Select a tool or prompt below and execute it</p>
+              <p className="text-xs">
+                Select a tool or prompt below and execute it
+              </p>
             </div>
           )}
         </ScrollArea>

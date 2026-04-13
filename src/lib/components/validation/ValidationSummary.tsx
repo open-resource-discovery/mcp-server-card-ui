@@ -1,4 +1,7 @@
-import type { ValidationSummary as ValidationSummaryType, ValidationStatus } from "@lib/types/validation";
+import type {
+  ValidationSummary as ValidationSummaryType,
+  ValidationStatus,
+} from "@lib/types/validation";
 import { Badge } from "@lib/components/ui/badge";
 import { CheckCircle, XCircle, AlertTriangle, Loader2 } from "lucide-react";
 import { cn } from "@lib/utils/cn";
@@ -11,7 +14,13 @@ interface ValidationSummaryProps {
   onFilterChange: (status: ValidationStatus | null) => void;
 }
 
-export function ValidationSummary({ summary, isValidating, lastValidatedAt, activeFilter, onFilterChange }: ValidationSummaryProps) {
+export function ValidationSummary({
+  summary,
+  isValidating,
+  lastValidatedAt,
+  activeFilter,
+  onFilterChange,
+}: ValidationSummaryProps) {
   const toggle = (status: ValidationStatus) => {
     onFilterChange(activeFilter === status ? null : status);
   };
@@ -70,7 +79,9 @@ export function ValidationSummary({ summary, isValidating, lastValidatedAt, acti
       </div>
 
       {lastValidatedAt && !isValidating && (
-        <span className="text-xs text-muted-foreground">Last validated: {new Date(lastValidatedAt).toLocaleTimeString()}</span>
+        <span className="text-xs text-muted-foreground">
+          Last validated: {new Date(lastValidatedAt).toLocaleTimeString()}
+        </span>
       )}
     </div>
   );
