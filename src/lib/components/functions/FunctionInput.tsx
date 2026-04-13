@@ -11,6 +11,7 @@ import {
   SelectItem,
 } from "@lib/components/ui/select";
 import { Button } from "@lib/components/ui/button";
+import { MonacoEditor } from "@lib/components/editor/MonacoEditor";
 import { Play, Loader2 } from "lucide-react";
 
 /**
@@ -195,13 +196,15 @@ export function FunctionInput() {
         </Select>
       </div>
 
-      <textarea
-        value={inputJson}
-        onChange={(e) => setInputJson(e.target.value)}
-        className="w-full h-32 font-mono text-[11px] bg-muted p-2 rounded border resize-y focus:outline-none focus:ring-2 focus:ring-primary"
-        spellCheck={false}
-        placeholder='{"key": "value"}'
-      />
+      <div className="h-32 rounded border overflow-hidden">
+        <MonacoEditor
+          value={inputJson}
+          onChange={setInputJson}
+          language="json"
+          lineNumbers="off"
+          minHeight="128px"
+        />
+      </div>
 
       {error && <p className="text-xs text-destructive">{error}</p>}
 
