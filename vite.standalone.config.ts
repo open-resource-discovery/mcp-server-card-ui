@@ -119,11 +119,14 @@ export default defineConfig({
           console.log("Copied oauth/callback/index.html to dist-standalone/");
         }
 
-        // Copy predefined-servers.json from public/
-        const publicFile = resolve(__dirname, "public/predefined-servers.json");
-        if (existsSync(publicFile)) {
-          copyFileSync(publicFile, resolve(outDir, "predefined-servers.json"));
-          console.log("Copied predefined-servers.json to dist-standalone/");
+        // Copy public files to dist-standalone/
+        const publicFiles = ["predefined-servers.json", "favicon.svg"];
+        for (const file of publicFiles) {
+          const src = resolve(__dirname, "public", file);
+          if (existsSync(src)) {
+            copyFileSync(src, resolve(outDir, file));
+            console.log(`Copied ${file} to dist-standalone/`);
+          }
         }
       },
     },

@@ -1,0 +1,7 @@
+node_modules
+dist
+dist-standalone
+.git
+.github
+*.md
+.claude
