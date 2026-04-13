@@ -1,12 +1,14 @@
 // @ts-check
 
-require("dotenv").config({ path: require("path").resolve(__dirname, "../.env") });
+require("dotenv").config({
+  path: require("path").resolve(__dirname, "../.env"),
+});
 
 const baseUrl = process.env.BASE_URL || "/";
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "MCP Editor",
+  title: "MCP Server Card UI",
   tagline:
     "Edit, validate, and test MCP Server Cards. Connect to servers, inspect capabilities, and execute tools and prompts in real-time.",
   favicon: "img/favicon.ico",
@@ -61,7 +63,7 @@ const config = {
         respectPrefersColorScheme: true,
       },
       navbar: {
-        title: "MCP Editor",
+        title: "MCP Server Card UI",
         items: [
           {
             type: "doc",

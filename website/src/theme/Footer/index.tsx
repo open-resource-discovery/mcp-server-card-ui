@@ -57,9 +57,10 @@ export default function Footer(): React.JSX.Element | null {
               <p>
                 <strong>Copyright © Linux Foundation Europe.</strong>
               </p>
-              MCP Editor is a project developed by SAP to help ensure API
-              guideline compliance. For applicable policies including privacy
-              policy, terms of use and trademark usage guidelines, please see{" "}
+              MCP Server Card UI is a project developed by SAP to help ensure
+              API guideline compliance. For applicable policies including
+              privacy policy, terms of use and trademark usage guidelines,
+              please see{" "}
               <a
                 href="https://www.sap.com/about/legal.html"
                 target="_blank"

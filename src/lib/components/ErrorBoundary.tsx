@@ -21,7 +21,7 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {
-    console.error("MCP Editor error:", error, info.componentStack);
+    console.error("MCP Server Card UI error:", error, info.componentStack);
   }
 
   render() {
@@ -33,12 +33,17 @@ export class ErrorBoundary extends Component<Props, State> {
       return (
         <div className="flex items-center justify-center h-full p-8">
           <div className="text-center space-y-2">
-            <p className="text-sm font-medium text-destructive">Something went wrong</p>
-            <p className="text-xs text-muted-foreground">{this.state.error?.message}</p>
+            <p className="text-sm font-medium text-destructive">
+              Something went wrong
+            </p>
+            <p className="text-xs text-muted-foreground">
+              {this.state.error?.message}
+            </p>
             <button
               type="button"
               className="text-xs text-primary underline"
-              onClick={() => this.setState({ hasError: false, error: null })}>
+              onClick={() => this.setState({ hasError: false, error: null })}
+            >
               Try again
             </button>
           </div>

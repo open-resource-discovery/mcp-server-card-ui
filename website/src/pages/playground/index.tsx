@@ -5,7 +5,9 @@ import Head from "@docusaurus/Head";
 
 function getDocusaurusTheme(): "dark" | "light" {
   if (typeof document === "undefined") return "light";
-  return document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+  return document.documentElement.getAttribute("data-theme") === "dark"
+    ? "dark"
+    : "light";
 }
 
 export default function Playground(): React.JSX.Element {
@@ -31,7 +33,9 @@ export default function Playground(): React.JSX.Element {
 
         if (!(window as any).MCPPlayground) {
           await new Promise<void>((resolve, reject) => {
-            const existingScript = document.querySelector(`script[src="${jsUrl}"]`);
+            const existingScript = document.querySelector(
+              `script[src="${jsUrl}"]`,
+            );
             if (existingScript) {
               const checkInterval = setInterval(() => {
                 if ((window as any).MCPPlayground) {
@@ -49,7 +53,8 @@ export default function Playground(): React.JSX.Element {
             const script = document.createElement("script");
             script.src = jsUrl;
             script.onload = () => setTimeout(resolve, 100);
-            script.onerror = () => reject(new Error("Failed to load MCPPlayground script"));
+            script.onerror = () =>
+              reject(new Error("Failed to load MCPPlayground script"));
             document.body.appendChild(script);
           });
         }
@@ -70,7 +75,9 @@ export default function Playground(): React.JSX.Element {
         if (mounted) setIsLoading(false);
       } catch (err) {
         if (mounted) {
-          setError(err instanceof Error ? err.message : "Failed to load playground");
+          setError(
+            err instanceof Error ? err.message : "Failed to load playground",
+          );
           setIsLoading(false);
         }
       }
@@ -104,7 +111,11 @@ export default function Playground(): React.JSX.Element {
   }, [cssUrl, jsUrl]);
 
   return (
-    <Layout title="Playground" description="Try the MCP Editor Playground" wrapperClassName="playground-page">
+    <Layout
+      title="Playground"
+      description="Try the MCP Server Card UI"
+      wrapperClassName="playground-page"
+    >
       <Head>
         <style>{`
           .playground-page ~ footer,
@@ -124,7 +135,8 @@ export default function Playground(): React.JSX.Element {
               justifyContent: "center",
               background: "var(--ifm-background-color)",
               zIndex: 1,
-            }}>
+            }}
+          >
             Loading playground...
           </div>
         )}
@@ -136,7 +148,8 @@ export default function Playground(): React.JSX.Element {
               justifyContent: "center",
               height: "calc(100vh - var(--ifm-navbar-height, 60px))",
               color: "var(--ifm-color-danger)",
-            }}>
+            }}
+          >
             Error: {error}
           </div>
         )}

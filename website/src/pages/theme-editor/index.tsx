@@ -33,7 +33,11 @@ const SECTIONS: Section[] = [
     title: "Brand",
     vars: [
       { name: "--primary", label: "Primary", type: "color" },
-      { name: "--primary-foreground", label: "Primary Foreground", type: "color" },
+      {
+        name: "--primary-foreground",
+        label: "Primary Foreground",
+        type: "color",
+      },
     ],
   },
   {
@@ -42,18 +46,30 @@ const SECTIONS: Section[] = [
       { name: "--card", label: "Card", type: "color" },
       { name: "--card-foreground", label: "Card Foreground", type: "color" },
       { name: "--popover", label: "Popover", type: "color" },
-      { name: "--popover-foreground", label: "Popover Foreground", type: "color" },
+      {
+        name: "--popover-foreground",
+        label: "Popover Foreground",
+        type: "color",
+      },
     ],
   },
   {
     title: "UI Colors",
     vars: [
       { name: "--secondary", label: "Secondary", type: "color" },
-      { name: "--secondary-foreground", label: "Secondary Foreground", type: "color" },
+      {
+        name: "--secondary-foreground",
+        label: "Secondary Foreground",
+        type: "color",
+      },
       { name: "--muted", label: "Muted", type: "color" },
       { name: "--muted-foreground", label: "Muted Foreground", type: "color" },
       { name: "--accent", label: "Accent", type: "color" },
-      { name: "--accent-foreground", label: "Accent Foreground", type: "color" },
+      {
+        name: "--accent-foreground",
+        label: "Accent Foreground",
+        type: "color",
+      },
     ],
   },
   {
@@ -70,7 +86,16 @@ const SECTIONS: Section[] = [
   },
   {
     title: "Border Radius",
-    vars: [{ name: "--radius", label: "Radius", type: "range", min: 0, max: 20, step: 1 }],
+    vars: [
+      {
+        name: "--radius",
+        label: "Radius",
+        type: "range",
+        min: 0,
+        max: 20,
+        step: 1,
+      },
+    ],
   },
   {
     title: "Sidebar",
@@ -78,9 +103,17 @@ const SECTIONS: Section[] = [
       { name: "--sidebar", label: "Background", type: "color" },
       { name: "--sidebar-foreground", label: "Foreground", type: "color" },
       { name: "--sidebar-primary", label: "Primary", type: "color" },
-      { name: "--sidebar-primary-foreground", label: "Primary FG", type: "color" },
+      {
+        name: "--sidebar-primary-foreground",
+        label: "Primary FG",
+        type: "color",
+      },
       { name: "--sidebar-accent", label: "Accent", type: "color" },
-      { name: "--sidebar-accent-foreground", label: "Accent FG", type: "color" },
+      {
+        name: "--sidebar-accent-foreground",
+        label: "Accent FG",
+        type: "color",
+      },
       { name: "--sidebar-border", label: "Border", type: "color" },
       { name: "--sidebar-ring", label: "Ring", type: "color" },
     ],
@@ -358,17 +391,25 @@ const PRESETS: Preset[] = [
 // Sample server card
 const SAMPLE_SERVER_CARD = JSON.stringify(
   {
-    $schema: "https://pages.github.tools.sap/CPA/mcp-protocol/spec-v1/mcp-server-card-spec.schema.json",
+    $schema:
+      "https://pages.github.tools.sap/CPA/mcp-protocol/spec-v1/mcp-server-card-spec.schema.json",
     name: "sap.com/weather",
     title: "Weather Service",
     version: "1.2.0",
-    description: "MCP server providing weather data and forecasts for cities worldwide.",
+    description:
+      "MCP server providing weather data and forecasts for cities worldwide.",
     supportedProtocolVersions: ["2025-11-25"],
     websiteUrl: "https://weather.example.com",
-    remotes: [{ type: "streamable-http", url: "https://api.weather.example.com/mcp" }],
-    capabilities: { tools: { listChanged: false }, resources: { subscribe: false, listChanged: false } },
+    remotes: [
+      { type: "streamable-http", url: "https://api.weather.example.com/mcp" },
+    ],
+    capabilities: {
+      tools: { listChanged: false },
+      resources: { subscribe: false, listChanged: false },
+    },
     authentication: { required: true, schemas: ["bearer", "oauth2"] },
-    instructions: "Use get_weather for current conditions and get_forecast for multi-day forecasts.",
+    instructions:
+      "Use get_weather for current conditions and get_forecast for multi-day forecasts.",
     tools: [
       {
         name: "get_weather",
@@ -390,7 +431,11 @@ const SAMPLE_SERVER_CARD = JSON.stringify(
           type: "object",
           properties: {
             city: { type: "string", description: "City name" },
-            days: { type: "number", description: "Number of days (1-7)", default: 3 },
+            days: {
+              type: "number",
+              description: "Number of days (1-7)",
+              default: 3,
+            },
           },
           required: ["city"],
         },
@@ -412,7 +457,11 @@ const SAMPLE_SERVER_CARD = JSON.stringify(
         description: "Generates a natural language weather report for a city.",
         arguments: [
           { name: "city", description: "City name", required: true },
-          { name: "style", description: "Report style (brief or detailed)", required: false },
+          {
+            name: "style",
+            description: "Report style (brief or detailed)",
+            required: false,
+          },
         ],
       },
     ],
@@ -443,7 +492,10 @@ function oklchToHex(value: string): string {
     } catch {}
   }
   // Already hex
-  if (value.startsWith("#")) return value.length === 4 ? `#${value[1]}${value[1]}${value[2]}${value[2]}${value[3]}${value[3]}` : value;
+  if (value.startsWith("#"))
+    return value.length === 4
+      ? `#${value[1]}${value[1]}${value[2]}${value[2]}${value[3]}${value[3]}`
+      : value;
   return value;
 }
 
@@ -555,9 +607,15 @@ export default function ThemeEditorPage(): React.JSX.Element {
             const existing = document.querySelector(`script[src="${jsUrl}"]`);
             if (existing) {
               const iv = setInterval(() => {
-                if ((window as any).MCPPlayground) { clearInterval(iv); resolve(); }
+                if ((window as any).MCPPlayground) {
+                  clearInterval(iv);
+                  resolve();
+                }
               }, 50);
-              setTimeout(() => { clearInterval(iv); reject(new Error("Timeout")); }, 10000);
+              setTimeout(() => {
+                clearInterval(iv);
+                reject(new Error("Timeout"));
+              }, 10000);
               return;
             }
             const s = document.createElement("script");
@@ -583,7 +641,9 @@ export default function ThemeEditorPage(): React.JSX.Element {
         // Read initial computed values
         if (containerRef.current) {
           const initial: Record<string, string> = {};
-          const mcpRoot = containerRef.current.querySelector(".mcp-root") as HTMLElement | null;
+          const mcpRoot = containerRef.current.querySelector(
+            ".mcp-root",
+          ) as HTMLElement | null;
           const target = mcpRoot ?? containerRef.current;
           for (const name of ALL_VARS) {
             if (name === "--radius") {
@@ -609,7 +669,9 @@ export default function ThemeEditorPage(): React.JSX.Element {
     return () => {
       mounted = false;
       if (instanceRef.current) {
-        try { instanceRef.current.destroy(); } catch {}
+        try {
+          instanceRef.current.destroy();
+        } catch {}
         instanceRef.current = null;
       }
     };
@@ -618,7 +680,9 @@ export default function ThemeEditorPage(): React.JSX.Element {
   // Apply overrides to the mcp-root element whenever they change
   useEffect(() => {
     if (!containerRef.current) return;
-    const mcpRoot = containerRef.current.querySelector(".mcp-root") as HTMLElement | null;
+    const mcpRoot = containerRef.current.querySelector(
+      ".mcp-root",
+    ) as HTMLElement | null;
     const target = mcpRoot ?? containerRef.current;
 
     for (const [name, value] of Object.entries(overrides)) {
@@ -645,7 +709,9 @@ export default function ThemeEditorPage(): React.JSX.Element {
     const wantDark = preset.mode === "dark";
     setIsDark(wantDark);
     if (instanceRef.current) {
-      try { instanceRef.current.setTheme(wantDark ? "dark" : "light"); } catch {}
+      try {
+        instanceRef.current.setTheme(wantDark ? "dark" : "light");
+      } catch {}
     }
   }, []);
 
@@ -653,12 +719,16 @@ export default function ThemeEditorPage(): React.JSX.Element {
     const next = !isDark;
     setIsDark(next);
     if (instanceRef.current) {
-      try { instanceRef.current.setTheme(next ? "dark" : "light"); } catch {}
+      try {
+        instanceRef.current.setTheme(next ? "dark" : "light");
+      } catch {}
     }
     // Re-read computed vars after theme toggle
     setTimeout(() => {
       if (!containerRef.current) return;
-      const mcpRoot = containerRef.current.querySelector(".mcp-root") as HTMLElement | null;
+      const mcpRoot = containerRef.current.querySelector(
+        ".mcp-root",
+      ) as HTMLElement | null;
       const target = mcpRoot ?? containerRef.current;
       // First clear inline overrides so we can read the new theme's values
       for (const name of ALL_VARS) {
@@ -679,7 +749,9 @@ export default function ThemeEditorPage(): React.JSX.Element {
 
   const resetAll = useCallback(() => {
     if (!containerRef.current) return;
-    const mcpRoot = containerRef.current.querySelector(".mcp-root") as HTMLElement | null;
+    const mcpRoot = containerRef.current.querySelector(
+      ".mcp-root",
+    ) as HTMLElement | null;
     const target = mcpRoot ?? containerRef.current;
     for (const name of ALL_VARS) {
       target.style.removeProperty(name);
@@ -716,7 +788,10 @@ export default function ThemeEditorPage(): React.JSX.Element {
   }, [exportCss]);
 
   return (
-    <Layout title="Theme Editor" description="Live theme customization for MCP Editor components">
+    <Layout
+      title="Theme Editor"
+      description="Live theme customization for MCP Server Card UI components"
+    >
       <Head>
         <style>{`
           .playground-page ~ footer,
@@ -728,7 +803,9 @@ export default function ThemeEditorPage(): React.JSX.Element {
         <div className="te-sidebar">
           <div className="te-sidebar-header">
             <h2 className="te-title">Theme Editor</h2>
-            <p className="te-subtitle">Customize CSS variables and see changes live</p>
+            <p className="te-subtitle">
+              Customize CSS variables and see changes live
+            </p>
           </div>
 
           {/* Actions */}
@@ -749,13 +826,20 @@ export default function ThemeEditorPage(): React.JSX.Element {
             </select>
 
             <div className="te-btn-row">
-              <button onClick={toggleTheme} className="te-btn" title="Toggle light/dark">
+              <button
+                onClick={toggleTheme}
+                className="te-btn"
+                title="Toggle light/dark"
+              >
                 {isDark ? "Light" : "Dark"}
               </button>
               <button onClick={resetAll} className="te-btn">
                 Reset
               </button>
-              <button onClick={() => setShowExport(!showExport)} className="te-btn te-btn-primary">
+              <button
+                onClick={() => setShowExport(!showExport)}
+                className="te-btn te-btn-primary"
+              >
                 Export CSS
               </button>
             </div>
@@ -770,7 +854,12 @@ export default function ThemeEditorPage(): React.JSX.Element {
                   {copied ? "Copied!" : "Copy"}
                 </button>
               </div>
-              <textarea className="te-export-code" readOnly value={exportCss()} rows={12} />
+              <textarea
+                className="te-export-code"
+                readOnly
+                value={exportCss()}
+                rows={12}
+              />
             </div>
           )}
 
@@ -782,9 +871,19 @@ export default function ThemeEditorPage(): React.JSX.Element {
                 <div className="te-section-body">
                   {section.vars.map((def) =>
                     def.type === "color" ? (
-                      <ColorControl key={def.name} def={def} value={overrides[def.name] || "#000000"} onChange={handleChange} />
+                      <ColorControl
+                        key={def.name}
+                        def={def}
+                        value={overrides[def.name] || "#000000"}
+                        onChange={handleChange}
+                      />
                     ) : (
-                      <RangeControl key={def.name} def={def} value={overrides[def.name] || "10"} onChange={handleChange} />
+                      <RangeControl
+                        key={def.name}
+                        def={def}
+                        value={overrides[def.name] || "10"}
+                        onChange={handleChange}
+                      />
                     ),
                   )}
                 </div>
@@ -795,16 +894,9 @@ export default function ThemeEditorPage(): React.JSX.Element {
 
         {/* Playground preview */}
         <div className="te-preview">
-          {isLoading && (
-            <div className="te-loading">Loading playground...</div>
-          )}
-          {error && (
-            <div className="te-error">Error: {error}</div>
-          )}
-          <div
-            ref={containerRef}
-            className="te-container"
-          />
+          {isLoading && <div className="te-loading">Loading playground...</div>}
+          {error && <div className="te-error">Error: {error}</div>}
+          <div ref={containerRef} className="te-container" />
         </div>
       </div>
     </Layout>

@@ -6,10 +6,10 @@ import Layout from "@theme/Layout";
 function HeroSection(): React.JSX.Element {
   return (
     <section className="hero-section">
-      <h1 className="hero-title">MCP Editor</h1>
+      <h1 className="hero-title">MCP Server Card UI</h1>
       <p className="hero-description">
-        Edit, validate, and test MCP Server Cards. Connect to servers, inspect capabilities, and
-        execute tools and prompts in real-time.
+        Edit, validate, and test MCP Server Cards. Connect to servers, inspect
+        capabilities, and execute tools and prompts in real-time.
       </p>
       <Link className="hero-cta" to="/playground">
         Open Playground

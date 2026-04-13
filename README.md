@@ -1,4 +1,4 @@
-# MCP Editor
+# MCP Server Card UI
 
 UI components for editing, viewing, and testing servers that implement the MCP Protocol.
 
