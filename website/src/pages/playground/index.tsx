@@ -16,8 +16,8 @@ export default function Playground(): React.JSX.Element {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const cssUrl = useBaseUrl("/standalone/mcp-playground.css");
-  const jsUrl = useBaseUrl("/standalone/mcp-playground.js");
+  const cssUrl = useBaseUrl("/standalone/mcp-server-card-ui.css");
+  const jsUrl = useBaseUrl("/standalone/mcp-server-card-ui.js");
 
   useEffect(() => {
     let mounted = true;

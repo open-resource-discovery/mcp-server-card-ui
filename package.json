@@ -8,7 +8,7 @@
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "unpkg": "./dist-standalone/mcp-playground.js",
+  "unpkg": "./dist-standalone/mcp-server-card-ui.js",
   "exports": {
     ".": {
       "import": "./dist/index.js",
@@ -31,8 +31,8 @@
       "types": "./dist/card-view.d.ts"
     },
     "./styles": "./dist/index.css",
-    "./standalone": "./dist-standalone/mcp-playground.js",
-    "./standalone/css": "./dist-standalone/mcp-playground.css"
+    "./standalone": "./dist-standalone/mcp-server-card-ui.js",
+    "./standalone/css": "./dist-standalone/mcp-server-card-ui.css"
   },
   "files": [
     "dist/index.js",
@@ -47,8 +47,8 @@
     "dist/card-view.js",
     "dist/card-view.d.ts",
     "dist/chunks",
-    "dist-standalone/mcp-playground.js",
-    "dist-standalone/mcp-playground.css",
+    "dist-standalone/mcp-server-card-ui.js",
+    "dist-standalone/mcp-server-card-ui.css",
     "dist-standalone/mcp-initializer.js",
     "dist-standalone/index.html",
     "dist-standalone/standalone.html",

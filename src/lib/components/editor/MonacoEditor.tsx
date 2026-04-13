@@ -151,7 +151,7 @@ export function MonacoEditor({
     if (!model) return;
 
     if (!markers || markers.length === 0) {
-      monaco.editor.setModelMarkers(model, "a2a-validation", []);
+      monaco.editor.setModelMarkers(model, "mcp-validation", []);
       return;
     }
 
@@ -171,15 +171,15 @@ export function MonacoEditor({
         startColumn: pos.startColumn,
         endLineNumber: pos.endLineNumber,
         endColumn: pos.endColumn,
-        source: "A2A Validation",
+        source: "MCP Validation",
       };
     });
 
-    monaco.editor.setModelMarkers(model, "a2a-validation", monacoMarkers);
+    monaco.editor.setModelMarkers(model, "mcp-validation", monacoMarkers);
 
     return () => {
       if (model && !model.isDisposed()) {
-        monaco.editor.setModelMarkers(model, "a2a-validation", []);
+        monaco.editor.setModelMarkers(model, "mcp-validation", []);
       }
     };
   }, [m, markers, value]);

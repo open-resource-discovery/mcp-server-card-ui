@@ -290,7 +290,7 @@ export const useMCPConnectionStore = create<MCPConnectionState>((set, get) => ({
         protocolVersion: state.protocolVersion,
         capabilities: {},
         clientInfo: {
-          name: "mcp-playground",
+          name: "mcp-server-card-ui",
           version: "0.1.0",
         },
       });
@@ -381,7 +381,7 @@ export const useMCPConnectionStore = create<MCPConnectionState>((set, get) => ({
             const retryResult = await sendRequest(retryConfig, "initialize", {
               protocolVersion: state.protocolVersion,
               capabilities: {},
-              clientInfo: { name: "mcp-playground", version: "0.1.0" },
+              clientInfo: { name: "mcp-server-card-ui", version: "0.1.0" },
             });
 
             if (isErrorResponse(retryResult.response)) continue;

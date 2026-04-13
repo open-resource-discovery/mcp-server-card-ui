@@ -46,9 +46,9 @@ function base64UrlEncode(bytes: Uint8Array): string {
  * Storage keys for OAuth flow state
  */
 export const OAUTH_STORAGE_KEYS = {
-  CODE_VERIFIER: "a2a_oauth_code_verifier",
-  STATE: "a2a_oauth_state",
-  REDIRECT_URI: "a2a_oauth_redirect_uri",
+  CODE_VERIFIER: "mcp_oauth_code_verifier",
+  STATE: "mcp_oauth_state",
+  REDIRECT_URI: "mcp_oauth_redirect_uri",
 } as const;
 
 /**
@@ -115,7 +115,7 @@ export function getDefaultOAuthRedirectUri(): string {
     const scripts = document.querySelectorAll("script[src]");
     for (const script of scripts) {
       const src = (script as HTMLScriptElement).src;
-      if (src.includes("a2a-playground")) {
+      if (src.includes("mcp-server-card-ui")) {
         const scriptUrl = new URL(src);
         // Only use same-origin scripts (ignore CDN-loaded bundles)
         if (scriptUrl.origin === origin) {

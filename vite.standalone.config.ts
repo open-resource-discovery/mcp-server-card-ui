@@ -87,11 +87,11 @@ export default defineConfig({
 
         // Strip @layer wrappers from CSS so the standalone bundle's rules
         // are un-layered and compete on specificity with host page styles
-        const cssPath = resolve(outDir, "mcp-playground.css");
+        const cssPath = resolve(outDir, "mcp-server-card-ui.css");
         if (existsSync(cssPath)) {
           const css = readFileSync(cssPath, "utf-8");
           writeFileSync(cssPath, stripCssLayers(css));
-          console.log("Stripped @layer wrappers from mcp-playground.css");
+          console.log("Stripped @layer wrappers from mcp-server-card-ui.css");
         }
 
         // Copy static files from standalone/ to dist-standalone/
@@ -150,7 +150,7 @@ export default defineConfig({
       entry: resolve(__dirname, "src/lib/standalone.ts"),
       name: "MCPPlayground",
       formats: ["iife"],
-      fileName: () => "mcp-playground.js",
+      fileName: () => "mcp-server-card-ui.js",
     },
     rollupOptions: {
       // Bundle everything including React (no external deps)
@@ -159,7 +159,7 @@ export default defineConfig({
         // Put CSS in same directory
         assetFileNames: (assetInfo) => {
           if (assetInfo.name?.endsWith(".css")) {
-            return "mcp-playground.css";
+            return "mcp-server-card-ui.css";
           }
           return "[name][extname]";
         },

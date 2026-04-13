@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { getStoredJson, setStoredJson } from "@lib/utils/local-storage";
 
-const STORAGE_KEY = "mcp-editor-settings";
+const STORAGE_KEY = "mcp-server-card-ui-editor-settings";
 
 interface EditorSettingsState {
   autoValidate: boolean;

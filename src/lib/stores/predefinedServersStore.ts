@@ -18,7 +18,7 @@ interface PredefinedServersState {
 
 function getBaseUrl(): string {
   if (typeof document !== "undefined") {
-    const scripts = document.querySelectorAll('script[src*="mcp-playground"]');
+    const scripts = document.querySelectorAll('script[src*="mcp-server-card-ui"]');
     if (scripts.length > 0) {
       const src = (scripts[scripts.length - 1] as HTMLScriptElement).src;
       return src.substring(0, src.lastIndexOf("/") + 1);

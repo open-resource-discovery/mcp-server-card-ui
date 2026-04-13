@@ -586,8 +586,8 @@ export default function ThemeEditorPage(): React.JSX.Element {
   const [showExport, setShowExport] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  const cssUrl = useBaseUrl("/standalone/mcp-playground.css");
-  const jsUrl = useBaseUrl("/standalone/mcp-playground.js");
+  const cssUrl = useBaseUrl("/standalone/mcp-server-card-ui.css");
+  const jsUrl = useBaseUrl("/standalone/mcp-server-card-ui.js");
 
   // Load standalone bundle & init playground
   useEffect(() => {

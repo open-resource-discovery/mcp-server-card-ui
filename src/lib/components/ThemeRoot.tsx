@@ -11,7 +11,7 @@ interface ThemeRootProps {
 /**
  * Context that provides the ThemeRoot container element for Radix
  * portals (Sheet, Select, etc.) so portal content stays inside the
- * `.a2a-root` scope and inherits CSS variables + dark mode.
+ * `.mcp-root` scope and inherits CSS variables + dark mode.
  */
 const PortalContainerContext = createContext<HTMLElement | null>(null);
 
@@ -27,7 +27,7 @@ export function usePortalContainer(): HTMLElement | undefined {
  * AgentEditor, AgentViewer, AgentCardView, AgentPlaygroundLite) must
  * render through this wrapper so that:
  *
- * 1. `.a2a-root` provides the CSS custom-property scope (light and dark).
+ * 1. `.mcp-root` provides the CSS custom-property scope (light and dark).
  * 2. `.dark` is toggled **only** on this container—never on
  *    `document.documentElement`—so the library can be safely embedded
  *    inside host pages (Docusaurus, Storybook, etc.) without leaking

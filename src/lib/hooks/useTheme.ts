@@ -66,7 +66,7 @@ if (typeof window !== "undefined") {
  *
  * NOTE: This hook does NOT apply a `.dark` class to the DOM.
  * Each root component (AgentPlayground, AgentEditor, etc.) is
- * wrapped in a `<ThemeRoot>` that applies `.a2a-root` and
+ * wrapped in a `<ThemeRoot>` that applies `.mcp-root` and
  * conditionally `.dark` to scope styles to the library container.
  */
 export function useTheme() {

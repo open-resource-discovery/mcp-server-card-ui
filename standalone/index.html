@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <title>MCP Server Card UI</title>
+    <meta
+      name="description"
+      content="Analyze, validate, and interact with MCP (Model Context Protocol) Server Cards. Connect to MCP servers, inspect their capabilities, and test tools and prompts in real-time."
+    />
+    <link rel="stylesheet" href="./mcp-server-card-ui.css" />
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        font-family:
+          system-ui,
+          -apple-system,
+          sans-serif;
+      }
+      #mcp-server-card-ui {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="mcp-server-card-ui"></div>
+    <script src="./mcp-server-card-ui.js"></script>
+    <script>
+      var playground = MCPPlayground.init({
+        el: "#mcp-server-card-ui",
+        showFunctions: true,
+        showRawHttp: true,
+        showValidation: true,
+        showSettings: true,
+        showEditor: true,
+        readOnly: false,
+        defaultTab: "overview",
+        theme: "system",
+        onReady: function (instance) {
+          console.log("MCP Server Card UI ready!", instance);
+        },
+        onConnect: function (url) {
+          console.log("Connected to:", url);
+        },
+        onError: function (error) {
+          console.error("MCP Server Card UI error:", error);
+        },
+      });
+    </script>
+  </body>
+</html>

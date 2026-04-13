@@ -42,8 +42,8 @@ function App() {
 ## Standalone (CDN)
 
 ```html
-<link rel="stylesheet" href="mcp-playground.css" />
-<script src="mcp-playground.js"></script>
+<link rel="stylesheet" href="mcp-server-card-ui.css" />
+<script src="mcp-server-card-ui.js"></script>
 <script>
   MCPPlayground.init({
     el: "#app",
