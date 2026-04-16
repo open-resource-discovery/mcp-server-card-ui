@@ -1,59 +1,59 @@
 name: CI
 
 on:
-    push:
-        branches: [main]
-    pull_request:
-        branches: [main]
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
-    linting:
-        name: Static linting
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v6
+  linting:
+    name: Static linting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
 
-            - uses: actions/setup-node@v6
-              with:
-                  node-version: "24.11.1"
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24.11.1"
 
-            - name: Install NPM dependencies
-              run: npm ci
+      - name: Install NPM dependencies
+        run: npm ci
 
-            - name: ESLint
-              run: npm run eslint:ci
+      - name: ESLint
+        run: npm run eslint:ci
 
-            - name: Prettier
-              run: npm run prettier:ci
+      - name: Prettier
+        run: npm run prettier:ci
 
-    unit-tests:
-        name: Unit Tests
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v6
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
 
-            - uses: actions/setup-node@v6
-              with:
-                  node-version: "24.11.1"
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24.11.1"
 
-            - name: Install NPM dependencies
-              run: npm ci
+      - name: Install NPM dependencies
+        run: npm ci
 
-            - name: Run Unit Tests
-              run: npm test
+      - name: Run Unit Tests
+        run: npm test
 
-    build:
-        name: Build
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v6
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
 
-            - uses: actions/setup-node@v6
-              with:
-                  node-version: "24.11.1"
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24.11.1"
 
-            - name: Install NPM dependencies
-              run: npm ci
+      - name: Install NPM dependencies
+        run: npm ci
 
-            - name: Build
-              run: npm run build
+      - name: Build
+        run: npm run build

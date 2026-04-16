@@ -17,22 +17,42 @@
     {
       "groupName": "Vite Build Tools",
       "matchManagers": ["npm"],
-      "matchPackageNames": ["vite", "@vitejs/plugin-react", "vite-plugin-dts", "@tailwindcss/vite"]
+      "matchPackageNames": [
+        "vite",
+        "@vitejs/plugin-react",
+        "vite-plugin-dts",
+        "@tailwindcss/vite"
+      ]
     },
     {
       "groupName": "Tailwind CSS",
       "matchManagers": ["npm"],
-      "matchPackageNames": ["tailwindcss", "@tailwindcss/typography", "tailwind-merge"]
+      "matchPackageNames": [
+        "tailwindcss",
+        "@tailwindcss/typography",
+        "tailwind-merge"
+      ]
     },
     {
       "groupName": "Linting Tools",
       "matchManagers": ["npm"],
-      "matchPackageNames": ["eslint", "@eslint/js", "/^eslint-plugin/", "typescript-eslint", "prettier"]
+      "matchPackageNames": [
+        "eslint",
+        "@eslint/js",
+        "/^eslint-plugin/",
+        "typescript-eslint",
+        "prettier"
+      ]
     },
     {
       "groupName": "TypeScript",
       "matchManagers": ["npm"],
-      "matchPackageNames": ["typescript", "@types/node", "@types/react", "@types/react-dom"]
+      "matchPackageNames": [
+        "typescript",
+        "@types/node",
+        "@types/react",
+        "@types/react-dom"
+      ]
     },
     {
       "groupName": "Testing",
@@ -42,7 +62,11 @@
     {
       "groupName": "Docusaurus",
       "matchManagers": ["npm"],
-      "matchPackageNames": ["/^@docusaurus\\//", "@mdx-js/react", "docusaurus-plugin-sass"]
+      "matchPackageNames": [
+        "/^@docusaurus\\//",
+        "@mdx-js/react",
+        "docusaurus-plugin-sass"
+      ]
     },
     {
       "groupName": "Monaco Editor",
@@ -52,7 +76,12 @@
     {
       "groupName": "UI Utilities",
       "matchManagers": ["npm"],
-      "matchPackageNames": ["class-variance-authority", "clsx", "lucide-react", "sonner"]
+      "matchPackageNames": [
+        "class-variance-authority",
+        "clsx",
+        "lucide-react",
+        "sonner"
+      ]
     },
     {
       "groupName": "React",
