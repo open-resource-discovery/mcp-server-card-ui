@@ -35,6 +35,20 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
+      name: "vite",
+      use: {
+        ...devices["Desktop Chrome"],
+        baseURL: "http://localhost:5173",
+      },
+    },
+    {
+      name: "docusaurus",
+      use: {
+        ...devices["Desktop Chrome"],
+        baseURL: "http://localhost:3000",
+      },
+    },
+    /*{
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
@@ -47,7 +61,7 @@ export default defineConfig({
     {
       name: 'webkit',
       use: { ...devices['Desktop Safari'] },
-    },
+    },*/
 
     /* Test against mobile viewports. */
     // {
@@ -76,4 +90,18 @@ export default defineConfig({
   //   url: 'http://localhost:3000',
   //   reuseExistingServer: !process.env.CI,
   // },
+   webServer: [
+    {
+      command: "npm run dev",
+      port: 5173,
+      reuseExistingServer: !process.env.CI,
+      timeout: 30000,
+    },
+    {
+      command: "npm run prepare:website-assets && cd website && npx docusaurus start --port 3000",
+      port: 3000,
+      reuseExistingServer: !process.env.CI,
+      timeout: 120000,
+    },
+  ],
 });
