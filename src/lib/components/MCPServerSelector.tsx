@@ -104,6 +104,7 @@ export function MCPServerSelector() {
               role="listitem"
               tabIndex={0}
               aria-selected={selectedId === server.id}
+              data-testid={`server-selector-item-${server.id}`}
               className={cn(
                 "group cursor-pointer rounded-md border px-2.5 py-2 transition-colors hover:bg-accent/50",
                 selectedId === server.id && "border-primary bg-accent/30",

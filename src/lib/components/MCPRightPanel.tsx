@@ -68,7 +68,11 @@ export function MCPRightPanel({
             </TabsTrigger>
           )}
           {showRawHttp && (
-            <TabsTrigger value="rawhttp" className="flex items-center gap-1.5" data-testid="tab-rawhttp">
+            <TabsTrigger
+              value="rawhttp"
+              className="flex items-center gap-1.5"
+              data-testid="tab-rawhttp"
+            >
               Raw HTTP
               {logCount > 0 && (
                 <Badge variant="outline" className="h-5 min-w-5 px-1 text-xs">

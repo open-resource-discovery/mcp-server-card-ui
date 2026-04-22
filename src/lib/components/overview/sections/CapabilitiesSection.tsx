@@ -48,7 +48,7 @@ export function CapabilitiesSection({
   if (entries.length === 0) return null;
 
   return (
-    <Card>
+    <Card data-testid="capabilities-section">
       <CardHeader className="p-4 pb-2">
         <CardTitle className="flex items-center gap-2 text-sm">
           <Puzzle className="h-4 w-4" />
@@ -60,7 +60,11 @@ export function CapabilitiesSection({
           {entries.map(([key, value]) => {
             const subProps = renderSubProps(value);
             return (
-              <div key={key} className="flex flex-col items-start">
+              <div
+                key={key}
+                data-testid={`capability-${key}`}
+                className="flex flex-col items-start"
+              >
                 <Badge variant="secondary">
                   {CAPABILITY_LABELS[key] ?? key}
                 </Badge>

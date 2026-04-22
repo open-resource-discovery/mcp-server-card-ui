@@ -18,8 +18,15 @@ export function PromptCard({ prompt }: PromptCardProps) {
   const displayName = prompt.title ?? prompt.name;
 
   return (
-    <AccordionItem value={prompt.name} className="border-b last:border-b-0">
-      <AccordionTrigger className="hover:no-underline hover:bg-muted/50 rounded-md px-2 -mx-2 transition-colors py-3">
+    <AccordionItem
+      value={prompt.name}
+      data-testid={`prompt-item-${prompt.name}`}
+      className="border-b last:border-b-0"
+    >
+      <AccordionTrigger
+        data-testid={`prompt-trigger-${prompt.name}`}
+        className="hover:no-underline hover:bg-muted/50 rounded-md px-2 -mx-2 transition-colors py-3"
+      >
         <div className="flex flex-1 flex-col gap-0.5 text-left min-w-0">
           {prompt.arguments && prompt.arguments.length > 0 && (
             <div className="flex gap-1.5">
@@ -89,6 +96,7 @@ export function PromptCard({ prompt }: PromptCardProps) {
             <Button
               variant="outline"
               size="sm"
+              data-testid={`prompt-try-it-${prompt.name}`}
               onClick={() => useUIStore.getState().switchToPrompt(prompt.name)}
             >
               <Play className="h-3 w-3" />

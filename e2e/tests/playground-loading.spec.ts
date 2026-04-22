@@ -13,7 +13,9 @@ test.describe("Playground Loading", () => {
     await expect(playground.tabOverview).toBeVisible();
   });
 
-  test("should show Overview, Tools, Raw HTTP and Validation tabs", async ({ playground }) => {
+  test("should show Overview, Tools, Raw HTTP and Validation tabs", async ({
+    playground,
+  }) => {
     await playground.goto();
     await expect(playground.tabOverview).toBeVisible();
     await expect(playground.tabFunctions).toBeVisible();
@@ -23,6 +25,9 @@ test.describe("Playground Loading", () => {
 
   test("should default to Overview tab", async ({ playground }) => {
     await playground.goto();
-    await expect(playground.tabOverview).toHaveAttribute("data-state", "active");
+    await expect(playground.tabOverview).toHaveAttribute(
+      "data-state",
+      "active",
+    );
   });
 });

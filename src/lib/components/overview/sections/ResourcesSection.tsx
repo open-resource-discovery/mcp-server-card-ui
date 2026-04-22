@@ -15,7 +15,7 @@ interface ResourcesSectionProps {
 
 export function ResourcesSection({ resources }: ResourcesSectionProps) {
   return (
-    <Card>
+    <Card data-testid="resources-section">
       <CardHeader className="p-4 pb-2">
         <CardTitle className="flex items-center gap-2 text-sm">
           <FileText className="h-4 w-4" />

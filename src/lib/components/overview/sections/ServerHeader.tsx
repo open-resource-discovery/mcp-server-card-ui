@@ -26,14 +26,22 @@ export function ServerHeader({ card }: ServerHeaderProps) {
         )}
 
         <div className="flex flex-1 flex-col gap-0.5 min-w-0">
-          <p className="font-mono text-[11px] text-muted-foreground leading-none">
+          <p
+            className="font-mono text-[11px] text-muted-foreground leading-none"
+            data-testid="server-name"
+          >
             {card.name}
           </p>
           <div className="flex items-center gap-2">
             <h2 className="text-base font-semibold leading-tight truncate">
               {card.title ?? card.name}
             </h2>
-            <Badge variant="outline" size="sm" className="shrink-0">
+            <Badge
+              variant="outline"
+              size="sm"
+              className="shrink-0"
+              data-testid="server-version"
+            >
               {card.version}
             </Badge>
           </div>

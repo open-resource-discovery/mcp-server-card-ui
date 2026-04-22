@@ -48,7 +48,7 @@ function CopyableUrl({ url }: { url: string }) {
 
 export function RemotesSection({ remotes }: RemotesSectionProps) {
   return (
-    <Card>
+    <Card data-testid="remotes-section">
       <CardHeader className="p-4 pb-2">
         <CardTitle className="flex items-center gap-2 text-sm">
           <Globe className="h-4 w-4" />
@@ -60,6 +60,7 @@ export function RemotesSection({ remotes }: RemotesSectionProps) {
           {remotes.map((remote, idx) => (
             <div
               key={idx}
+              data-testid={`remote-item-${idx}`}
               className="flex flex-col gap-1.5 py-3 border-b last:border-b-0"
             >
               <Badge variant="secondary" className="self-start">

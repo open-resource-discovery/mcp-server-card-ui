@@ -16,7 +16,7 @@ interface ToolsSectionProps {
 
 export function ToolsSection({ tools, readOnly }: ToolsSectionProps) {
   return (
-    <Card>
+    <Card data-testid="tools-section">
       <CardHeader className="p-4 pb-2">
         <CardTitle className="flex items-center gap-2 text-sm">
           <Wrench className="h-4 w-4" />
