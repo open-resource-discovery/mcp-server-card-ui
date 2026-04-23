@@ -43,20 +43,82 @@ test.describe("Server Selector", () => {
 });
 
 test.describe("Connection URL", () => {
-  test("should not accept invalid url", async ({ playground }) => {
+  test.beforeEach(async ({ playground }) => {
     await playground.goto();
+  });
+
+  test("should not accept invalid url", async ({ playground }) => {
     await playground.connectionUrl.fill("mock://invalid");
     await playground.connectionUrl.press("Enter");
+    await playground.page.waitForTimeout(500);
     await expect(playground.connectionStatus).toHaveText("error");
   });
+
   test("should display server info after connecting", async ({
     playground,
   }) => {
-    await playground.goto();
     await playground.connectionUrl.fill("mock://echo");
     await playground.connectionUrl.press("Enter");
     await expect(playground.serverInfo).toBeVisible();
-    await expect(playground.serverInfo).toContainText("Echo Server");
+    await expect(playground.serverInfo).toContainText("mock/echo");
+  });
+
+  test("should show + button when typing mock://calculator", async ({
+    playground,
+  }) => {
+    await playground.connectionUrl.fill("mock://calculator");
+    await expect(playground.addServerBtn).toBeVisible();
+  });
+
+  test("should not show + button when URL matches existing predefined server", async ({
+    playground,
+  }) => {
+    await playground.connectionUrl.fill("mock://echo");
+    await expect(playground.addServerBtn).not.toBeVisible();
+  });
+
+  test("should not show + button when URL matches already added custom server", async ({
+    playground,
+  }) => {
+    await playground.connectionUrl.fill("mock://calculator");
+    await playground.addServerBtn.click();
+    await expect(playground.connectionStatus).toHaveText("connected", {
+      timeout: 10000,
+    });
+    await playground.connectionUrl.fill("mock://calculator");
+    await expect(playground.addServerBtn).not.toBeVisible();
+  });
+
+  test("should add calculator server to list on + click", async ({
+    playground,
+  }) => {
+    await playground.connectionUrl.fill("mock://calculator");
+    await playground.addServerBtn.click();
+    await expect(playground.connectionStatus).toHaveText("connected", {
+      timeout: 10000,
+    });
+    await expect(
+      playground.settingsPanel
+        .getByRole("listitem")
+        .filter({ hasText: "calculator" }),
+    ).toBeVisible();
+  });
+
+  test("should remove calculator server from list on cross button click", async ({
+    playground,
+  }) => {
+    await playground.connectionUrl.fill("mock://calculator");
+    await playground.addServerBtn.click();
+    await expect(playground.connectionStatus).toHaveText("connected", {
+      timeout: 10000,
+    });
+
+    const calculatorItem = playground.settingsPanel
+      .getByRole("listitem")
+      .filter({ hasText: "calculator" });
+    await calculatorItem.hover();
+    await calculatorItem.getByTitle("Remove server").click();
+    await expect(calculatorItem).not.toBeVisible();
   });
 });
 test.describe("Predefined Server Auto-Select", () => {

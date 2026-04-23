@@ -13,6 +13,7 @@ import { defineConfig, devices } from "@playwright/test";
  */
 export default defineConfig({
   testDir: "./e2e/tests",
+  globalSetup: "./e2e/global-setup.ts",
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -98,8 +99,7 @@ export default defineConfig({
       timeout: 30000,
     },
     {
-      command:
-        "npm run prepare:website-assets && cd website && npx docusaurus start --port 3000",
+      command: "cd website && npx docusaurus start --port 3000",
       port: 3000,
       reuseExistingServer: !process.env.CI,
       timeout: 120000,

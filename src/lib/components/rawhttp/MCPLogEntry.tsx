@@ -172,7 +172,10 @@ export function MCPLogEntryCard({
       )}
     >
       <Collapsible open={open} onOpenChange={setOpen}>
-        <CollapsibleTrigger className="flex w-full items-center justify-between p-3 text-left hover:bg-accent/50 cursor-pointer">
+        <CollapsibleTrigger
+          data-testid="log-entry-trigger"
+          className="flex w-full items-center justify-between p-3 text-left hover:bg-accent/50 cursor-pointer"
+        >
           <div className="flex flex-wrap items-center gap-2 flex-1 min-w-0">
             <div className="flex items-center gap-2 min-w-0 flex-1">
               {isSuccess && (
@@ -194,7 +197,11 @@ export function MCPLogEntryCard({
                 </Badge>
               )}
 
-              <Badge variant="outline" className="text-xs font-mono shrink-0">
+              <Badge
+                data-testid="log-entry-method"
+                variant="outline"
+                className="text-xs font-mono shrink-0"
+              >
                 {entry.method}
               </Badge>
 
@@ -204,7 +211,10 @@ export function MCPLogEntryCard({
                 </span>
               )}
 
-              <span className="text-xs text-muted-foreground truncate">
+              <span
+                data-testid="log-entry-url"
+                className="text-xs text-muted-foreground truncate"
+              >
                 {entry.url}
               </span>
             </div>
@@ -230,11 +240,15 @@ export function MCPLogEntryCard({
         </CollapsibleTrigger>
 
         <CollapsibleContent>
-          <div className="border-t p-3 space-y-4">
+          <div
+            data-testid="log-entry-details"
+            className="border-t p-3 space-y-4"
+          >
             <div className="flex justify-end gap-2">
               {!isEditing && (
                 <>
                   <Button
+                    data-testid="log-entry-edit-resend"
                     variant="outline"
                     size="sm"
                     onClick={handleStartEdit}
@@ -243,7 +257,12 @@ export function MCPLogEntryCard({
                     <Play className="h-3 w-3 mr-1" />
                     Edit & Resend
                   </Button>
-                  <Button variant="outline" size="sm" onClick={handleCopyCurl}>
+                  <Button
+                    data-testid="log-entry-copy-curl"
+                    variant="outline"
+                    size="sm"
+                    onClick={handleCopyCurl}
+                  >
                     {copied ? (
                       <Check className="h-3 w-3 mr-1" />
                     ) : (
@@ -304,10 +323,13 @@ export function MCPLogEntryCard({
               </div>
             ) : (
               <>
-                <div>
+                <div data-testid="log-entry-request">
                   <h4 className="text-xs font-semibold mb-2">Request</h4>
                   <div className="space-y-2">
-                    <div className="text-xs font-mono bg-muted p-2 rounded break-all">
+                    <div
+                      data-testid="log-entry-request-url"
+                      className="text-xs font-mono bg-muted p-2 rounded break-all"
+                    >
                       POST {entry.url}
                     </div>
                     {headerCount > 0 && (
@@ -325,7 +347,11 @@ export function MCPLogEntryCard({
                         </div>
                       </details>
                     )}
-                    <details open className="text-xs">
+                    <details
+                      data-testid="log-entry-request-body"
+                      open
+                      className="text-xs"
+                    >
                       <summary className="cursor-pointer text-muted-foreground hover:text-foreground">
                         Body
                       </summary>
@@ -338,11 +364,12 @@ export function MCPLogEntryCard({
                 </div>
 
                 {entry.responseBody && (
-                  <div>
+                  <div data-testid="log-entry-response">
                     <h4 className="text-xs font-semibold mb-2">Response</h4>
                     <div className="space-y-2">
                       {entry.responseStatus && (
                         <div
+                          data-testid="log-entry-response-status"
                           className={cn(
                             "text-xs font-mono p-2 rounded",
                             isSuccess ? "bg-success/10" : "bg-destructive/10",
@@ -351,7 +378,11 @@ export function MCPLogEntryCard({
                           HTTP {entry.responseStatus}
                         </div>
                       )}
-                      <details open className="text-xs">
+                      <details
+                        data-testid="log-entry-response-body"
+                        open
+                        className="text-xs"
+                      >
                         <summary className="cursor-pointer text-muted-foreground hover:text-foreground">
                           Body
                         </summary>

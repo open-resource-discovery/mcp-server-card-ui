@@ -41,6 +41,7 @@ export class PlaygroundPage {
   readonly connectBtn: Locator;
   readonly disconnectBtn: Locator;
   readonly connectionStatus: Locator;
+  readonly addServerBtn: Locator;
 
   // Authtype and connection settings
   readonly transportTypeSelect: Locator;
@@ -50,6 +51,22 @@ export class PlaygroundPage {
   readonly bearerToken: Locator;
   readonly serverInfo: Locator;
   readonly executeButton: Locator;
+
+  // Raw HTTP log
+  readonly logPanel: Locator;
+  readonly logEmptyState: Locator;
+  readonly logList: Locator;
+  readonly logClearBtn: Locator;
+
+  // Validation
+  readonly validationPanel: Locator;
+  readonly validationSummary: Locator;
+  readonly validationResultsList: Locator;
+  readonly validationEmptyState: Locator;
+  readonly validationAllPassed: Locator;
+  readonly validationBadgePass: Locator;
+  readonly validationBadgeWarning: Locator;
+  readonly validationBadgeFail: Locator;
 
   constructor(page: Page, isDocusaurus = false) {
     this.page = page;
@@ -89,6 +106,7 @@ export class PlaygroundPage {
     this.connectBtn = page.getByTestId("connect-btn");
     this.disconnectBtn = page.getByTestId("disconnect-btn");
     this.connectionStatus = page.getByTestId("connection-status");
+    this.addServerBtn = page.getByTestId("add-server-btn");
 
     //Authtype and connection settings
     this.transportTypeSelect = page.getByTestId("transport-type-select");
@@ -97,6 +115,22 @@ export class PlaygroundPage {
     this.basicAuthPassword = page.getByTestId("basic-auth-password");
     this.bearerToken = page.getByTestId("bearer-token");
     this.serverInfo = page.getByTestId("server-info");
+
+    // Raw HTTP log
+    this.logPanel = page.getByTestId("mcp-log-panel");
+    this.logEmptyState = page.getByTestId("log-empty-state");
+    this.logList = page.getByTestId("log-list");
+    this.logClearBtn = page.getByTestId("log-clear-btn");
+
+    // Validation
+    this.validationPanel = page.getByTestId("validation-panel");
+    this.validationSummary = page.getByTestId("validation-summary");
+    this.validationResultsList = page.getByTestId("validation-results-list");
+    this.validationEmptyState = page.getByTestId("validation-empty-state");
+    this.validationAllPassed = page.getByTestId("validation-all-passed");
+    this.validationBadgePass = page.getByTestId("validation-badge-pass");
+    this.validationBadgeWarning = page.getByTestId("validation-badge-warning");
+    this.validationBadgeFail = page.getByTestId("validation-badge-fail");
   }
 
   async goto() {
@@ -122,6 +156,58 @@ export class PlaygroundPage {
     // Give the UI a moment to settle (lazy loading, agent list fetch)
     await this.page.waitForTimeout(500);
   }
+  logEntry(index: number): Locator {
+    return this.page.getByTestId("mcp-log-entry").nth(index);
+  }
+
+  logEntryMethod(index: number): Locator {
+    return this.logEntry(index).getByTestId("log-entry-method");
+  }
+
+  logEntryUrl(index: number): Locator {
+    return this.logEntry(index).getByTestId("log-entry-url");
+  }
+
+  logEntryDetails(index: number): Locator {
+    return this.logEntry(index).getByTestId("log-entry-details");
+  }
+
+  logEntryEditResend(index: number): Locator {
+    return this.logEntry(index).getByTestId("log-entry-edit-resend");
+  }
+
+  logEntryCopyCurl(index: number): Locator {
+    return this.logEntry(index).getByTestId("log-entry-copy-curl");
+  }
+
+  logEntryRequest(index: number): Locator {
+    return this.logEntry(index).getByTestId("log-entry-request");
+  }
+
+  logEntryRequestUrl(index: number): Locator {
+    return this.logEntry(index).getByTestId("log-entry-request-url");
+  }
+
+  logEntryRequestBody(index: number): Locator {
+    return this.logEntry(index).getByTestId("log-entry-request-body");
+  }
+
+  logEntryResponse(index: number): Locator {
+    return this.logEntry(index).getByTestId("log-entry-response");
+  }
+
+  logEntryResponseStatus(index: number): Locator {
+    return this.logEntry(index).getByTestId("log-entry-response-status");
+  }
+
+  logEntryResponseBody(index: number): Locator {
+    return this.logEntry(index).getByTestId("log-entry-response-body");
+  }
+
+  validationResultCard(index: number): Locator {
+    return this.page.getByTestId("validation-result-card").nth(index);
+  }
+
   serverSelectorItem(id: string): Locator {
     return this.page.getByTestId(`server-selector-item-${id}`);
   }
@@ -168,6 +254,25 @@ export class PlaygroundPage {
 
   async selectServer(serverId: string) {
     const card = this.serverSelectorItem(serverId);
+
+    const cardExists = await card.isVisible().catch(() => false);
+    if (!cardExists && serverId.startsWith("mock-")) {
+      if (await this.disconnectBtn.isVisible().catch(() => false)) {
+        await this.disconnectBtn.click();
+        await expect(this.connectionStatus).toHaveText("disconnected", {
+          timeout: 5000,
+        });
+      }
+      const mockName = serverId.replace(/^mock-/, "");
+      await this.connectionUrl.fill(`mock://${mockName}`);
+      await this.connectionUrl.press("Enter");
+      await this.connectionStatus.waitFor({ timeout: 10000 });
+      await expect(this.connectionStatus).toHaveText("connected", {
+        timeout: 10000,
+      });
+      return;
+    }
+
     await card.waitFor({ timeout: 10000 });
     await card.click();
     // Wait for connection to complete
@@ -180,7 +285,8 @@ export class PlaygroundPage {
 // Custom fixture that creates a PlaygroundPage with the correct isDocusaurus flag
 export const test = base.extend<{ playground: PlaygroundPage }>({
   playground: async ({ page, baseURL }, use) => {
-    const isDocusaurus = baseURL?.includes("3000") ?? false;
+    const isDocusaurus =
+      (baseURL?.includes("3000") || baseURL?.includes("3002")) ?? false;
     const pg = new PlaygroundPage(page, isDocusaurus);
     // eslint-disable-next-line react-hooks/rules-of-hooks
     await use(pg);

@@ -27,7 +27,10 @@ export function ValidationResultCard({ result }: ValidationResultCardProps) {
   const StatusIcon = config.icon;
 
   return (
-    <Card className={cn("border-l-4", config.borderClass)}>
+    <Card
+      data-testid="validation-result-card"
+      className={cn("border-l-4", config.borderClass)}
+    >
       <CardContent className="p-3">
         <div className="flex items-start gap-2">
           <StatusIcon

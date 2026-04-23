@@ -140,6 +140,7 @@ export function MCPServerSelector() {
                 ))}
                 {isCustom && (
                   <button
+                    data-testid={`server-remove-btn-${server.id}`}
                     onClick={(e) => handleRemove(e, server.id)}
                     className="hidden group-hover:flex h-4 w-4 items-center justify-center rounded-sm hover:bg-destructive/20 text-muted-foreground hover:text-destructive shrink-0 transition-colors"
                     title="Remove server"

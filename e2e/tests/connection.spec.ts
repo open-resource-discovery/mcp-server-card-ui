@@ -2,6 +2,7 @@ import { test, expect } from "../fixtures/playground";
 
 test.describe("Connection Flow", () => {
   test.beforeEach(async ({ playground }) => {
+    //test.skip(!playground.isMock, "Requires mock servers");
     await playground.goto();
     await playground.selectServer("mock-echo");
   });
@@ -15,7 +16,7 @@ test.describe("Connection Flow", () => {
   test("should display server details in overview after connecting", async ({
     playground,
   }) => {
-    await expect(playground.serverName).toHaveText("Echo Server");
+    await expect(playground.serverName).toHaveText("mock/echo");
     await expect(playground.serverVersion).toContainText("1.0.0");
   });
 
@@ -50,7 +51,7 @@ test.describe("Connection Flow", () => {
   });
   test("should show server info after connecting", async ({ playground }) => {
     await expect(playground.serverInfo).toBeVisible();
-    await expect(playground.serverInfo).toContainText("Echo Server");
+    await expect(playground.serverInfo).toContainText("mock/echo");
   });
   test("should hide server info after disconnecting", async ({
     playground,

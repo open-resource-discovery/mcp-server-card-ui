@@ -219,6 +219,7 @@ export function MCPConnectionSettings() {
           />
           {showAddButton && (
             <Button
+              data-testid="add-server-btn"
               variant="outline"
               size="icon"
               className="h-8 w-8 shrink-0"

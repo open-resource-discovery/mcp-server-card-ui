@@ -16,7 +16,12 @@ export function MCPLogPanel() {
           </span>
         </div>
         {logs.length > 0 && (
-          <Button variant="ghost" size="sm" onClick={clearLogs}>
+          <Button
+            data-testid="log-clear-btn"
+            variant="ghost"
+            size="sm"
+            onClick={clearLogs}
+          >
             <Trash2 className="h-3 w-3 mr-1" />
             Clear
           </Button>
@@ -24,7 +29,7 @@ export function MCPLogPanel() {
       </div>
 
       {logs.length > 0 ? (
-        <div className="space-y-2">
+        <div className="space-y-2" data-testid="log-list">
           {logs.map((entry) => (
             <MCPLogEntryCard
               key={entry.id}
@@ -34,7 +39,10 @@ export function MCPLogPanel() {
           ))}
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center py-8 text-center text-muted-foreground">
+        <div
+          data-testid="log-empty-state"
+          className="flex flex-col items-center justify-center py-8 text-center text-muted-foreground"
+        >
           <Network className="h-8 w-8 mb-2 opacity-50" />
           <p className="text-sm font-medium">No JSON-RPC logs yet</p>
           <p className="text-xs">
