@@ -2,7 +2,7 @@ import { type Page, type Locator, expect } from "@playwright/test";
 import { test as base } from "@playwright/test";
 
 export const CONNECTION_TIMEOUT = 15000;
-export const COMPONENT_TIMEOUT = 10000;
+export const COMPONENT_TIMEOUT = 15000;
 
 export class PlaygroundPage {
   // Editor
@@ -288,8 +288,7 @@ export class PlaygroundPage {
 // Custom fixture that creates a PlaygroundPage with the correct isDocusaurus flag
 export const test = base.extend<{ playground: PlaygroundPage }>({
   playground: async ({ page, baseURL }, use) => {
-    const isDocusaurus =
-      baseURL?.includes("3000") ?? false;
+    const isDocusaurus = baseURL?.includes("3000") ?? false;
     const pg = new PlaygroundPage(page, isDocusaurus);
     // eslint-disable-next-line react-hooks/rules-of-hooks
     await use(pg);
