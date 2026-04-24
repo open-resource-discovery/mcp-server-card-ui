@@ -1,4 +1,4 @@
-import { test, expect, COMPONENT_TIMEOUT } from "../fixtures/playground";
+import { test, expect } from "../fixtures/playground";
 
 test.describe("Tools", () => {
   test.beforeEach(async ({ playground }) => {
@@ -51,7 +51,7 @@ test.describe("Raw HTTP", () => {
     await playground.goto();
     await playground.selectServer("mock-weather");
     await playground.tabRawHttp.click();
-    await playground.logList.waitFor({ timeout: COMPONENT_TIMEOUT });
+    await playground.logList.waitFor();
   });
   test("should display the Raw HTTP tab", async ({ playground }) => {
     await expect(playground.tabRawHttp).toHaveAttribute("data-state", "active");
@@ -279,7 +279,7 @@ test.describe("Log Entry Expanded", () => {
     await playground.goto();
     await playground.selectServer("mock-weather");
     await playground.tabRawHttp.click();
-    await playground.logList.waitFor({ timeout: COMPONENT_TIMEOUT });
+    await playground.logList.waitFor();
     await playground.page.getByTestId("log-entry-trigger").first().click();
     await expect(playground.logEntryDetails(0)).toBeVisible();
   });

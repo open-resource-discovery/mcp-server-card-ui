@@ -2,7 +2,7 @@ import { type Page, type Locator, expect } from "@playwright/test";
 import { test as base } from "@playwright/test";
 
 export const CONNECTION_TIMEOUT = 15000;
-export const COMPONENT_TIMEOUT = 15000;
+//export const COMPONENT_TIMEOUT = 15000;
 
 export class PlaygroundPage {
   // Editor
@@ -262,27 +262,21 @@ export class PlaygroundPage {
     if (!cardExists && serverId.startsWith("mock-")) {
       if (await this.disconnectBtn.isVisible().catch(() => false)) {
         await this.disconnectBtn.click();
-        await expect(this.connectionStatus).toHaveText("disconnected", {
-          timeout: COMPONENT_TIMEOUT,
-        });
+        await expect(this.connectionStatus).toHaveText("disconnected");
       }
       const mockName = serverId.replace(/^mock-/, "");
       await this.connectionUrl.fill(`mock://${mockName}`);
       await this.connectionUrl.press("Enter");
-      await this.connectionStatus.waitFor({ timeout: CONNECTION_TIMEOUT });
-      await expect(this.connectionStatus).toHaveText("connected", {
-        timeout: CONNECTION_TIMEOUT,
-      });
+      await this.connectionStatus.waitFor();
+      await expect(this.connectionStatus).toHaveText("connected");
       return;
     }
 
-    await card.waitFor({ timeout: CONNECTION_TIMEOUT });
+    await card.waitFor();
     await card.click();
     // Wait for connection to complete
-    await this.connectionStatus.waitFor({ timeout: CONNECTION_TIMEOUT });
-    await expect(this.connectionStatus).toHaveText("connected", {
-      timeout: CONNECTION_TIMEOUT,
-    });
+    await this.connectionStatus.waitFor();
+    await expect(this.connectionStatus).toHaveText("connected");
   }
 }
 // Custom fixture that creates a PlaygroundPage with the correct isDocusaurus flag
