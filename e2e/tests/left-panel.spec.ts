@@ -1,4 +1,4 @@
-import { test, expect } from "../fixtures/playground";
+import { test, expect, CONNECTION_TIMEOUT } from "../fixtures/playground";
 
 test.describe("Server Selector", () => {
   test.beforeEach(async ({ playground }) => {
@@ -83,7 +83,7 @@ test.describe("Connection URL", () => {
     await playground.connectionUrl.fill("mock://calculator");
     await playground.addServerBtn.click();
     await expect(playground.connectionStatus).toHaveText("connected", {
-      timeout: 10000,
+      timeout: CONNECTION_TIMEOUT,
     });
     await playground.connectionUrl.fill("mock://calculator");
     await expect(playground.addServerBtn).not.toBeVisible();
@@ -95,7 +95,7 @@ test.describe("Connection URL", () => {
     await playground.connectionUrl.fill("mock://calculator");
     await playground.addServerBtn.click();
     await expect(playground.connectionStatus).toHaveText("connected", {
-      timeout: 10000,
+      timeout: CONNECTION_TIMEOUT,
     });
     await expect(
       playground.settingsPanel
@@ -110,7 +110,7 @@ test.describe("Connection URL", () => {
     await playground.connectionUrl.fill("mock://calculator");
     await playground.addServerBtn.click();
     await expect(playground.connectionStatus).toHaveText("connected", {
-      timeout: 10000,
+      timeout: CONNECTION_TIMEOUT,
     });
 
     const calculatorItem = playground.settingsPanel

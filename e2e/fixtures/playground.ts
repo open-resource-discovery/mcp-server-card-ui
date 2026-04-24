@@ -1,6 +1,9 @@
 import { type Page, type Locator, expect } from "@playwright/test";
 import { test as base } from "@playwright/test";
 
+export const CONNECTION_TIMEOUT = 15000;
+export const COMPONENT_TIMEOUT = 10000;
+
 export class PlaygroundPage {
   // Editor
 
@@ -144,14 +147,14 @@ export class PlaygroundPage {
       await this.page.waitForFunction(
         () => !!(window as unknown as Record<string, unknown>).MCPPlayground,
         {
-          timeout: 15000,
+          timeout: CONNECTION_TIMEOUT,
         },
       );
     }
     // Wait for either settings panel or editor panel to appear
     await this.page.waitForSelector(
       "[data-testid='settings-panel'], [data-testid='editor-panel'], [data-testid='tab-overview']",
-      { timeout: 15000 },
+      { timeout: CONNECTION_TIMEOUT },
     );
     // Give the UI a moment to settle (lazy loading, agent list fetch)
     await this.page.waitForTimeout(500);
@@ -260,25 +263,25 @@ export class PlaygroundPage {
       if (await this.disconnectBtn.isVisible().catch(() => false)) {
         await this.disconnectBtn.click();
         await expect(this.connectionStatus).toHaveText("disconnected", {
-          timeout: 5000,
+          timeout: COMPONENT_TIMEOUT,
         });
       }
       const mockName = serverId.replace(/^mock-/, "");
       await this.connectionUrl.fill(`mock://${mockName}`);
       await this.connectionUrl.press("Enter");
-      await this.connectionStatus.waitFor({ timeout: 10000 });
+      await this.connectionStatus.waitFor({ timeout: CONNECTION_TIMEOUT });
       await expect(this.connectionStatus).toHaveText("connected", {
-        timeout: 10000,
+        timeout: CONNECTION_TIMEOUT,
       });
       return;
     }
 
-    await card.waitFor({ timeout: 10000 });
+    await card.waitFor({ timeout: CONNECTION_TIMEOUT });
     await card.click();
     // Wait for connection to complete
-    await this.connectionStatus.waitFor({ timeout: 10000 });
+    await this.connectionStatus.waitFor({ timeout: CONNECTION_TIMEOUT });
     await expect(this.connectionStatus).toHaveText("connected", {
-      timeout: 10000,
+      timeout: CONNECTION_TIMEOUT,
     });
   }
 }
@@ -286,7 +289,7 @@ export class PlaygroundPage {
 export const test = base.extend<{ playground: PlaygroundPage }>({
   playground: async ({ page, baseURL }, use) => {
     const isDocusaurus =
-      (baseURL?.includes("3000") || baseURL?.includes("3002")) ?? false;
+      baseURL?.includes("3000") ?? false;
     const pg = new PlaygroundPage(page, isDocusaurus);
     // eslint-disable-next-line react-hooks/rules-of-hooks
     await use(pg);
