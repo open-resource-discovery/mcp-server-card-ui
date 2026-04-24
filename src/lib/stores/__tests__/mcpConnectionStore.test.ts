@@ -9,7 +9,8 @@ vi.mock("@lib/utils/mcp-transport", () => ({
 }));
 
 vi.mock("@lib/utils/mcp-jsonrpc", async (importOriginal) => {
-  const actual = await importOriginal<typeof import("@lib/utils/mcp-jsonrpc")>();
+  const actual =
+    await importOriginal<typeof import("@lib/utils/mcp-jsonrpc")>();
   return { ...actual, resetIdCounter: vi.fn() };
 });
 
