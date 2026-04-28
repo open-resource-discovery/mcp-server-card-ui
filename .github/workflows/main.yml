@@ -1,9 +1,11 @@
 name: CI
+
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
+
 jobs:
   linting:
     name: Static linting
@@ -13,7 +15,7 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version: "24"
+          node-version: "24.11.1"
 
       - name: Install NPM dependencies
         run: npm ci
@@ -23,16 +25,16 @@ jobs:
 
       - name: Prettier
         run: npm run prettier:ci
-  
+
   unit-tests:
     name: Unit Tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
-          node-version: "24"
+          node-version: "24.11.1"
 
       - name: Install NPM dependencies
         run: npm ci
@@ -64,3 +66,18 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24.11.1"
+
+      - name: Install NPM dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
