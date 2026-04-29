@@ -181,7 +181,15 @@ export function MCPConnectionSettings() {
         }
       }
     },
-    [url, connectionStatus, showAddButton, handleAdd, handleConnect],
+    [
+      url,
+      connectionStatus,
+      showAddButton,
+      handleAdd,
+      handleConnect,
+      select,
+      servers,
+    ],
   );
 
   const statusColor = {

@@ -30,7 +30,9 @@ test.describe("Server Selector", () => {
     );
   });
 
-  test("should select weather server by url and connect", async ({ playground }) => {
+  test("should select weather server by url and connect", async ({
+    playground,
+  }) => {
     await playground.connectionUrl.fill("mock://weather");
     await playground.connectionUrl.press("Enter");
     await expect(playground.connectionStatus).toHaveText("connected");
@@ -42,7 +44,9 @@ test.describe("Server Selector", () => {
     );
   });
 
-  test("should select echo server by url and connect", async ({ playground }) => {
+  test("should select echo server by url and connect", async ({
+    playground,
+  }) => {
     await playground.connectionUrl.fill("mock://echo");
     await playground.connectionUrl.press("Enter");
     await expect(playground.connectionStatus).toHaveText("connected");
