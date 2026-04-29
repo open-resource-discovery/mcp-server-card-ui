@@ -112,6 +112,8 @@ export function FunctionInput() {
         setInputJson(generatePromptInput(prompt));
         setError(null);
       }
+    } else {
+      setInputJson("{}");
     }
   }, [pendingPrefill, selectedToolName, selectedPromptName, tools, prompts]);
 

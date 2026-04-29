@@ -30,8 +30,8 @@ export function ValidationPanel() {
   }, [results, activeFilter]);
 
   // Split "Server card is valid" into main text + version suffix
-  const passMessage = results[0]?.message ?? "Server card is valid";
-  const versionMatch = passMessage.match(/^(.+?)(\s*\(v[\d.]+\))$/);
+  const passMessage = "Server card is valid";
+  const versionMatch = passMessage.match(/^(.+?)(\s*\(v[\d.]+\))$/); //It will never match as for now, but in results messages there was no matches as well.
 
   return (
     <div

@@ -20,6 +20,7 @@ interface FunctionsState {
   getPrompt: (name: string, args: Record<string, unknown>) => Promise<void>;
   readResource: (uri: string) => Promise<void>;
   clearCalls: () => void;
+  reset: () => void;
   retryCall: (id: string) => Promise<void>;
   setSelectedToolName: (name: string | null) => void;
   setSelectedPromptName: (name: string | null) => void;
@@ -250,6 +251,14 @@ export const useFunctionsStore = create<FunctionsState>((set, get) => ({
   },
 
   clearCalls: () => set({ calls: [] }),
+  reset: () =>
+    set({
+      calls: [],
+      selectedToolName: null,
+      selectedPromptName: null,
+      pendingMode: null,
+      pendingPrefill: 0,
+    }),
 
   retryCall: async (id) => {
     const call = get().calls.find((c) => c.id === id);

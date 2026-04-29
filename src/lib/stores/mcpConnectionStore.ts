@@ -28,6 +28,7 @@ import {
   clearOAuthParams,
   getDefaultOAuthRedirectUri,
 } from "@lib/utils/pkce";
+import { useFunctionsStore } from "./functionsStore";
 
 // Compute auth headers from current credentials
 function computeAuthHeaders(
@@ -527,6 +528,8 @@ export const useMCPConnectionStore = create<MCPConnectionState>((set, get) => ({
       serverInfo: null,
       serverCapabilities: null,
     });
+    useMCPLogStore.getState().clearLogs();
+    useFunctionsStore.getState().reset();
   },
 
   reset: () => {
@@ -555,6 +558,7 @@ export const useMCPConnectionStore = create<MCPConnectionState>((set, get) => ({
     });
     oauthPopup = null;
     useMCPLogStore.getState().clearLogs();
+    useFunctionsStore.getState().reset();
     resetIdCounter();
   },
 
