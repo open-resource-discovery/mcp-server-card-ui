@@ -30,7 +30,19 @@ test.describe("Server Selector", () => {
     );
   });
 
-  test("should select server by url and connect", async ({ playground }) => {
+  test("should select weather server by url and connect", async ({ playground }) => {
+    await playground.connectionUrl.fill("mock://weather");
+    await playground.connectionUrl.press("Enter");
+    await expect(playground.connectionStatus).toHaveText("connected");
+    await expect(playground.serverSelectorItem("mock-weather")).toHaveClass(
+      /border-primary/,
+    );
+    await expect(playground.serverSelectorItem("mock-echo")).not.toHaveClass(
+      /border-primary/,
+    );
+  });
+
+  test("should select echo server by url and connect", async ({ playground }) => {
     await playground.connectionUrl.fill("mock://echo");
     await playground.connectionUrl.press("Enter");
     await expect(playground.connectionStatus).toHaveText("connected");

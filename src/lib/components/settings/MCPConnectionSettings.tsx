@@ -176,6 +176,7 @@ export function MCPConnectionSettings() {
         if (showAddButton) {
           handleAdd();
         } else {
+          select(servers.find((s) => s.url === url.trim())?.id ?? "");
           handleConnect();
         }
       }
