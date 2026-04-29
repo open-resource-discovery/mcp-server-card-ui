@@ -26,7 +26,10 @@ export function ValidationSummary({
   };
 
   return (
-    <div className="flex items-center justify-between">
+    <div
+      data-testid="validation-summary"
+      className="flex items-center justify-between"
+    >
       <div className="flex items-center gap-2">
         {isValidating ? (
           <>
@@ -37,6 +40,7 @@ export function ValidationSummary({
           <>
             {summary.pass > 0 && (
               <Badge
+                data-testid="validation-badge-pass"
                 variant="success"
                 className={cn(
                   "flex items-center gap-1 cursor-pointer transition-opacity",
@@ -50,6 +54,7 @@ export function ValidationSummary({
             )}
             {summary.warning > 0 && (
               <Badge
+                data-testid="validation-badge-warning"
                 variant="warning"
                 className={cn(
                   "flex items-center gap-1 cursor-pointer transition-opacity",
@@ -63,6 +68,7 @@ export function ValidationSummary({
             )}
             {summary.fail > 0 && (
               <Badge
+                data-testid="validation-badge-fail"
                 variant="error"
                 className={cn(
                   "flex items-center gap-1 cursor-pointer transition-opacity",

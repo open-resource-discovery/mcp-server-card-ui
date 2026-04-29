@@ -65,6 +65,7 @@ function computeAuthHeaders(
 
 export interface ServerInfo {
   name: string;
+  title?: string;
   version: string;
 }
 
@@ -983,6 +984,7 @@ async function buildServerCardFromConnection(
     $schema:
       "https://raw.githubusercontent.com/anthropics/model-context-protocol/refs/heads/main/schema/2025-03-26/schema.json",
     name: serverInfo?.name ?? "unknown/server",
+    ...(serverInfo?.title ? { title: serverInfo.title } : {}),
     version: serverInfo?.version ?? "0.0.0",
     supportedProtocolVersions: [config.protocolVersion ?? "2025-03-26"],
     description: `Server card auto-generated from live MCP connection to ${serverInfo?.name ?? config.url}`,

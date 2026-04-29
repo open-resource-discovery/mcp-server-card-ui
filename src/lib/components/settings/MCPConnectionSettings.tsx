@@ -196,7 +196,10 @@ export function MCPConnectionSettings() {
         <h3 className="text-xs font-medium text-muted-foreground">
           Connection
         </h3>
-        <div className="flex items-center gap-1.5">
+        <div
+          className="flex items-center gap-1.5"
+          data-testid="connection-status"
+        >
           <div className={`h-2 w-2 rounded-full ${statusColor}`} />
           <span className="text-[10px] text-muted-foreground capitalize">
             {connectionStatus}
@@ -212,9 +215,11 @@ export function MCPConnectionSettings() {
             onChange={(e) => setUrl(e.target.value)}
             onKeyDown={handleUrlKeyDown}
             className="h-8 text-xs flex-1"
+            data-testid="connection-url"
           />
           {showAddButton && (
             <Button
+              data-testid="add-server-btn"
               variant="outline"
               size="icon"
               className="h-8 w-8 shrink-0"
@@ -237,7 +242,10 @@ export function MCPConnectionSettings() {
             setTransportType(v as "streamable-http" | "sse")
           }
         >
-          <SelectTrigger className="h-8 text-xs">
+          <SelectTrigger
+            className="h-8 text-xs"
+            data-testid="transport-type-select"
+          >
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -250,7 +258,7 @@ export function MCPConnectionSettings() {
           value={connAuthType}
           onValueChange={(v) => setManualAuthType(v as ConnAuthType)}
         >
-          <SelectTrigger className="h-8 text-xs">
+          <SelectTrigger className="h-8 text-xs" data-testid="auth-type-select">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -268,6 +276,7 @@ export function MCPConnectionSettings() {
               onChange={(e) => setLocalUsername(e.target.value)}
               className="h-8 text-xs"
               autoComplete="off"
+              data-testid="basic-auth-username"
             />
             <PasswordInput
               placeholder="Password"
@@ -275,6 +284,7 @@ export function MCPConnectionSettings() {
               onChange={(e) => setLocalPassword(e.target.value)}
               className="h-8 text-xs"
               autoComplete="off"
+              data-testid="basic-auth-password"
             />
           </div>
         )}
@@ -286,6 +296,7 @@ export function MCPConnectionSettings() {
             onChange={(e) => setLocalToken(e.target.value)}
             className="h-8 text-xs"
             autoComplete="off"
+            data-testid="bearer-token"
           />
         )}
 
@@ -297,6 +308,7 @@ export function MCPConnectionSettings() {
               size="sm"
               onClick={() => disconnect()}
               disabled={connectionStatus === "connecting"}
+              data-testid="disconnect-btn"
             >
               {connectionStatus === "connecting" ? (
                 <Loader2 className="h-4 w-4 mr-1 animate-spin" />
@@ -310,6 +322,7 @@ export function MCPConnectionSettings() {
               size="sm"
               onClick={handleConnect}
               disabled={!url || connectionStatus === "connecting"}
+              data-testid="connect-btn"
             >
               {connectionStatus === "connecting" ? (
                 <Loader2 className="h-4 w-4 mr-1 animate-spin" />
@@ -331,6 +344,7 @@ export function MCPConnectionSettings() {
               "rounded-md border p-3 space-y-1 transition-opacity",
               connectionStatus === "connecting" && "opacity-50",
             )}
+            data-testid="server-info"
           >
             <p className="text-xs font-medium">
               {serverInfo.name} v{serverInfo.version}

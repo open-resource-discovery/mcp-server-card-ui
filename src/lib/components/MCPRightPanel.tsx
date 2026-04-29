@@ -50,11 +50,14 @@ export function MCPRightPanel({
     >
       <div className="flex-none border-b px-4 bg-background">
         <TabsList className="h-10">
-          <TabsTrigger value="overview">Overview</TabsTrigger>
+          <TabsTrigger value="overview" data-testid="tab-overview">
+            Overview
+          </TabsTrigger>
           {showFunctions && (
             <TabsTrigger
               value="functions"
               className="flex items-center gap-1.5"
+              data-testid="tab-functions"
             >
               Tools
               {callCount > 0 && (
@@ -65,7 +68,11 @@ export function MCPRightPanel({
             </TabsTrigger>
           )}
           {showRawHttp && (
-            <TabsTrigger value="rawhttp" className="flex items-center gap-1.5">
+            <TabsTrigger
+              value="rawhttp"
+              className="flex items-center gap-1.5"
+              data-testid="tab-rawhttp"
+            >
               Raw HTTP
               {logCount > 0 && (
                 <Badge variant="outline" className="h-5 min-w-5 px-1 text-xs">
@@ -78,6 +85,7 @@ export function MCPRightPanel({
             <TabsTrigger
               value="validation"
               className="flex items-center gap-1.5"
+              data-testid="tab-validation"
             >
               Validation
               {summary.fail > 0 && (

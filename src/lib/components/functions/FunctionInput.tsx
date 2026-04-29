@@ -213,6 +213,7 @@ export function FunctionInput() {
         onClick={handleExecute}
         disabled={!isConnected || !selectedName || isExecuting}
         className="w-full"
+        data-testid="execute-button"
       >
         {isExecuting ? (
           <Loader2 className="h-4 w-4 mr-1 animate-spin" />

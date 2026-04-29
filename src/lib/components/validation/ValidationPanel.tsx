@@ -34,7 +34,10 @@ export function ValidationPanel() {
   const versionMatch = passMessage.match(/^(.+?)(\s*\(v[\d.]+\))$/);
 
   return (
-    <div className="flex flex-col gap-4 p-4 h-full">
+    <div
+      data-testid="validation-panel"
+      className="flex flex-col gap-4 p-4 h-full"
+    >
       {results.length > 0 && (
         <ValidationSummary
           summary={summary}
@@ -47,6 +50,7 @@ export function ValidationPanel() {
 
       {allPassed && !activeFilter ? (
         <div
+          data-testid="validation-all-passed"
           className="flex flex-1 flex-col items-center justify-center gap-4"
           style={{ "--c-accent": "#22c55e" } as React.CSSProperties}
         >
@@ -63,7 +67,7 @@ export function ValidationPanel() {
           </p>
         </div>
       ) : sortedAndFiltered.length > 0 ? (
-        <div className="space-y-2">
+        <div data-testid="validation-results-list" className="space-y-2">
           {sortedAndFiltered.map((result) => (
             <ValidationResultCard key={result.id} result={result} />
           ))}
@@ -73,7 +77,10 @@ export function ValidationPanel() {
           <p className="text-sm">No results match the current filter.</p>
         </div>
       ) : (
-        <div className="flex items-center justify-center py-8 text-center text-muted-foreground">
+        <div
+          data-testid="validation-empty-state"
+          className="flex items-center justify-center py-8 text-center text-muted-foreground"
+        >
           <div>
             <p className="text-lg font-medium">No validation results</p>
             <p className="text-sm">

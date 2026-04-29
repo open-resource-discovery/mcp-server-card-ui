@@ -27,8 +27,15 @@ export function ToolCard({ tool, readOnly }: ToolCardProps) {
   const displayName = tool.annotations?.title ?? tool.title ?? tool.name;
 
   return (
-    <AccordionItem value={tool.name} className="border-b last:border-b-0">
-      <AccordionTrigger className="hover:no-underline hover:bg-muted/50 rounded-md px-2 -mx-2 transition-colors py-3">
+    <AccordionItem
+      value={tool.name}
+      data-testid={`tool-item-${tool.name}`}
+      className="border-b last:border-b-0"
+    >
+      <AccordionTrigger
+        data-testid={`tool-trigger-${tool.name}`}
+        className="hover:no-underline hover:bg-muted/50 rounded-md px-2 -mx-2 transition-colors py-3"
+      >
         <div className="flex flex-1 flex-col gap-0.5 text-left min-w-0">
           <AnnotationBadges annotations={tool.annotations} />
           <span className="text-xs font-medium truncate">{displayName}</span>
@@ -97,6 +104,7 @@ export function ToolCard({ tool, readOnly }: ToolCardProps) {
               <Button
                 variant="outline"
                 size="sm"
+                data-testid={`tool-try-it-${tool.name}`}
                 onClick={() =>
                   useUIStore.getState().switchToFunctions(tool.name)
                 }

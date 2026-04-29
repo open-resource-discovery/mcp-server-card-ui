@@ -23,8 +23,15 @@ export function ResourceCard({ resource }: ResourceCardProps) {
   const displayName = resource.title ?? resource.name;
 
   return (
-    <AccordionItem value={resource.uri} className="border-b last:border-b-0">
-      <AccordionTrigger className="hover:no-underline hover:bg-muted/50 rounded-md px-2 -mx-2 transition-colors py-3">
+    <AccordionItem
+      value={resource.uri}
+      data-testid={`resource-item-${resource.uri}`}
+      className="border-b last:border-b-0"
+    >
+      <AccordionTrigger
+        data-testid={`resource-trigger-${resource.uri}`}
+        className="hover:no-underline hover:bg-muted/50 rounded-md px-2 -mx-2 transition-colors py-3"
+      >
         <div className="flex flex-1 flex-col gap-0.5 text-left min-w-0">
           {resource.mimeType && (
             <div className="flex gap-1.5">

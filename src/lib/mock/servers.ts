@@ -18,13 +18,13 @@ function getMockServerId(url: string): string {
 }
 
 interface MockServerDef {
-  serverInfo: { name: string; version: string };
+  serverInfo: { name: string; title?: string; version: string };
   capabilities: Record<string, unknown>;
   handleRequest: (method: string, params?: Record<string, unknown>) => unknown;
 }
 
 const echoServer: MockServerDef = {
-  serverInfo: { name: "Echo Server", version: "1.0.0" },
+  serverInfo: { name: "mock/echo", title: "Echo Server", version: "1.0.0" },
   capabilities: {
     tools: { listChanged: false },
   },
@@ -67,7 +67,11 @@ const echoServer: MockServerDef = {
 };
 
 const weatherServer: MockServerDef = {
-  serverInfo: { name: "Weather Server", version: "1.2.0" },
+  serverInfo: {
+    name: "mock/weather",
+    title: "Weather Server",
+    version: "1.2.0",
+  },
   capabilities: {
     tools: { listChanged: false },
     resources: { subscribe: false, listChanged: false },
@@ -272,9 +276,187 @@ const weatherServer: MockServerDef = {
   },
 };
 
+const calculatorServer: MockServerDef = {
+  serverInfo: {
+    name: "sap.com/calculator",
+    title: "Calculator Server",
+    version: "0.1.0",
+  },
+  capabilities: {
+    tools: { listChanged: true },
+    logging: {},
+  },
+  handleRequest: (method, params) => {
+    switch (method) {
+      case "tools/list":
+        return {
+          tools: [
+            {
+              name: "calculate",
+              title: "Math Calculator",
+              description: "Evaluate a math expression",
+              inputSchema: {
+                type: "object",
+                properties: { expression: { type: "string" } },
+                required: ["expression"],
+              },
+            },
+            {
+              name: "convert_units",
+              title: "Unit Converter",
+              description: "Convert between units",
+              inputSchema: {
+                type: "object",
+                properties: {
+                  value: { type: "number" },
+                  from: { type: "string" },
+                  to: { type: "string" },
+                },
+                required: ["value", "from", "to"],
+              },
+            },
+            {
+              name: "statistics",
+              title: "Statistical Analysis",
+              description: "Calculate statistics for a set of numbers",
+              inputSchema: {
+                type: "object",
+                properties: {
+                  numbers: { type: "array", items: { type: "number" } },
+                },
+                required: ["numbers"],
+              },
+            },
+            {
+              name: "random_number",
+              title: "Random Number Generator",
+              description: "Generate a random number in a range",
+              inputSchema: {
+                type: "object",
+                properties: {
+                  min: { type: "number" },
+                  max: { type: "number" },
+                },
+                required: ["min", "max"],
+              },
+            },
+          ],
+        };
+      case "tools/call": {
+        const name = params?.name as string;
+        const args = params?.arguments as Record<string, unknown> | undefined;
+
+        if (name === "calculate") {
+          const expression = args?.expression as string;
+          try {
+            const result = Function(`"use strict"; return (${expression})`)();
+            return {
+              content: [{ type: "text", text: String(result) }],
+              isError: false,
+            };
+          } catch {
+            return {
+              content: [{ type: "text", text: "Invalid expression" }],
+              isError: true,
+            };
+          }
+        }
+
+        if (name === "convert_units") {
+          const value = args?.value as number;
+          const from = (args?.from as string).toLowerCase();
+          const to = (args?.to as string).toLowerCase();
+          let result: number | null = null;
+          if (from === "celsius" && to === "fahrenheit")
+            result = (value * 9) / 5 + 32;
+          else if (from === "fahrenheit" && to === "celsius")
+            result = ((value - 32) * 5) / 9;
+          else {
+            const conversions: Record<string, Record<string, number>> = {
+              km: { miles: 0.621371, m: 1000 },
+              miles: { km: 1.60934, m: 1609.34 },
+              kg: { lbs: 2.20462, g: 1000 },
+              lbs: { kg: 0.453592, g: 453.592 },
+            };
+            const factor = conversions[from]?.[to];
+            if (factor === undefined) {
+              return {
+                content: [
+                  { type: "text", text: `Cannot convert ${from} to ${to}` },
+                ],
+                isError: true,
+              };
+            }
+            result = value * factor;
+          }
+          return {
+            content: [
+              {
+                type: "text",
+                text: `${value} ${from} = ${result.toFixed(4)} ${to}`,
+              },
+            ],
+            isError: false,
+          };
+        }
+
+        if (name === "statistics") {
+          const numbers = args?.numbers as number[];
+          if (!numbers?.length)
+            return {
+              content: [{ type: "text", text: "Empty array" }],
+              isError: true,
+            };
+          const sum = numbers.reduce((a, b) => a + b, 0);
+          const mean = sum / numbers.length;
+          const sorted = [...numbers].sort((a, b) => a - b);
+          const median =
+            sorted.length % 2 === 0
+              ? (sorted[sorted.length / 2 - 1] + sorted[sorted.length / 2]) / 2
+              : sorted[Math.floor(sorted.length / 2)];
+          return {
+            content: [
+              {
+                type: "text",
+                text: JSON.stringify({
+                  count: numbers.length,
+                  sum,
+                  mean,
+                  median,
+                  min: sorted[0],
+                  max: sorted[sorted.length - 1],
+                }),
+              },
+            ],
+            isError: false,
+          };
+        }
+
+        if (name === "random_number") {
+          const min = args?.min as number;
+          const max = args?.max as number;
+          const result = Math.random() * (max - min) + min;
+          return {
+            content: [{ type: "text", text: String(result) }],
+            isError: false,
+          };
+        }
+
+        return {
+          content: [{ type: "text", text: `Unknown tool: ${name}` }],
+          isError: true,
+        };
+      }
+      default:
+        return null;
+    }
+  },
+};
+
 const MOCK_SERVERS: Record<string, MockServerDef> = {
   echo: echoServer,
   weather: weatherServer,
+  calculator: calculatorServer,
 };
 
 /**
@@ -333,7 +515,92 @@ export function handleMockRequest(
 /**
  * Get a mock server's card JSON for display.
  */
+const MOCK_SERVER_CARDS: Record<string, string> = {
+  calculator: JSON.stringify(
+    {
+      $schema:
+        "https://raw.githubusercontent.com/anthropics/model-context-protocol/refs/heads/main/schema/2025-03-26/schema.json",
+      name: "sap.com/calculator",
+      title: "Calculator Server",
+      version: "0.1.0",
+      supportedProtocolVersions: ["2025-03-26"],
+      description:
+        "Server card auto-generated from live MCP connection to mock/calculator",
+      remotes: [{ type: "streamable-http", url: "mock://calculator" }],
+      capabilities: { tools: { listChanged: true }, logging: {} },
+      tools: [
+        {
+          name: "calculate",
+          title: "Math Calculator",
+          description: "Evaluate a math expression",
+          inputSchema: {
+            type: "object",
+            properties: { expression: { type: "string" } },
+            required: ["expression"],
+            additionalProperties: false,
+            $schema: "http://json-schema.org/draft-07/schema#",
+          },
+          annotations: { readOnlyHint: true, idempotentHint: true },
+          execution: { taskSupport: "forbidden" },
+        },
+        {
+          name: "convert_units",
+          title: "Unit Converter",
+          description: "Convert between units",
+          inputSchema: {
+            type: "object",
+            properties: {
+              value: { type: "number" },
+              from: { type: "string" },
+              to: { type: "string" },
+            },
+            required: ["value", "from", "to"],
+            additionalProperties: false,
+            $schema: "http://json-schema.org/draft-07/schema#",
+          },
+          annotations: { readOnlyHint: true, idempotentHint: true },
+          execution: { taskSupport: "forbidden" },
+        },
+        {
+          name: "statistics",
+          title: "Statistical Analysis",
+          description: "Calculate statistics for a set of numbers",
+          inputSchema: {
+            type: "object",
+            properties: {
+              numbers: { type: "array", items: { type: "number" } },
+            },
+            required: ["numbers"],
+            additionalProperties: false,
+            $schema: "http://json-schema.org/draft-07/schema#",
+          },
+          annotations: { readOnlyHint: true, idempotentHint: true },
+          execution: { taskSupport: "forbidden" },
+        },
+        {
+          name: "random_number",
+          title: "Random Number Generator",
+          description: "Generate a random number in a range",
+          inputSchema: {
+            type: "object",
+            properties: { min: { type: "number" }, max: { type: "number" } },
+            required: ["min", "max"],
+            additionalProperties: false,
+            $schema: "http://json-schema.org/draft-07/schema#",
+          },
+          annotations: { readOnlyHint: true },
+          execution: { taskSupport: "forbidden" },
+        },
+      ],
+    },
+    null,
+    2,
+  ),
+};
+
 export function getMockServerCard(serverId: string): string | null {
+  if (MOCK_SERVER_CARDS[serverId]) return MOCK_SERVER_CARDS[serverId];
+
   const server = MOCK_SERVERS[serverId];
   if (!server) return null;
 
