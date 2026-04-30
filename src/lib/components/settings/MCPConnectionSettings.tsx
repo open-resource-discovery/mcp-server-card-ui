@@ -177,6 +177,10 @@ export function MCPConnectionSettings() {
           handleAdd();
         } else {
           select(servers.find((s) => s.url === url.trim())?.id ?? "");
+          // Disconnect previous session before switching
+          if (connectionStatus === "connected") {
+            disconnect();
+          }
           handleConnect();
         }
       }
@@ -189,6 +193,7 @@ export function MCPConnectionSettings() {
       handleConnect,
       select,
       servers,
+      disconnect,
     ],
   );
 
