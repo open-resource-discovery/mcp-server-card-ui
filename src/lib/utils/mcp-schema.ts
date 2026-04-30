@@ -44,7 +44,6 @@ export function validateMCPServerCardSchema(
     { field: "capabilities", label: "Server capabilities" },
   ];
 
-  
   for (const { field, label } of requiredFields) {
     const value = parsed[field];
     if (value === undefined || value === null) {
@@ -57,9 +56,8 @@ export function validateMCPServerCardSchema(
         message: `Missing required field '${field}'`,
         path: field,
       });
-    } 
+    }
   }
-  
 
   // Step 3: Validate name format
   if (typeof parsed.name === "string") {
@@ -75,7 +73,7 @@ export function validateMCPServerCardSchema(
         message: `Invalid name format: '${parsed.name}'. Expected format: 'namespace/name' (e.g., 'sap.com/weather')`,
         path: "name",
       });
-    } 
+    }
   }
 
   // Step 4: Validate supportedProtocolVersions
@@ -273,8 +271,8 @@ export function validateMCPServerCardSchema(
       rule: "No errors",
       description: "Server card is valid",
       status: "pass",
-      message: "Server card is valid"
-    })
+      message: "Server card is valid",
+    });
   }
 
   return results;
