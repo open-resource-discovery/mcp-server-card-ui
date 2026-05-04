@@ -165,7 +165,7 @@ html[data-theme="light"]
     [class*="searchBarContainer_"]
   ) {
   position: relative;
-  width: 160px;
+  max-width: 160px;
   height: 31px;
   border-radius: 8px;
   padding: 5px 8px;
@@ -210,6 +210,7 @@ html[data-theme="light"]
   border: 0;
   outline: none;
   font-size: 14px;
+  max-width: 142px;
 }
 
 html[data-theme="light"]
@@ -217,6 +218,7 @@ html[data-theme="light"]
   :is(input.navbar__search-input, input[class*="searchInput_"])::placeholder {
   color: rgba(27, 36, 42, 0.65);
   opacity: 1;
+  max-width: 142px;
 }
 
 html[data-theme="light"] nav.navbar :is([class*="searchHintContainer_"]) {
@@ -256,7 +258,7 @@ html[data-theme="dark"]
     [class*="searchBarContainer_"]
   ) {
   position: relative;
-  width: 160px;
+  max-width: 160px;
   height: 31px;
   border-radius: 8px;
   padding: 5px 8px;
@@ -301,6 +303,7 @@ html[data-theme="dark"]
   border: 0;
   outline: none;
   font-size: 14px;
+  max-width: 142px;
 }
 
 html[data-theme="dark"]
@@ -308,6 +311,7 @@ html[data-theme="dark"]
   :is(input.navbar__search-input, input[class*="searchInput_"])::placeholder {
   color: rgba(255, 255, 255, 0.65);
   opacity: 1;
+  max-width: 142px;
 }
 
 html[data-theme="dark"]
@@ -374,6 +378,7 @@ nav.navbar
   padding-block: 0 !important;
   line-height: normal !important;
   display: block;
+  max-width: 142px;
 }
 
 nav.navbar .navbar__items--right [class*="navbarSearchContainer"] {
