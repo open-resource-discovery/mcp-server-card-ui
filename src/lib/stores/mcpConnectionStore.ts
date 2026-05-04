@@ -231,7 +231,13 @@ export const useMCPConnectionStore = create<MCPConnectionState>((set, get) => ({
 
   // Setters
   setUrl: (url) => set({ url }),
-  setTransportType: (transportType) => set({ transportType }),
+  setTransportType: (transportType) => {
+    const state = get();
+    if (state.connectionStatus !== "disconnected") {
+      get().disconnect(); // fire-and-forget, transport changes immediately
+    }
+    set({ transportType });
+  },
   setProtocolVersion: (protocolVersion) => set({ protocolVersion }),
 
   setAuthType: (authType) => {
