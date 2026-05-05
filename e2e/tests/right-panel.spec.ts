@@ -78,6 +78,26 @@ test.describe("Raw HTTP", () => {
   test("should show server url in log entry", async ({ playground }) => {
     await expect(playground.logEntryUrl(0)).toContainText("mock://weather");
   });
+
+  test("Should clear logs on disconnect", async ({ playground }) => {
+    await playground.disconnectBtn.click();
+    await expect(playground.page.getByTestId("log-entry-trigger")).toHaveCount(
+      0,
+    );
+    await expect(playground.logEmptyState).toBeVisible();
+    await expect(playground.logList).not.toBeVisible();
+  });
+
+  test("Should clear logs on server change", async ({ playground }) => {
+    await playground.selectServer("mock-echo");
+    await expect(playground.logList).toBeVisible();
+    await expect(playground.logEntryUrl(0)).toContainText("mock://echo");
+    await expect(
+      playground.page
+        .getByTestId("log-entry-url")
+        .filter({ hasText: "mock://weather" }),
+    ).toHaveCount(0);
+  });
 });
 
 test.describe("Validation", () => {
@@ -102,21 +122,18 @@ test.describe("Validation", () => {
     await expect(playground.validationSummary).toBeVisible();
   });
 
-  test("should show results or all-passed state", async ({ playground }) => {
-    const resultCards = playground.validationResultCard(0);
+  test("should show all-passed state", async ({ playground }) => {
     const allPassed = playground.validationAllPassed;
-    await expect(resultCards.or(allPassed)).toBeVisible();
+    await expect(allPassed).toBeVisible();
+    await expect(playground.page.getByTestId(/^validation-badge-/)).toHaveCount(
+      0,
+    );
   });
 
   test("should not show empty state when results exist", async ({
     playground,
   }) => {
     await expect(playground.validationEmptyState).not.toBeVisible();
-  });
-
-  test("should show pass or warning or fail badge", async ({ playground }) => {
-    const anyBadge = playground.page.getByTestId(/^validation-badge-/);
-    await expect(anyBadge.first()).toBeVisible();
   });
 
   test("should show fail badge after entering invalid content", async ({
@@ -153,6 +170,9 @@ test.describe("Validation", () => {
   }) => {
     await playground.selectServer("mock-echo");
     await expect(playground.validationAllPassed).toBeVisible();
+    await expect(playground.page.getByTestId(/^validation-badge-/)).toHaveCount(
+      0,
+    );
   });
 });
 
