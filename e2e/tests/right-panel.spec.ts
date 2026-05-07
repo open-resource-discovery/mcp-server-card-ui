@@ -119,6 +119,9 @@ test.describe("Validation", () => {
   });
 
   test("should show validation summary", async ({ playground }) => {
+    await playground.page.locator(".monaco-editor").first().click();
+    await playground.page.keyboard.press("Control+a");
+    await playground.page.keyboard.type("{Something wrong}");
     await expect(playground.validationSummary).toBeVisible();
   });
 
