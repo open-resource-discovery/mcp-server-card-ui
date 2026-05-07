@@ -29,7 +29,10 @@ export function ValidationResultCard({ result }: ValidationResultCardProps) {
   return (
     <Card
       data-testid="validation-result-card"
-      className={cn("border-l-4", config.borderClass)}
+      className={cn(
+        "rounded-md shadow-none border-l-4 transition-all duration-150 hover:shadow-sm hover:translate-x-0.5",
+        config.borderClass,
+      )}
     >
       <CardContent className="p-3">
         <div className="flex items-start gap-2">
