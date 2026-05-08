@@ -10,7 +10,6 @@ test.describe("Tools", () => {
       "data-state",
       "active",
     );
-    //await expect(playground.toolsPanel).toBeVisible();
   });
   test("Execute button should be disabled at the beginning", async ({
     playground,
@@ -21,7 +20,6 @@ test.describe("Tools", () => {
   test("Execute button should be enabled after selecting a tool", async ({
     playground,
   }) => {
-    //test.skip(!playground.isMock, "Requires mock servers");
     await playground.selectServer("mock-echo");
     await playground.page
       .getByRole("combobox")
@@ -34,7 +32,6 @@ test.describe("Tools", () => {
   test("Execute button should be disabled after disconnecting", async ({
     playground,
   }) => {
-    //test.skip(!playground.isMock, "Requires mock servers");
     await playground.selectServer("mock-echo");
     await playground.page
       .getByRole("combobox")
@@ -56,7 +53,6 @@ test.describe("Raw HTTP", () => {
   test("should display the Raw HTTP tab", async ({ playground }) => {
     await expect(playground.tabRawHttp).toHaveAttribute("data-state", "active");
     await expect(playground.logClearBtn).toBeVisible();
-    //await expect(playground.rawHttpPanel).toBeVisible();
   });
   test("should show empty state after clearing logs", async ({
     playground,
@@ -118,7 +114,9 @@ test.describe("Validation", () => {
     await expect(playground.validationPanel).toBeVisible();
   });
 
-  test("should show validation summary", async ({ playground }) => {
+  test("should show validation summary, if the card is not valid", async ({
+    playground,
+  }) => {
     await playground.page.locator(".monaco-editor").first().click();
     await playground.page.keyboard.press("Control+a");
     await playground.page.keyboard.type("{Something wrong}");
@@ -137,6 +135,15 @@ test.describe("Validation", () => {
     playground,
   }) => {
     await expect(playground.validationEmptyState).not.toBeVisible();
+  });
+
+  test("should show empty state when results don't exist", async ({
+    playground,
+  }) => {
+    await playground.page.locator(".monaco-editor").first().click();
+    await playground.page.keyboard.press("Control+a");
+    await playground.page.keyboard.type(" ");
+    await expect(playground.validationEmptyState).toBeVisible();
   });
 
   test("should show fail badge after entering invalid content", async ({
@@ -187,7 +194,6 @@ test.describe("Overview", () => {
 
   test.describe("Echo server", () => {
     test.beforeEach(async ({ playground }) => {
-      //test.skip(!playground.isMock, "Requires mock servers");
       await playground.selectServer("mock-echo");
     });
 
@@ -239,7 +245,6 @@ test.describe("Overview", () => {
 
   test.describe("Weather server", () => {
     test.beforeEach(async ({ playground }) => {
-      //test.skip(!playground.isMock, "Requires mock servers");
       await playground.selectServer("mock-weather");
     });
 
