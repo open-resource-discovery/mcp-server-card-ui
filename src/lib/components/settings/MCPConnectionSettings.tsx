@@ -176,11 +176,25 @@ export function MCPConnectionSettings() {
         if (showAddButton) {
           handleAdd();
         } else {
+          select(servers.find((s) => s.url === url.trim())?.id ?? "");
+          // Disconnect previous session before switching
+          if (connectionStatus === "connected") {
+            disconnect();
+          }
           handleConnect();
         }
       }
     },
-    [url, connectionStatus, showAddButton, handleAdd, handleConnect],
+    [
+      url,
+      connectionStatus,
+      showAddButton,
+      handleAdd,
+      handleConnect,
+      select,
+      servers,
+      disconnect,
+    ],
   );
 
   const statusColor = {

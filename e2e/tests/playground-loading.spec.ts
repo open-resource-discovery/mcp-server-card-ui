@@ -31,3 +31,43 @@ test.describe("Playground Loading", () => {
     );
   });
 });
+test.describe("Navigation bar", () => {
+  test.beforeEach(async ({ playground }) => {
+    test.skip(!playground.isDocusaurus, "Requires Docusaurus");
+    await playground.page.goto("/");
+  });
+
+  test("should show home link", async ({ playground }) => {
+    await expect(playground.page.locator(".navbar__brand")).toBeVisible();
+  });
+
+  test("should show Documentation link", async ({ playground }) => {
+    await expect(
+      playground.page.getByRole("link", { name: "Documentation" }),
+    ).toBeVisible();
+  });
+
+  test("should show Playground link", async ({ playground }) => {
+    await expect(
+      playground.page.locator("nav").getByRole("link", { name: "Playground" }),
+    ).toBeVisible();
+  });
+
+  test("should show GitHub link", async ({ playground }) => {
+    await expect(playground.page.locator(".header-github-pill")).toBeVisible();
+  });
+
+  test("should show light/dark mode toggle", async ({ playground }) => {
+    await expect(
+      playground.page.getByRole("button", {
+        name: /switch between dark and light mode/i,
+      }),
+    ).toBeVisible();
+  });
+
+  test("should show search panel", async ({ playground }) => {
+    await expect(
+      playground.page.getByRole("textbox", { name: "Search" }),
+    ).toBeVisible();
+  });
+});

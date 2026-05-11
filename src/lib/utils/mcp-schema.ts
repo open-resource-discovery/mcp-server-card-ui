@@ -56,16 +56,6 @@ export function validateMCPServerCardSchema(
         message: `Missing required field '${field}'`,
         path: field,
       });
-    } else {
-      results.push({
-        id: `required-${field}`,
-        rule: `Required field: ${label}`,
-        description: `The '${field}' field is required`,
-        status: "pass",
-        severity: "error",
-        message: `Field '${field}' is present`,
-        path: field,
-      });
     }
   }
 
@@ -81,17 +71,6 @@ export function validateMCPServerCardSchema(
         status: "fail",
         severity: "error",
         message: `Invalid name format: '${parsed.name}'. Expected format: 'namespace/name' (e.g., 'sap.com/weather')`,
-        path: "name",
-      });
-    } else {
-      results.push({
-        id: "name-format",
-        rule: "Name format",
-        description:
-          'Name must be in reverse-DNS format (e.g., "sap.com/weather")',
-        status: "pass",
-        severity: "error",
-        message: "Name format is valid",
         path: "name",
       });
     }
@@ -281,6 +260,18 @@ export function validateMCPServerCardSchema(
       severity: "warning",
       message: `Description is ${parsed.description.length} characters (max 100)`,
       path: "description",
+    });
+  }
+
+  // Step 10: Return pass message, if no errors or warnings found
+
+  if (results.length == 0) {
+    results.push({
+      id: "all-valid",
+      rule: "No errors",
+      description: "Server card is valid",
+      status: "pass",
+      message: "Server card is valid",
     });
   }
 

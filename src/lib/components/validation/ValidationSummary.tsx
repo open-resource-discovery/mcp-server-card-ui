@@ -3,7 +3,7 @@ import type {
   ValidationStatus,
 } from "@lib/types/validation";
 import { Badge } from "@lib/components/ui/badge";
-import { CheckCircle, XCircle, AlertTriangle, Loader2 } from "lucide-react";
+import { XCircle, AlertTriangle, Loader2 } from "lucide-react";
 import { cn } from "@lib/utils/cn";
 
 interface ValidationSummaryProps {
@@ -38,20 +38,6 @@ export function ValidationSummary({
           </>
         ) : (
           <>
-            {summary.pass > 0 && (
-              <Badge
-                data-testid="validation-badge-pass"
-                variant="success"
-                className={cn(
-                  "flex items-center gap-1 cursor-pointer transition-opacity",
-                  activeFilter && activeFilter !== "pass" && "opacity-40",
-                )}
-                onClick={() => toggle("pass")}
-              >
-                <CheckCircle className="h-3 w-3" />
-                {summary.pass} passed
-              </Badge>
-            )}
             {summary.warning > 0 && (
               <Badge
                 data-testid="validation-badge-warning"
