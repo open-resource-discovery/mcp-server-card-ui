@@ -11,7 +11,7 @@ interface ValidationState {
   isValidating: boolean;
   lastValidatedAt: number | null;
 
-  validate: (rawJson: string) => void;
+  validate: (rawJson: string) => Promise<void>;
   clear: () => void;
 }
 
@@ -41,7 +41,7 @@ export const useValidationStore = create<ValidationState>((set) => ({
   isValidating: false,
   lastValidatedAt: null,
 
-  validate: (rawJson: string) => {
+  validate: async (rawJson: string) => {
     set({ isValidating: true });
     try {
       const results = validateMCPServerCardSchema(rawJson);

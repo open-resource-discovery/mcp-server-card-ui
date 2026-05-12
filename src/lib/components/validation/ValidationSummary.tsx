@@ -3,7 +3,7 @@ import type {
   ValidationStatus,
 } from "@lib/types/validation";
 import { Badge } from "@lib/components/ui/badge";
-import { XCircle, AlertTriangle, Loader2 } from "lucide-react";
+import { XCircle, AlertTriangle } from "lucide-react";
 import { cn } from "@lib/utils/cn";
 
 interface ValidationSummaryProps {
@@ -16,8 +16,6 @@ interface ValidationSummaryProps {
 
 export function ValidationSummary({
   summary,
-  isValidating,
-  lastValidatedAt,
   activeFilter,
   onFilterChange,
 }: ValidationSummaryProps) {
@@ -31,50 +29,35 @@ export function ValidationSummary({
       className="flex items-center justify-between"
     >
       <div className="flex items-center gap-2">
-        {isValidating ? (
-          <>
-            <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
-            <span className="text-sm text-muted-foreground">Validating...</span>
-          </>
-        ) : (
-          <>
-            {summary.warning > 0 && (
-              <Badge
-                data-testid="validation-badge-warning"
-                variant="warning"
-                className={cn(
-                  "flex items-center gap-1 cursor-pointer transition-opacity",
-                  activeFilter && activeFilter !== "warning" && "opacity-40",
-                )}
-                onClick={() => toggle("warning")}
-              >
-                <AlertTriangle className="h-3 w-3" />
-                {summary.warning} warnings
-              </Badge>
+        {summary.warning > 0 && (
+          <Badge
+            data-testid="validation-badge-warning"
+            variant="warning"
+            className={cn(
+              "flex items-center gap-1 cursor-pointer transition-opacity bg-warning text-white rounded-full",
+              activeFilter && activeFilter !== "warning" && "opacity-40",
             )}
-            {summary.fail > 0 && (
-              <Badge
-                data-testid="validation-badge-fail"
-                variant="error"
-                className={cn(
-                  "flex items-center gap-1 cursor-pointer transition-opacity",
-                  activeFilter && activeFilter !== "fail" && "opacity-40",
-                )}
-                onClick={() => toggle("fail")}
-              >
-                <XCircle className="h-3 w-3" />
-                {summary.fail} failed
-              </Badge>
+            onClick={() => toggle("warning")}
+          >
+            <AlertTriangle className="h-3 w-3" />
+            {summary.warning} warnings
+          </Badge>
+        )}
+        {summary.fail > 0 && (
+          <Badge
+            data-testid="validation-badge-fail"
+            variant="error"
+            className={cn(
+              "flex items-center gap-1 cursor-pointer transition-opacity bg-error text-white rounded-full",
+              activeFilter && activeFilter !== "fail" && "opacity-40",
             )}
-          </>
+            onClick={() => toggle("fail")}
+          >
+            <XCircle className="h-3 w-3" />
+            {summary.fail} failed
+          </Badge>
         )}
       </div>
-
-      {lastValidatedAt && !isValidating && (
-        <span className="text-xs text-muted-foreground">
-          Last validated: {new Date(lastValidatedAt).toLocaleTimeString()}
-        </span>
-      )}
     </div>
   );
 }

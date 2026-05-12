@@ -45,6 +45,7 @@
   --sidebar-border: oklch(0.928 0.006 264.531);
   --sidebar-ring: oklch(0.707 0.022 261.325);
   /* Syntax highlighting tokens (light) */
+  --c-accent: #4a9696;
   --hljs-attr: #881391;
   --hljs-string: #a31515;
   --hljs-number: #098658;
@@ -87,6 +88,8 @@
   --sidebar-accent-foreground: #d4d4d4;
   --sidebar-border: #3e3e42;
   --sidebar-ring: #0098ff;
+  /* Semantic colors */
+  --c-accent: #27e0d1;
   /* Syntax highlighting tokens (dark) */
   --hljs-attr: #9cdcfe;
   --hljs-string: #ce9178;
@@ -135,7 +138,6 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
   /* Semantic colors */
-  --color-success: #3a9b84;
   --color-warning: #ff9800;
   --color-error: #f44747;
   --color-info: #0098ff;
