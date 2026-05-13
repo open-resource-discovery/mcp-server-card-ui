@@ -4,7 +4,7 @@ require("dotenv").config({
   path: require("path").resolve(__dirname, "../.env"),
 });
 
-const baseUrl = process.env.BASE_URL || "/";
+const baseUrl = process.env.BASE_URL || "/mcp-server-card-ui/";
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
