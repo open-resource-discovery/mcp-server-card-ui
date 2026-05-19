@@ -146,7 +146,7 @@ export default function Playground(): React.JSX.Element {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              height: "calc(100vh - var(--ifm-navbar-height, 60px))",
+              height: "calc(100dvh - var(--ifm-navbar-height, 60px))",
               color: "var(--ifm-color-danger)",
             }}
           >
@@ -157,7 +157,7 @@ export default function Playground(): React.JSX.Element {
           ref={containerRef}
           style={{
             width: "100%",
-            height: "calc(100vh - var(--ifm-navbar-height, 60px))",
+            height: "calc(100dvh - var(--ifm-navbar-height, 60px))",
           }}
         />
       </div>
