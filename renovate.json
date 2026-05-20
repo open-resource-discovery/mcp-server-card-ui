@@ -65,7 +65,8 @@
       "matchPackageNames": [
         "/^@docusaurus\\//",
         "@mdx-js/react",
-        "docusaurus-plugin-sass"
+        "docusaurus-plugin-sass",
+        "@babel/plugin-transform-modules-systemjs"
       ]
     },
     {
