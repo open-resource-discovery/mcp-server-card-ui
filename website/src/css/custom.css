@@ -644,3 +644,89 @@ details[open] > .te-section-title::before {
 .te-error {
   color: var(--ifm-color-danger);
 }
+
+/* ===== Mobile: hide search and GitHub from top bar ===== */
+@media (max-width: 996px) {
+  nav.navbar
+    .navbar__items--right
+    :is(
+      .navbar__search,
+      [class*="searchbarContainer_"],
+      [class*="searchBarContainer_"],
+      [class*="navbarSearchContainer"]
+    ),
+  nav.navbar .navbar__items--right .header-github-pill {
+    display: none !important;
+  }
+}
+
+/* ===== Mobile sidebar: search bar theming ===== */
+@media (max-width: 996px) {
+  html[data-theme="light"]
+    nav.navbar
+    .navbar-sidebar__search
+    :is(
+      .navbar__search,
+      [class*="searchbarContainer_"],
+      [class*="searchBarContainer_"]
+    ) {
+    background: var(--ifm-background-surface-color) !important;
+    border: 1px solid var(--ifm-color-emphasis-200) !important;
+    border-radius: 8px;
+    max-width: 100%;
+    width: 100%;
+    padding: var(--ifm-menu-link-padding-vertical)
+      var(--ifm-menu-link-padding-horizontal) !important;
+    margin-left: 0;
+  }
+
+  html[data-theme="dark"]
+    nav.navbar
+    .navbar-sidebar__search
+    :is(
+      .navbar__search,
+      [class*="searchbarContainer_"],
+      [class*="searchBarContainer_"]
+    ) {
+    background: var(--ifm-background-color) !important;
+    border: 1px solid var(--ifm-color-emphasis-300) !important;
+    border-radius: 8px;
+    max-width: 100%;
+    width: 100%;
+    padding: var(--ifm-menu-link-padding-vertical)
+      var(--ifm-menu-link-padding-horizontal) !important;
+    margin-left: 0;
+  }
+
+  html[data-theme="light"]
+    nav.navbar
+    .navbar-sidebar__search
+    [class*="searchHintContainer_"],
+  html[data-theme="dark"]
+    nav.navbar
+    .navbar-sidebar__search
+    [class*="searchHintContainer_"] {
+    display: none !important;
+  }
+
+  html[data-theme="light"]
+    nav.navbar
+    :is(input.navbar__search-input, input[class*="searchInput_"]),
+  html[data-theme="dark"]
+    nav.navbar
+    :is(input.navbar__search-input, input[class*="searchInput_"]) {
+    max-width: 100%;
+  }
+
+  html[data-theme="light"] nav.navbar .header-github-pill,
+  html[data-theme="dark"] nav.navbar .header-github-pill {
+    padding: var(--ifm-menu-link-padding-vertical)
+      var(--ifm-menu-link-padding-horizontal);
+  }
+}
+@media (max-width: 576px) {
+  nav.navbar .navbar-sidebar__search input.navbar__search-input:not(:focus),
+  nav.navbar .navbar-sidebar__search input[class*="searchInput_"]:not(:focus) {
+    width: auto !important;
+  }
+}
