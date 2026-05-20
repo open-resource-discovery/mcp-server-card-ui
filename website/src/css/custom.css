@@ -711,6 +711,17 @@ details[open] > .te-section-title::before {
 
   html[data-theme="light"]
     nav.navbar
+    .navbar-sidebar__search
+    [class*="searchBar_"],
+  html[data-theme="dark"]
+    nav.navbar
+    .navbar-sidebar__search
+    [class*="searchBar_"] {
+    width: 100% !important;
+  }
+
+  html[data-theme="light"]
+    nav.navbar
     :is(input.navbar__search-input, input[class*="searchInput_"]),
   html[data-theme="dark"]
     nav.navbar
@@ -722,6 +733,14 @@ details[open] > .te-section-title::before {
   html[data-theme="dark"] nav.navbar .header-github-pill {
     padding: var(--ifm-menu-link-padding-vertical)
       var(--ifm-menu-link-padding-horizontal);
+  }
+  /* --- Dropdown: anchor to left in sidebar --- */
+  nav.navbar .navbar-sidebar__search [class*="dropdownMenu"] {
+    left: 0 !important;
+    right: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
   }
 }
 @media (max-width: 576px) {
