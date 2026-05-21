@@ -1,6 +1,6 @@
 import { Collapsible as BaseCollapsible } from "@base-ui/react/collapsible";
 
-export const CollapsibleRoot = BaseCollapsible.Root;
-export const Collapsible = BaseCollapsible.Root;
-export const CollapsibleTrigger = BaseCollapsible.Trigger;
-export const CollapsibleContent = BaseCollapsible.Panel;
+export const CollapsibleRoot: typeof BaseCollapsible.Root = BaseCollapsible.Root;
+export const Collapsible: typeof BaseCollapsible.Root = BaseCollapsible.Root;
+export const CollapsibleTrigger: typeof BaseCollapsible.Trigger = BaseCollapsible.Trigger;
+export const CollapsibleContent: typeof BaseCollapsible.Panel = BaseCollapsible.Panel;
