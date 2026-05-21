@@ -38,6 +38,10 @@ export default defineConfig(({ mode }) => {
         "@lib": resolve(__dirname, "./src/lib"),
         "@demo": resolve(__dirname, "./src/demo"),
       },
+      dedupe: ["react", "react-dom"],
+    },
+    optimizeDeps: {
+      include: ["@open-resource-discovery/ui-components"],
     },
     build: isLib
       ? {
