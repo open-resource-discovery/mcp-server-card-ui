@@ -89,7 +89,7 @@ export function MCPRightPanel({
             >
               Validation
               {summary.fail > 0 && (
-                <Badge variant="error" className="h-5 min-w-5 px-1 text-xs">
+                <Badge variant="destructive" className="h-5 min-w-5 px-1 text-xs">
                   {summary.fail}
                 </Badge>
               )}

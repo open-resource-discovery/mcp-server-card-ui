@@ -5,7 +5,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@lib/components/ui/card";
-import { Accordion } from "@lib/components/ui/accordion";
 import { ResourceCard } from "@lib/components/overview/ResourceCard";
 import { FileText } from "lucide-react";
 
@@ -23,11 +22,9 @@ export function ResourcesSection({ resources }: ResourcesSectionProps) {
         </CardTitle>
       </CardHeader>
       <CardContent className="px-4 pb-4 pt-0">
-        <Accordion type="multiple" className="w-full">
-          {resources.map((resource) => (
-            <ResourceCard key={resource.uri} resource={resource} />
-          ))}
-        </Accordion>
+        {resources.map((resource) => (
+          <ResourceCard key={resource.uri} resource={resource} />
+        ))}
       </CardContent>
     </Card>
   );

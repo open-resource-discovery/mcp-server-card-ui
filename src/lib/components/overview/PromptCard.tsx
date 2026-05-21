@@ -1,31 +1,35 @@
+import { useState } from "react";
 import type { Prompt } from "../../types/mcp-protocol";
 import {
-  AccordionItem,
-  AccordionTrigger,
-  AccordionContent,
-} from "@lib/components/ui/accordion";
+  Collapsible,
+  CollapsibleTrigger,
+  CollapsibleContent,
+} from "@lib/components/ui/collapsible";
 import { Badge } from "@lib/components/ui/badge";
 import { Button } from "@lib/components/ui/button";
 import { MarkdownText } from "@lib/components/ui/MarkdownText";
 import { useUIStore } from "@lib/stores/uiStore";
-import { Play } from "lucide-react";
+import { ChevronDown, Play } from "lucide-react";
+import { cn } from "@lib/utils/cn";
 
 interface PromptCardProps {
   prompt: Prompt;
 }
 
 export function PromptCard({ prompt }: PromptCardProps) {
+  const [open, setOpen] = useState(false);
   const displayName = prompt.title ?? prompt.name;
 
   return (
-    <AccordionItem
-      value={prompt.name}
+    <Collapsible
+      open={open}
+      onOpenChange={setOpen}
       data-testid={`prompt-item-${prompt.name}`}
       className="border-b last:border-b-0"
     >
-      <AccordionTrigger
+      <CollapsibleTrigger
         data-testid={`prompt-trigger-${prompt.name}`}
-        className="hover:no-underline hover:bg-muted/50 rounded-md px-2 -mx-2 transition-colors py-3"
+        className="flex w-full items-center justify-between py-3 text-sm font-medium transition-all hover:bg-muted/50 rounded-md px-2 -mx-2 cursor-pointer"
       >
         <div className="flex flex-1 flex-col gap-0.5 text-left min-w-0">
           {prompt.arguments && prompt.arguments.length > 0 && (
@@ -43,68 +47,78 @@ export function PromptCard({ prompt }: PromptCardProps) {
             </span>
           )}
         </div>
-      </AccordionTrigger>
-      <AccordionContent>
-        <div className="flex flex-col gap-2 pl-2">
-          {prompt.description && (
-            <MarkdownText
-              text={prompt.description}
-              className="text-xs text-muted-foreground"
-            />
+        <ChevronDown
+          className={cn(
+            "h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200",
+            open && "rotate-180",
           )}
+        />
+      </CollapsibleTrigger>
+      <CollapsibleContent>
+        <div className="pb-4 pt-0">
+          <div className="flex flex-col gap-2 pl-2">
+            {prompt.description && (
+              <MarkdownText
+                text={prompt.description}
+                className="text-xs text-muted-foreground"
+              />
+            )}
 
-          {prompt.arguments && prompt.arguments.length > 0 && (
-            <div className="flex flex-col gap-1.5">
-              <span className="text-xs font-medium text-muted-foreground">
-                Arguments
-              </span>
-              <div className="flex flex-col gap-2">
-                {prompt.arguments.map((arg) => (
-                  <div
-                    key={arg.name}
-                    className="flex flex-col gap-0.5 rounded border p-2"
-                  >
-                    <div className="flex items-center gap-2">
-                      <span className="font-mono text-xs font-semibold">
-                        {arg.name}
-                      </span>
-                      {arg.title && arg.title !== arg.name && (
-                        <span className="text-xs text-muted-foreground">
-                          {arg.title}
+            {prompt.arguments && prompt.arguments.length > 0 && (
+              <div className="flex flex-col gap-1.5">
+                <span className="text-xs font-medium text-muted-foreground">
+                  Arguments
+                </span>
+                <div className="flex flex-col gap-2">
+                  {prompt.arguments.map((arg) => (
+                    <div
+                      key={arg.name}
+                      className="flex flex-col gap-0.5 rounded border p-2"
+                    >
+                      <div className="flex items-center gap-2">
+                        <span className="font-mono text-xs font-semibold">
+                          {arg.name}
                         </span>
-                      )}
-                      {arg.required ? (
-                        <Badge variant="warning">required</Badge>
-                      ) : (
-                        <Badge variant="secondary">optional</Badge>
+                        {arg.title && arg.title !== arg.name && (
+                          <span className="text-xs text-muted-foreground">
+                            {arg.title}
+                          </span>
+                        )}
+                        {arg.required ? (
+                          <Badge variant="warning">required</Badge>
+                        ) : (
+                          <Badge variant="secondary">optional</Badge>
+                        )}
+                      </div>
+                      {arg.description && (
+                        <MarkdownText
+                          text={arg.description}
+                          className="text-xs text-muted-foreground"
+                          clampLines={2}
+                        />
                       )}
                     </div>
-                    {arg.description && (
-                      <MarkdownText
-                        text={arg.description}
-                        className="text-xs text-muted-foreground"
-                        clampLines={2}
-                      />
-                    )}
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
-          <div className="pt-1">
-            <Button
-              variant="outline"
-              size="sm"
-              data-testid={`prompt-try-it-${prompt.name}`}
-              onClick={() => useUIStore.getState().switchToPrompt(prompt.name)}
-            >
-              <Play className="h-3 w-3" />
-              Try it
-            </Button>
+            <div className="pt-1">
+              <Button
+                variant="outline"
+                size="sm"
+                data-testid={`prompt-try-it-${prompt.name}`}
+                onClick={() =>
+                  useUIStore.getState().switchToPrompt(prompt.name)
+                }
+              >
+                <Play className="h-3 w-3" />
+                Try it
+              </Button>
+            </div>
           </div>
         </div>
-      </AccordionContent>
-    </AccordionItem>
+      </CollapsibleContent>
+    </Collapsible>
   );
 }

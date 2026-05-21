@@ -5,7 +5,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@lib/components/ui/card";
-import { Accordion } from "@lib/components/ui/accordion";
 import { ToolCard } from "@lib/components/overview/ToolCard";
 import { Wrench } from "lucide-react";
 
@@ -24,11 +23,9 @@ export function ToolsSection({ tools, readOnly }: ToolsSectionProps) {
         </CardTitle>
       </CardHeader>
       <CardContent className="px-4 pb-4 pt-0">
-        <Accordion type="multiple" className="w-full">
-          {tools.map((tool) => (
-            <ToolCard key={tool.name} tool={tool} readOnly={readOnly} />
-          ))}
-        </Accordion>
+        {tools.map((tool) => (
+          <ToolCard key={tool.name} tool={tool} readOnly={readOnly} />
+        ))}
       </CardContent>
     </Card>
   );

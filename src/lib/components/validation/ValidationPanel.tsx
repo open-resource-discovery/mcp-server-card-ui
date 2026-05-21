@@ -3,7 +3,7 @@ import { useValidationStore } from "@lib/stores/validationStore";
 import { ValidationSummary } from "./ValidationSummary";
 import { ValidationResultCard } from "./ValidationResultCard";
 import Checkmark from "./Checkmark";
-import Loader from "./Loader";
+import { Spinner } from "@open-resource-discovery/ui-components";
 import type { ValidationStatus } from "@lib/types/validation";
 
 const sortOrder: Record<ValidationStatus, number> = {
@@ -49,7 +49,7 @@ export function ValidationPanel() {
       <div className="flex-1 overflow-y-auto p-5 flex flex-col">
         {isValidating ? (
           <div className="flex-1 flex flex-col items-center justify-center gap-8">
-            <Loader />
+          <Spinner size="lg" data-testid="loading-spinner" />
             <h2 className="text-xl font-semibold text-foreground">
               Validating
             </h2>

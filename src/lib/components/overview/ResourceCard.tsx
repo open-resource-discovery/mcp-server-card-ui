@@ -1,11 +1,14 @@
+import { useState } from "react";
 import type { Resource } from "../../types/mcp-protocol";
 import {
-  AccordionItem,
-  AccordionTrigger,
-  AccordionContent,
-} from "@lib/components/ui/accordion";
+  Collapsible,
+  CollapsibleTrigger,
+  CollapsibleContent,
+} from "@lib/components/ui/collapsible";
 import { Badge } from "@lib/components/ui/badge";
 import { MarkdownText } from "@lib/components/ui/MarkdownText";
+import { ChevronDown } from "lucide-react";
+import { cn } from "@lib/utils/cn";
 
 interface ResourceCardProps {
   resource: Resource;
@@ -20,17 +23,19 @@ function formatBytes(bytes: number): string {
 }
 
 export function ResourceCard({ resource }: ResourceCardProps) {
+  const [open, setOpen] = useState(false);
   const displayName = resource.title ?? resource.name;
 
   return (
-    <AccordionItem
-      value={resource.uri}
+    <Collapsible
+      open={open}
+      onOpenChange={setOpen}
       data-testid={`resource-item-${resource.uri}`}
       className="border-b last:border-b-0"
     >
-      <AccordionTrigger
+      <CollapsibleTrigger
         data-testid={`resource-trigger-${resource.uri}`}
-        className="hover:no-underline hover:bg-muted/50 rounded-md px-2 -mx-2 transition-colors py-3"
+        className="flex w-full items-center justify-between py-3 text-sm font-medium transition-all hover:bg-muted/50 rounded-md px-2 -mx-2 cursor-pointer"
       >
         <div className="flex flex-1 flex-col gap-0.5 text-left min-w-0">
           {resource.mimeType && (
@@ -45,70 +50,78 @@ export function ResourceCard({ resource }: ResourceCardProps) {
             </span>
           )}
         </div>
-      </AccordionTrigger>
-      <AccordionContent>
-        <div className="flex flex-col gap-2 pl-2">
-          <div className="flex items-center gap-1.5">
-            <span className="text-xs text-muted-foreground">URI:</span>
-            <code className="font-mono text-xs break-all">{resource.uri}</code>
-          </div>
-
-          {resource.description && (
-            <MarkdownText
-              text={resource.description}
-              className="text-xs text-muted-foreground"
-            />
+        <ChevronDown
+          className={cn(
+            "h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200",
+            open && "rotate-180",
           )}
+        />
+      </CollapsibleTrigger>
+      <CollapsibleContent>
+        <div className="pb-4 pt-0">
+          <div className="flex flex-col gap-2 pl-2">
+            <div className="flex items-center gap-1.5">
+              <span className="text-xs text-muted-foreground">URI:</span>
+              <code className="font-mono text-xs break-all">{resource.uri}</code>
+            </div>
 
-          <div className="flex flex-wrap items-center gap-2">
-            {resource.size !== undefined && (
-              <Badge variant="outline">{formatBytes(resource.size)}</Badge>
+            {resource.description && (
+              <MarkdownText
+                text={resource.description}
+                className="text-xs text-muted-foreground"
+              />
             )}
-          </div>
 
-          {resource.annotations && (
-            <div className="flex flex-col gap-1.5 mt-1">
-              {resource.annotations.audience &&
-                resource.annotations.audience.length > 0 && (
+            <div className="flex flex-wrap items-center gap-2">
+              {resource.size !== undefined && (
+                <Badge variant="outline">{formatBytes(resource.size)}</Badge>
+              )}
+            </div>
+
+            {resource.annotations && (
+              <div className="flex flex-col gap-1.5 mt-1">
+                {resource.annotations.audience &&
+                  resource.annotations.audience.length > 0 && (
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-xs text-muted-foreground">
+                        Audience:
+                      </span>
+                      <div className="flex gap-1.5">
+                        {resource.annotations.audience.map((role) => (
+                          <Badge key={role} variant="secondary">
+                            {role}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                {resource.annotations.priority !== undefined && (
                   <div className="flex items-center gap-1.5">
                     <span className="text-xs text-muted-foreground">
-                      Audience:
+                      Priority:
                     </span>
-                    <div className="flex gap-1.5">
-                      {resource.annotations.audience.map((role) => (
-                        <Badge key={role} variant="secondary">
-                          {role}
-                        </Badge>
-                      ))}
-                    </div>
+                    <span className="text-xs font-mono">
+                      {resource.annotations.priority}
+                    </span>
                   </div>
                 )}
 
-              {resource.annotations.priority !== undefined && (
-                <div className="flex items-center gap-1.5">
-                  <span className="text-xs text-muted-foreground">
-                    Priority:
-                  </span>
-                  <span className="text-xs font-mono">
-                    {resource.annotations.priority}
-                  </span>
-                </div>
-              )}
-
-              {resource.annotations.lastModified && (
-                <div className="flex items-center gap-1.5">
-                  <span className="text-xs text-muted-foreground">
-                    Last Modified:
-                  </span>
-                  <span className="text-xs font-mono">
-                    {resource.annotations.lastModified}
-                  </span>
-                </div>
-              )}
-            </div>
-          )}
+                {resource.annotations.lastModified && (
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-xs text-muted-foreground">
+                      Last Modified:
+                    </span>
+                    <span className="text-xs font-mono">
+                      {resource.annotations.lastModified}
+                    </span>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         </div>
-      </AccordionContent>
-    </AccordionItem>
+      </CollapsibleContent>
+    </Collapsible>
   );
 }

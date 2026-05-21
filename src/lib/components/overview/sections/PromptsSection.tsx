@@ -5,7 +5,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@lib/components/ui/card";
-import { Accordion } from "@lib/components/ui/accordion";
 import { PromptCard } from "@lib/components/overview/PromptCard";
 import { MessageSquare } from "lucide-react";
 
@@ -23,11 +22,9 @@ export function PromptsSection({ prompts }: PromptsSectionProps) {
         </CardTitle>
       </CardHeader>
       <CardContent className="px-4 pb-4 pt-0">
-        <Accordion type="multiple" className="w-full">
-          {prompts.map((prompt) => (
-            <PromptCard key={prompt.name} prompt={prompt} />
-          ))}
-        </Accordion>
+        {prompts.map((prompt) => (
+          <PromptCard key={prompt.name} prompt={prompt} />
+        ))}
       </CardContent>
     </Card>
   );

@@ -37,7 +37,7 @@ export function MobileBottomBar({ showSettings = true }: MobileBottomBarProps) {
         <span className="ml-1 text-xs">Server Card</span>
         {summary.fail > 0 && (
           <Badge
-            variant="error"
+            variant="destructive"
             className="absolute -top-1 -right-1 h-4 min-w-4 justify-center p-0 text-[10px]"
             aria-hidden="true"
           >

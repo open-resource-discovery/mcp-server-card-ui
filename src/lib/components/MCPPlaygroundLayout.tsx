@@ -1,6 +1,5 @@
 import { lazy, Suspense } from "react";
-import { Panel, Group as PanelGroup, Separator } from "react-resizable-panels";
-import { GripVertical } from "lucide-react";
+import { SplitPane } from "@open-resource-discovery/ui-components";
 import { useIsLargeScreen } from "@lib/hooks/useMediaQuery";
 import { useUIStore } from "@lib/stores/uiStore";
 import { useAutoValidate } from "@lib/hooks/useAutoValidate";
@@ -42,13 +41,7 @@ interface MCPPlaygroundLayoutProps {
 }
 
 function ResizeHandle() {
-  return (
-    <Separator className="group relative flex w-2 items-center justify-center bg-border/50 transition-colors hover:bg-border">
-      <div className="absolute z-10 flex h-8 w-4 items-center justify-center rounded-sm bg-border opacity-0 transition-opacity group-hover:opacity-100">
-        <GripVertical className="h-4 w-4 text-muted-foreground" />
-      </div>
-    </Separator>
-  );
+  return <SplitPane.Handle />;
 }
 
 export function MCPPlaygroundLayout({
@@ -85,10 +78,10 @@ export function MCPPlaygroundLayout({
   if (useDesktopLayout) {
     return (
       <div className={cn("h-full overflow-hidden", className)}>
-        <PanelGroup orientation="horizontal" className="h-full">
+        <SplitPane.Root orientation="horizontal" className="h-full">
           {showSettings && (
             <>
-              <Panel
+              <SplitPane.Panel
                 defaultSize={20}
                 minSize={15}
                 collapsible
@@ -97,23 +90,23 @@ export function MCPPlaygroundLayout({
                 <Suspense fallback={<SettingsPanelFallback />}>
                   <MCPSettingsPanel />
                 </Suspense>
-              </Panel>
+              </SplitPane.Panel>
               <ResizeHandle />
             </>
           )}
-          <Panel defaultSize={showSettings ? 45 : 55} minSize={30}>
+          <SplitPane.Panel defaultSize={showSettings ? 45 : 55} minSize={30}>
             <ServerCardEditor readOnly={readOnly} />
-          </Panel>
+          </SplitPane.Panel>
           <ResizeHandle />
-          <Panel defaultSize={showSettings ? 35 : 45} minSize={20}>
+          <SplitPane.Panel defaultSize={showSettings ? 35 : 45} minSize={20}>
             <MCPRightPanel
               showFunctions={showFunctions}
               showValidation={showValidation}
               showRawHttp={showRawHttp}
               defaultTab={defaultTab}
             />
-          </Panel>
-        </PanelGroup>
+          </SplitPane.Panel>
+        </SplitPane.Root>
       </div>
     );
   }
