@@ -183,7 +183,10 @@ export function FunctionInput() {
           </Select.Portal>
         </Select.Root>
 
-        <Select.Root value={selectedName ?? ""} onValueChange={(v) => handleSelectName(v as string)}>
+        <Select.Root
+          value={selectedName ?? ""}
+          onValueChange={(v) => handleSelectName(v as string)}
+        >
           <Select.Trigger className="h-8 flex-1 text-xs">
             <Select.Value placeholder={`Select ${mode}...`} />
             <Select.Icon />

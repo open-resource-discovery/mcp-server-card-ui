@@ -277,7 +277,10 @@ export function MCPConnectionSettings() {
           value={connAuthType}
           onValueChange={(v) => setManualAuthType(v as ConnAuthType)}
         >
-          <Select.Trigger className="h-8 text-xs" data-testid="auth-type-select">
+          <Select.Trigger
+            className="h-8 text-xs"
+            data-testid="auth-type-select"
+          >
             <Select.Value />
             <Select.Icon />
           </Select.Trigger>

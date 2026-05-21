@@ -96,7 +96,9 @@ export function ToolCard({ tool, readOnly }: ToolCardProps) {
                   {Object.entries(tool._meta).map(([key, value]) => (
                     <Badge key={key} variant="outline">
                       {key}:{" "}
-                      {typeof value === "string" ? value : JSON.stringify(value)}
+                      {typeof value === "string"
+                        ? value
+                        : JSON.stringify(value)}
                     </Badge>
                   ))}
                 </div>

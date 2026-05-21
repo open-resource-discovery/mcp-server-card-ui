@@ -49,7 +49,7 @@ export function ValidationPanel() {
       <div className="flex-1 overflow-y-auto p-5 flex flex-col">
         {isValidating ? (
           <div className="flex-1 flex flex-col items-center justify-center gap-8">
-          <Spinner size="lg" data-testid="loading-spinner" />
+            <Spinner size="lg" data-testid="loading-spinner" />
             <h2 className="text-xl font-semibold text-foreground">
               Validating
             </h2>

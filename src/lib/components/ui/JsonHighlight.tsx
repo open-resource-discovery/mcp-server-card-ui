@@ -6,7 +6,11 @@ interface JsonHighlightProps {
   showCopy?: boolean;
 }
 
-export function JsonHighlight({ code, className, showCopy = false }: JsonHighlightProps) {
+export function JsonHighlight({
+  code,
+  className,
+  showCopy = false,
+}: JsonHighlightProps) {
   return (
     <CodeBlock
       code={code}

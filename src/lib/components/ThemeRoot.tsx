@@ -42,7 +42,11 @@ export function ThemeRoot({ className, children }: ThemeRootProps) {
   return (
     <div
       ref={setContainer}
-      className={cn("mcp-root ord-ui", resolvedTheme === "dark" && "dark", className)}
+      className={cn(
+        "mcp-root ord-ui",
+        resolvedTheme === "dark" && "dark",
+        className,
+      )}
     >
       <PortalContainerContext.Provider value={container}>
         {children}
