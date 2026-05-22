@@ -34,7 +34,7 @@ export function MCPConnectionSettings() {
     serverInfo,
     serverCapabilities,
   } = useMCPConnectionStore();
-  const { parsedCard, setRawJson } = useServerCardStore();
+  const { parsedCard, reset } = useServerCardStore();
   const servers = usePredefinedServersStore((s) => s.servers);
   const addCustomServer = usePredefinedServersStore((s) => s.addCustomServer);
   const select = usePredefinedServersStore((s) => s.select);
@@ -117,8 +117,14 @@ export function MCPConnectionSettings() {
           const first = discovered[0];
           select(first.id);
           setFromPredefined(first);
-          setRawJson("");
+          reset();
           setUrl("");
+          if (
+            connectionStatus === "connected" ||
+            connectionStatus === "error"
+          ) {
+            await disconnect();
+          }
           await connect();
           return;
         }
@@ -144,7 +150,10 @@ export function MCPConnectionSettings() {
       addCustomServer(server);
       select(server.id);
       setFromPredefined(server);
-      setRawJson("");
+      reset();
+      if (connectionStatus === "connected" || connectionStatus === "error") {
+        await disconnect();
+      }
       await connect();
     } finally {
       setIsAdding(false);
@@ -152,12 +161,14 @@ export function MCPConnectionSettings() {
   }, [
     url,
     transportType,
+    connectionStatus,
     addCustomServer,
     select,
     setFromPredefined,
-    setRawJson,
+    reset,
     setUrl,
     connect,
+    disconnect,
   ]);
 
   const handleUrlKeyDown = useCallback(

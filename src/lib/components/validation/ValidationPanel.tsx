@@ -34,7 +34,7 @@ export function ValidationPanel() {
 
   return (
     <div data-testid="validation-panel" className="flex flex-col h-full">
-      {results.length > 0 && (
+      {results.length > 0 && !allPassed && (
         <div className="flex items-center px-5 py-4 border-b border-border min-h-14">
           <ValidationSummary
             summary={summary}

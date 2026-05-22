@@ -137,7 +137,7 @@ export class PlaygroundPage {
   }
 
   async goto() {
-    await this.page.goto(this.isDocusaurus ? "/playground" : "/");
+    await this.page.goto(this.isDocusaurus ? "./playground" : "/");
     await this.waitForPlaygroundReady();
   }
 
