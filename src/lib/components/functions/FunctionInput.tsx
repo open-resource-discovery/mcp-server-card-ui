@@ -185,7 +185,7 @@ export function FunctionInput() {
 
         <Select.Root
           value={selectedName ?? ""}
-          onValueChange={(v) => handleSelectName(v)}
+          onValueChange={(v) => typeof v === "string" && handleSelectName(v)}
         >
           <Select.Trigger className="h-8 flex-1 text-xs">
             <Select.Value placeholder={`Select ${mode}...`} />

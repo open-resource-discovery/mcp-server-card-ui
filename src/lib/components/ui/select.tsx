@@ -12,8 +12,8 @@ function SelectPortalInRoot(
   return <LibSelect.Portal {...props} container={container} />;
 }
 
-export const Select: typeof LibSelect & { Portal: typeof SelectPortalInRoot } =
-  Object.assign({}, LibSelect, {
-    Portal: SelectPortalInRoot,
-  });
+export const Select = {
+  ...LibSelect,
+  Portal: SelectPortalInRoot,
+};
 export { SimpleSelect };
