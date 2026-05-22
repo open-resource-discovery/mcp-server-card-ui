@@ -1,10 +1,15 @@
+import { forwardRef } from "react";
 import { Switch as LibSwitch } from "@open-resource-discovery/ui-components";
 import type { ComponentPropsWithoutRef } from "react";
 
-export function Switch(props: ComponentPropsWithoutRef<typeof LibSwitch.Root>) {
+export const Switch = forwardRef<
+  HTMLButtonElement,
+  ComponentPropsWithoutRef<typeof LibSwitch.Root>
+>(function Switch(props, ref) {
   return (
-    <LibSwitch.Root {...props}>
+    <LibSwitch.Root ref={ref} {...props}>
       <LibSwitch.Thumb />
     </LibSwitch.Root>
   );
-}
+});
+Switch.displayName = "Switch";
