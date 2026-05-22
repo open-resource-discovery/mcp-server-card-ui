@@ -48,7 +48,7 @@ export function ValidationSummary({
             data-testid="validation-badge-fail"
             variant="destructive"
             className={cn(
-              "flex items-center gap-1 cursor-pointer transition-opacity bg-destructive text-white rounded-full",
+              "flex items-center gap-1 cursor-pointer transition-opacity text-white rounded-full",
               activeFilter && activeFilter !== "fail" && "opacity-40",
             )}
             onClick={() => toggle("fail")}

@@ -4,6 +4,7 @@ import { useUIStore } from "@lib/stores/uiStore";
 import { useAutoValidate } from "@lib/hooks/useAutoValidate";
 import { ServerCardEditor } from "@lib/components/editor/ServerCardEditor";
 import { EditorRightPanel } from "./EditorRightPanel";
+import { ResizeHandle } from "./ResizeHandle";
 import {
   Sheet,
   SheetContent,
@@ -18,10 +19,6 @@ interface EditorLayoutProps {
   readOnly?: boolean;
   defaultTab?: "overview" | "validation";
   className?: string;
-}
-
-function ResizeHandle() {
-  return <SplitPane.Handle />;
 }
 
 export function EditorLayout({

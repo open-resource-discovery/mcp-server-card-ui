@@ -5,6 +5,7 @@ import { useAutoValidate } from "@lib/hooks/useAutoValidate";
 import { TextareaEditor } from "@lib/components/editor/TextareaEditor";
 import { useServerCardStore } from "@lib/stores/serverCardStore";
 import { ViewerRightPanel } from "./ViewerRightPanel";
+import { ResizeHandle } from "./ResizeHandle";
 import {
   Sheet,
   SheetContent,
@@ -17,10 +18,6 @@ interface ViewerLayoutProps {
   showValidation?: boolean;
   defaultTab?: "overview" | "validation";
   className?: string;
-}
-
-function ResizeHandle() {
-  return <SplitPane.Handle />;
 }
 
 export function ViewerLayout({

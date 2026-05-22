@@ -6,6 +6,7 @@ import { useAutoValidate } from "@lib/hooks/useAutoValidate";
 import { ServerCardEditor } from "@lib/components/editor/ServerCardEditor";
 import { MCPRightPanel } from "@lib/components/MCPRightPanel";
 import { MobileBottomBar } from "@lib/components/MobileBottomBar";
+import { ResizeHandle } from "@lib/components/layouts/ResizeHandle";
 import {
   Sheet,
   SheetContent,
@@ -38,10 +39,6 @@ interface MCPPlaygroundLayoutProps {
   defaultTab?: "overview" | "functions" | "rawhttp" | "validation";
   forceDesktop?: boolean;
   className?: string;
-}
-
-function ResizeHandle() {
-  return <SplitPane.Handle />;
 }
 
 export function MCPPlaygroundLayout({
