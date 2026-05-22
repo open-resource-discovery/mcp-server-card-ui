@@ -56,7 +56,7 @@ export function ServerHeader({ card }: ServerHeaderProps) {
       )}
 
       <div className="flex flex-wrap items-center gap-1.5">
-        {card.supportedProtocolVersions.map((v) => (
+        {card.supportedProtocolVersions?.map((v) => (
           <Badge key={v} variant="secondary" size="sm">
             Protocol {v}
           </Badge>

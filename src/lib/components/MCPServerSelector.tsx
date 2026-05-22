@@ -51,7 +51,7 @@ export function MCPServerSelector() {
     if (!server) return;
 
     // Disconnect previous session before switching
-    if (connectionStatus === "connected") {
+    if (connectionStatus === "connected" || connectionStatus === "error") {
       await disconnect();
     }
 

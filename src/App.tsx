@@ -19,7 +19,7 @@ function App() {
               showFunctions={true}
               showRawHttp={true}
               showSettings={true}
-              className="h-screen"
+              className="h-dvh"
             />
           }
         />

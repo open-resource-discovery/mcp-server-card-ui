@@ -37,7 +37,7 @@ export default defineConfig({
       name: "docusaurus",
       use: {
         ...devices["Desktop Chrome"],
-        baseURL: "http://localhost:3000",
+        baseURL: "http://localhost:3000/mcp-server-card-ui/",
       },
     },
   ],
