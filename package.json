@@ -9,26 +9,49 @@
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "unpkg": "./dist-standalone/mcp-server-card-ui.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/open-resource-discovery/mcp-server-card-ui.git"
+  },
+  "homepage": "https://github.com/open-resource-discovery/mcp-server-card-ui#readme",
+  "bugs": {
+    "url": "https://github.com/open-resource-discovery/mcp-server-card-ui/issues"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "server-card",
+    "react",
+    "ui",
+    "playground",
+    "viewer",
+    "editor"
+  ],
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "default": "./dist/index.js"
     },
     "./lite": {
+      "types": "./dist/playground-lite.d.ts",
       "import": "./dist/playground-lite.js",
-      "types": "./dist/playground-lite.d.ts"
+      "default": "./dist/playground-lite.js"
     },
     "./viewer": {
+      "types": "./dist/viewer.d.ts",
       "import": "./dist/viewer.js",
-      "types": "./dist/viewer.d.ts"
+      "default": "./dist/viewer.js"
     },
     "./editor": {
+      "types": "./dist/editor.d.ts",
       "import": "./dist/editor.js",
-      "types": "./dist/editor.d.ts"
+      "default": "./dist/editor.js"
     },
     "./card-view": {
+      "types": "./dist/card-view.d.ts",
       "import": "./dist/card-view.js",
-      "types": "./dist/card-view.d.ts"
+      "default": "./dist/card-view.js"
     },
     "./styles": "./dist/index.css",
     "./standalone": "./dist-standalone/mcp-server-card-ui.js",
@@ -51,8 +74,10 @@
     "dist-standalone/mcp-server-card-ui.css",
     "dist-standalone/mcp-initializer.js",
     "dist-standalone/index.html",
-    "dist-standalone/standalone.html",
     "dist-standalone/index.cjs",
+    "dist-standalone/oauth/callback/index.html",
+    "dist-standalone/predefined-servers.json",
+    "dist-standalone/favicon.svg",
     "README.md"
   ],
   "sideEffects": [
