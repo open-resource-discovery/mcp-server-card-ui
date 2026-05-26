@@ -45,8 +45,11 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Verify package contents
+        run: npm pack --dry-run
+
       - name: Publish to NPM
-        run: npm publish
+        run: npm publish --access public --provenance
 
   docker:
     if: inputs.docker
