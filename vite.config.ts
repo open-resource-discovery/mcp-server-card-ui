@@ -4,6 +4,17 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import dts from "vite-plugin-dts";
 import { resolve } from "path";
+import { readFileSync } from "fs";
+
+const pkg = JSON.parse(readFileSync("./package.json", "utf-8")) as {
+  dependencies?: Record<string, string>;
+  peerDependencies?: Record<string, string>;
+};
+const libExternals = [
+  ...Object.keys(pkg.dependencies ?? {}),
+  ...Object.keys(pkg.peerDependencies ?? {}),
+  "react/jsx-runtime",
+];
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
@@ -38,7 +49,7 @@ export default defineConfig(({ mode }) => {
         "@lib": resolve(__dirname, "./src/lib"),
         "@demo": resolve(__dirname, "./src/demo"),
       },
-      dedupe: ["react", "react-dom"],
+      dedupe: ["react", "react-dom", "react-resizable-panels"],
     },
     optimizeDeps: {
       include: ["@open-resource-discovery/ui-components"],
@@ -60,7 +71,7 @@ export default defineConfig(({ mode }) => {
             formats: ["es"],
           },
           rollupOptions: {
-            external: ["react", "react-dom", "react/jsx-runtime"],
+            external: libExternals,
             output: {
               globals: {
                 react: "React",
