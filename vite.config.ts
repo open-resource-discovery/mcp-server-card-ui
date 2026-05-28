@@ -19,6 +19,7 @@ const libExternals = [
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   const isLib = mode === "lib";
+  const isWatch = process.argv.includes("--watch");
   const isProduction = process.env.NODE_ENV === "production";
 
   return {
@@ -31,7 +32,7 @@ export default defineConfig(({ mode }) => {
     plugins: [
       react(),
       tailwindcss(),
-      ...(isLib
+      ...(isLib && !isWatch
         ? [
             dts({
               include: ["src/lib/**/*.ts", "src/lib/**/*.tsx"],

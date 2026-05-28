@@ -27,13 +27,13 @@ export function ServerHeader({ card }: ServerHeaderProps) {
 
         <div className="flex flex-1 flex-col gap-0.5 min-w-0">
           <p
-            className="font-mono text-[11px] text-muted-foreground leading-none"
+            className="font-mono text-[11px] text-muted-foreground leading-none m-0"
             data-testid="server-name"
           >
             {card.name}
           </p>
           <div className="flex items-center gap-2">
-            <h2 className="text-base font-semibold leading-tight truncate">
+            <h2 className="text-base font-semibold leading-tight truncate m-0">
               {card.title ?? card.name}
             </h2>
             <Badge
