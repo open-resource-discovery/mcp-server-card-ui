@@ -7,6 +7,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [unreleased]
 
+## [[0.1.0](https://github.com/open-resource-discovery/mcp-server-card-ui/releases/tag/v0.1.0)] - 2026-05-28
+
 ### Added
 
 - Standalone IIFE bundle for CDN / script-tag embedding with CSS layer stripping
@@ -18,3 +20,5 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Raw HTTP log viewer for inspecting MCP JSON-RPC traffic
 - Playground environment configuration via `VITE_*` env variables
 - Prompt execution support alongside tool calls in functions panel
+
+
