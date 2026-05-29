@@ -9,7 +9,10 @@ import { PromptsSection } from "@lib/components/overview/sections/PromptsSection
 import { ClientRequirementsSection } from "@lib/components/overview/sections/ClientRequirementsSection";
 import { ExtensionsSection } from "@lib/components/overview/sections/ExtensionsSection";
 import type { MCPServerCardDefinition } from "../../types/mcp-protocol";
-import { AlertTriangle, FileJson } from "lucide-react";
+import { InfoCard } from "@open-resource-discovery/ui-components";
+import { Badge } from "@lib/components/ui/badge";
+import { MarkdownText } from "@lib/components/ui/MarkdownText";
+import { AlertTriangle, ExternalLink, FileJson } from "lucide-react";
 
 interface MCPServerOverviewProps {
   readOnly?: boolean;
@@ -37,7 +40,7 @@ export function MCPServerOverview({ readOnly }: MCPServerOverviewProps) {
   if (!card) return null;
 
   return (
-    <div className="space-y-3 p-4">
+    <div className="space-y-3 p-4 h-full bg-background">
       {parseError && lastValidCard && !parsedCard && (
         <div className="flex items-start gap-2 rounded-lg border border-warning/50 bg-warning/10 p-3">
           <AlertTriangle className="h-4 w-4 text-warning mt-0.5 shrink-0" />
@@ -50,8 +53,53 @@ export function MCPServerOverview({ readOnly }: MCPServerOverviewProps) {
         </div>
       )}
 
-      <ServerHeader card={card} />
-      <CardSections card={card} readOnly={readOnly} />
+      <InfoCard>
+        <ServerHeader card={card} />
+        <InfoCard.Content>
+          {card.description && (
+            <InfoCard.Section>
+              <MarkdownText
+                text={card.description}
+                className="text-sm text-muted-foreground"
+              />
+            </InfoCard.Section>
+          )}
+
+          {(card.supportedProtocolVersions?.length || card.websiteUrl) && (
+            <InfoCard.Section className="flex-row flex-wrap items-center gap-1.5">
+              {card.supportedProtocolVersions?.map((v) => (
+                <Badge key={v} variant="secondary" size="sm">
+                  Protocol {v}
+                </Badge>
+              ))}
+              {card.websiteUrl && (
+                <a
+                  href={card.websiteUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
+                >
+                  <ExternalLink className="h-3 w-3" />
+                  {card.websiteUrl}
+                </a>
+              )}
+            </InfoCard.Section>
+          )}
+
+          {card.instructions && (
+            <InfoCard.Section>
+              <div className="rounded-md border bg-muted/50 px-3 py-2">
+                <p className="text-[11px] font-medium text-muted-foreground mb-0.5">
+                  Instructions
+                </p>
+                <MarkdownText text={card.instructions} className="text-sm" />
+              </div>
+            </InfoCard.Section>
+          )}
+
+          <CardSections card={card} readOnly={readOnly} />
+        </InfoCard.Content>
+      </InfoCard>
     </div>
   );
 }

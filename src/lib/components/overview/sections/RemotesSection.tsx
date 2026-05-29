@@ -1,11 +1,6 @@
 import { useState } from "react";
 import type { RemoteTransport } from "../../../types/mcp-protocol";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@lib/components/ui/card";
+import { Card } from "@open-resource-discovery/ui-components";
 import { Badge } from "@lib/components/ui/badge";
 import { Globe, Copy, Check } from "lucide-react";
 
@@ -49,13 +44,13 @@ function CopyableUrl({ url }: { url: string }) {
 export function RemotesSection({ remotes }: RemotesSectionProps) {
   return (
     <Card data-testid="remotes-section">
-      <CardHeader className="p-4 pb-2">
-        <CardTitle className="flex items-center gap-2 text-sm">
+      <Card.Header className="p-4 pb-2">
+        <Card.Title className="flex items-center gap-2 text-sm">
           <Globe className="h-4 w-4" />
           Remote Transports
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="px-4 pb-4 pt-0">
+        </Card.Title>
+      </Card.Header>
+      <Card.Content className="px-4 pb-4 pt-0">
         <div className="flex flex-col">
           {remotes.map((remote, idx) => (
             <div
@@ -88,7 +83,7 @@ export function RemotesSection({ remotes }: RemotesSectionProps) {
             </div>
           ))}
         </div>
-      </CardContent>
+      </Card.Content>
     </Card>
   );
 }

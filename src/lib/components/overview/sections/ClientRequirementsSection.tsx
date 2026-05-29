@@ -1,10 +1,5 @@
 import type { ClientCapabilities } from "../../../types/mcp-protocol";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@lib/components/ui/card";
+import { Card } from "@open-resource-discovery/ui-components";
 import { Badge } from "@lib/components/ui/badge";
 import { Monitor } from "lucide-react";
 
@@ -31,13 +26,13 @@ export function ClientRequirementsSection({
 
   return (
     <Card>
-      <CardHeader className="p-4 pb-2">
-        <CardTitle className="flex items-center gap-2 text-sm">
+      <Card.Header className="p-4 pb-2">
+        <Card.Title className="flex items-center gap-2 text-sm">
           <Monitor className="h-4 w-4" />
           Client Requirements
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="px-4 pb-4 pt-0">
+        </Card.Title>
+      </Card.Header>
+      <Card.Content className="px-4 pb-4 pt-0">
         <p className="text-sm text-muted-foreground mb-3">
           The client must support the following capabilities to fully interact
           with this server.
@@ -49,7 +44,7 @@ export function ClientRequirementsSection({
             </Badge>
           ))}
         </div>
-      </CardContent>
+      </Card.Content>
     </Card>
   );
 }

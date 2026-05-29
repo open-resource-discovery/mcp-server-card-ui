@@ -1,11 +1,6 @@
 import { useState } from "react";
 import type { MetaObject } from "../../../types/mcp-protocol";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@lib/components/ui/card";
+import { Card } from "@open-resource-discovery/ui-components";
 import { JsonHighlight } from "@lib/components/ui/JsonHighlight";
 import { Braces, Copy, Check, ExternalLink } from "lucide-react";
 
@@ -96,13 +91,13 @@ export function ExtensionsSection({ meta }: ExtensionsSectionProps) {
 
   return (
     <Card>
-      <CardHeader className="p-4 pb-2">
-        <CardTitle className="flex items-center gap-2 text-sm">
+      <Card.Header className="p-4 pb-2">
+        <Card.Title className="flex items-center gap-2 text-sm">
           <Braces className="h-4 w-4" />
           Extensions (_meta)
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="px-4 pb-4 pt-0">
+        </Card.Title>
+      </Card.Header>
+      <Card.Content className="px-4 pb-4 pt-0">
         <div className="flex flex-col gap-3">
           {entries.map(([key, value]) => (
             <div key={key} className="flex flex-col gap-1 group/ext">
@@ -126,7 +121,7 @@ export function ExtensionsSection({ meta }: ExtensionsSectionProps) {
             </div>
           ))}
         </div>
-      </CardContent>
+      </Card.Content>
     </Card>
   );
 }
