@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { RemoteTransport } from "../../../types/mcp-protocol";
-import { Card } from "@open-resource-discovery/ui-components";
+import { SectionCard } from "@open-resource-discovery/ui-components";
 import { Badge } from "@lib/components/ui/badge";
 import { Globe, Copy, Check } from "lucide-react";
 
@@ -20,7 +20,7 @@ function CopyableUrl({ url }: { url: string }) {
   };
 
   return (
-    <div className="relative group/url inline-flex items-center gap-1.5">
+    <div className="relative group/url inline-flex items-center gap-1.5 py-1">
       <a
         href={url}
         target="_blank"
@@ -43,20 +43,15 @@ function CopyableUrl({ url }: { url: string }) {
 
 export function RemotesSection({ remotes }: RemotesSectionProps) {
   return (
-    <Card data-testid="remotes-section">
-      <Card.Header className="p-4 pb-2">
-        <Card.Title className="flex items-center gap-2 text-sm">
-          <Globe className="h-4 w-4" />
-          Remote Transports
-        </Card.Title>
-      </Card.Header>
-      <Card.Content className="px-4 pb-4 pt-0">
-        <div className="flex flex-col">
+    <SectionCard.Root data-testid="remotes-section">
+      <SectionCard.Header icon={<Globe />} title="Remote Transports" />
+      <SectionCard.Content>
+        <div className="flex flex-col gap-3">
           {remotes.map((remote, idx) => (
             <div
               key={idx}
               data-testid={`remote-item-${idx}`}
-              className="flex flex-col gap-1.5 py-3 border-b last:border-b-0"
+              className="flex flex-col gap-1.5 border-b last:border-b-0"
             >
               <Badge variant="secondary" className="self-start">
                 {remote.type}
@@ -83,7 +78,7 @@ export function RemotesSection({ remotes }: RemotesSectionProps) {
             </div>
           ))}
         </div>
-      </Card.Content>
-    </Card>
+      </SectionCard.Content>
+    </SectionCard.Root>
   );
 }
