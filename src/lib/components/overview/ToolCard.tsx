@@ -1,17 +1,13 @@
-import { useState } from "react";
 import type { Tool } from "../../types/mcp-protocol";
 import {
-  Collapsible,
-  CollapsibleTrigger,
-  CollapsibleContent,
-} from "@lib/components/ui/collapsible";
-import { Badge } from "@lib/components/ui/badge";
-import { Button } from "@lib/components/ui/button";
+  CollapsibleSection,
+  Badge,
+  Button,
+} from "@open-resource-discovery/ui-components";
 import { JsonHighlight } from "@lib/components/ui/JsonHighlight";
 import { MarkdownText } from "@lib/components/ui/MarkdownText";
 import { useUIStore } from "@lib/stores/uiStore";
-import { ChevronDown, ChevronRight, Play } from "lucide-react";
-import { cn } from "@lib/utils/cn";
+import { Play } from "lucide-react";
 
 interface ToolCardProps {
   tool: Tool;
@@ -19,37 +15,23 @@ interface ToolCardProps {
 }
 
 export function ToolCard({ tool, readOnly }: ToolCardProps) {
-  const [open, setOpen] = useState(false);
   const displayName = tool.annotations?.title ?? tool.title ?? tool.name;
 
+  const annotationBadges = <AnnotationBadges annotations={tool.annotations} />;
+
   return (
-    <Collapsible
-      open={open}
-      onOpenChange={setOpen}
+    <CollapsibleSection.Root
       data-testid={`tool-item-${tool.name}`}
-      className="border-b last:border-b-0"
+      className="border-b last:border-b-0 py-2"
     >
-      <CollapsibleTrigger
+      <CollapsibleSection.Trigger
         data-testid={`tool-trigger-${tool.name}`}
-        className="flex w-full items-center justify-between py-3 text-sm font-medium transition-all hover:bg-muted/50 rounded-md px-2 -mx-2 cursor-pointer"
+        badges={annotationBadges}
+        description={displayName !== tool.name ? tool.name : undefined}
       >
-        <div className="flex flex-1 flex-col gap-0.5 text-left min-w-0">
-          <AnnotationBadges annotations={tool.annotations} />
-          <span className="text-xs font-medium truncate">{displayName}</span>
-          {displayName !== tool.name && (
-            <span className="font-mono text-[11px] text-muted-foreground truncate">
-              {tool.name}
-            </span>
-          )}
-        </div>
-        <ChevronDown
-          className={cn(
-            "h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200",
-            open && "rotate-180",
-          )}
-        />
-      </CollapsibleTrigger>
-      <CollapsibleContent>
+        {displayName}
+      </CollapsibleSection.Trigger>
+      <CollapsibleSection.Content>
         <div className="pb-4 pt-0">
           <div className="flex flex-col gap-2 pl-2">
             {tool.description && (
@@ -122,8 +104,8 @@ export function ToolCard({ tool, readOnly }: ToolCardProps) {
             )}
           </div>
         </div>
-      </CollapsibleContent>
-    </Collapsible>
+      </CollapsibleSection.Content>
+    </CollapsibleSection.Root>
   );
 }
 
@@ -172,22 +154,18 @@ function SchemaCollapsible({
   label: string;
   schema: Record<string, unknown>;
 }) {
-  const [open, setOpen] = useState(false);
   const json = JSON.stringify(schema, null, 2);
 
   return (
-    <Collapsible open={open} onOpenChange={setOpen}>
-      <CollapsibleTrigger className="flex items-center gap-1 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
-        <ChevronRight
-          className={cn("h-3 w-3 transition-transform", open && "rotate-90")}
-        />
+    <CollapsibleSection.Root>
+      <CollapsibleSection.Trigger className="text-xs text-muted-foreground hover:text-foreground">
         {label}
-      </CollapsibleTrigger>
-      <CollapsibleContent>
+      </CollapsibleSection.Trigger>
+      <CollapsibleSection.Content>
         <div className="mt-1.5">
           <JsonHighlight code={json} showCopy />
         </div>
-      </CollapsibleContent>
-    </Collapsible>
+      </CollapsibleSection.Content>
+    </CollapsibleSection.Root>
   );
 }

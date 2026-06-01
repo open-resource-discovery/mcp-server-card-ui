@@ -1,14 +1,9 @@
-import { useState } from "react";
 import type { Resource } from "../../types/mcp-protocol";
 import {
-  Collapsible,
-  CollapsibleTrigger,
-  CollapsibleContent,
-} from "@lib/components/ui/collapsible";
-import { Badge } from "@lib/components/ui/badge";
+  CollapsibleSection,
+  Badge,
+} from "@open-resource-discovery/ui-components";
 import { MarkdownText } from "@lib/components/ui/MarkdownText";
-import { ChevronDown } from "lucide-react";
-import { cn } from "@lib/utils/cn";
 
 interface ResourceCardProps {
   resource: Resource;
@@ -23,48 +18,32 @@ function formatBytes(bytes: number): string {
 }
 
 export function ResourceCard({ resource }: ResourceCardProps) {
-  const [open, setOpen] = useState(false);
   const displayName = resource.title ?? resource.name;
 
+  const mimeTypeBadge = resource.mimeType ? (
+    <div className="flex gap-1.5">
+      <Badge variant="secondary">{resource.mimeType}</Badge>
+    </div>
+  ) : null;
+
   return (
-    <Collapsible
-      open={open}
-      onOpenChange={setOpen}
+    <CollapsibleSection.Root
       data-testid={`resource-item-${resource.uri}`}
       className="border-b last:border-b-0"
     >
-      <CollapsibleTrigger
+      <CollapsibleSection.Trigger
         data-testid={`resource-trigger-${resource.uri}`}
-        className="flex w-full items-center justify-between py-3 text-sm font-medium transition-all hover:bg-muted/50 rounded-md px-2 -mx-2 cursor-pointer"
+        badges={mimeTypeBadge}
+        description={displayName !== resource.name ? resource.name : undefined}
       >
-        <div className="flex flex-1 flex-col gap-0.5 text-left min-w-0">
-          {resource.mimeType && (
-            <div className="flex gap-1.5">
-              <Badge variant="secondary">{resource.mimeType}</Badge>
-            </div>
-          )}
-          <span className="text-xs font-medium truncate">{displayName}</span>
-          {displayName !== resource.name && (
-            <span className="font-mono text-[11px] text-muted-foreground truncate">
-              {resource.name}
-            </span>
-          )}
-        </div>
-        <ChevronDown
-          className={cn(
-            "h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200",
-            open && "rotate-180",
-          )}
-        />
-      </CollapsibleTrigger>
-      <CollapsibleContent>
+        {displayName}
+      </CollapsibleSection.Trigger>
+      <CollapsibleSection.Content>
         <div className="pb-4 pt-0">
           <div className="flex flex-col gap-2 pl-2">
             <div className="flex items-center gap-1.5">
               <span className="text-xs text-muted-foreground">URI:</span>
-              <code className="font-mono text-xs break-all">
-                {resource.uri}
-              </code>
+              <code className="font-mono text-xs break-all">{resource.uri}</code>
             </div>
 
             {resource.description && (
@@ -123,7 +102,7 @@ export function ResourceCard({ resource }: ResourceCardProps) {
             )}
           </div>
         </div>
-      </CollapsibleContent>
-    </Collapsible>
+      </CollapsibleSection.Content>
+    </CollapsibleSection.Root>
   );
 }

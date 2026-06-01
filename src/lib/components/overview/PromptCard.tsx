@@ -1,60 +1,43 @@
-import { useState } from "react";
 import type { Prompt } from "../../types/mcp-protocol";
 import {
-  Collapsible,
-  CollapsibleTrigger,
-  CollapsibleContent,
-} from "@lib/components/ui/collapsible";
-import { Badge } from "@lib/components/ui/badge";
-import { Button } from "@lib/components/ui/button";
+  CollapsibleSection,
+  Badge,
+  Button,
+} from "@open-resource-discovery/ui-components";
 import { MarkdownText } from "@lib/components/ui/MarkdownText";
 import { useUIStore } from "@lib/stores/uiStore";
-import { ChevronDown, Play } from "lucide-react";
-import { cn } from "@lib/utils/cn";
+import { Play } from "lucide-react";
 
 interface PromptCardProps {
   prompt: Prompt;
 }
 
 export function PromptCard({ prompt }: PromptCardProps) {
-  const [open, setOpen] = useState(false);
   const displayName = prompt.title ?? prompt.name;
 
+  const argsBadge =
+    prompt.arguments && prompt.arguments.length > 0 ? (
+      <div className="flex gap-1.5">
+        <Badge variant="secondary">
+          {prompt.arguments.length} arg
+          {prompt.arguments.length !== 1 ? "s" : ""}
+        </Badge>
+      </div>
+    ) : null;
+
   return (
-    <Collapsible
-      open={open}
-      onOpenChange={setOpen}
+    <CollapsibleSection.Root
       data-testid={`prompt-item-${prompt.name}`}
       className="border-b last:border-b-0"
     >
-      <CollapsibleTrigger
+      <CollapsibleSection.Trigger
         data-testid={`prompt-trigger-${prompt.name}`}
-        className="flex w-full items-center justify-between py-3 text-sm font-medium transition-all hover:bg-muted/50 rounded-md px-2 -mx-2 cursor-pointer"
+        badges={argsBadge}
+        description={displayName !== prompt.name ? prompt.name : undefined}
       >
-        <div className="flex flex-1 flex-col gap-0.5 text-left min-w-0">
-          {prompt.arguments && prompt.arguments.length > 0 && (
-            <div className="flex gap-1.5">
-              <Badge variant="secondary">
-                {prompt.arguments.length} arg
-                {prompt.arguments.length !== 1 ? "s" : ""}
-              </Badge>
-            </div>
-          )}
-          <span className="text-xs font-medium truncate">{displayName}</span>
-          {displayName !== prompt.name && (
-            <span className="font-mono text-[11px] text-muted-foreground truncate">
-              {prompt.name}
-            </span>
-          )}
-        </div>
-        <ChevronDown
-          className={cn(
-            "h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200",
-            open && "rotate-180",
-          )}
-        />
-      </CollapsibleTrigger>
-      <CollapsibleContent>
+        {displayName}
+      </CollapsibleSection.Trigger>
+      <CollapsibleSection.Content>
         <div className="pb-4 pt-0">
           <div className="flex flex-col gap-2 pl-2">
             {prompt.description && (
@@ -118,7 +101,7 @@ export function PromptCard({ prompt }: PromptCardProps) {
             </div>
           </div>
         </div>
-      </CollapsibleContent>
-    </Collapsible>
+      </CollapsibleSection.Content>
+    </CollapsibleSection.Root>
   );
 }

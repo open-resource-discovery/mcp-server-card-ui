@@ -76,7 +76,7 @@ function ExpandableBadge({ label, subProps, testId }: ExpandableBadgeProps) {
         >
           <div className="flex flex-col gap-0.5">
             {subProps.map((s) => (
-              <span key={s} className="text-[11px] text-muted-foreground">{s}</span>
+              <span key={s} className="text-[11px] text-popover-foreground">{s}</span>
             ))}
           </div>
         </div>
