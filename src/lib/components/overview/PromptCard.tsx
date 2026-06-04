@@ -28,7 +28,7 @@ export function PromptCard({ prompt }: PromptCardProps) {
   return (
     <CollapsibleSection.Root
       data-testid={`prompt-item-${prompt.name}`}
-      className="border-b last:border-b-0"
+      
     >
       <CollapsibleSection.Trigger
         data-testid={`prompt-trigger-${prompt.name}`}

@@ -22,7 +22,6 @@ export function ToolCard({ tool, readOnly }: ToolCardProps) {
   return (
     <CollapsibleSection.Root
       data-testid={`tool-item-${tool.name}`}
-      className="border-b last:border-b-0 py-2"
     >
       <CollapsibleSection.Trigger
         data-testid={`tool-trigger-${tool.name}`}
