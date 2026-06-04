@@ -1,7 +1,6 @@
 import { useState } from "react";
 import type { RemoteTransport } from "../../../types/mcp-protocol";
-import { SectionCard } from "@open-resource-discovery/ui-components";
-import { Badge } from "@lib/components/ui/badge";
+import { SectionCard, CollapsibleSection } from "@open-resource-discovery/ui-components";
 import { Globe, Copy, Check } from "lucide-react";
 
 interface RemotesSectionProps {
@@ -46,38 +45,33 @@ export function RemotesSection({ remotes }: RemotesSectionProps) {
     <SectionCard.Root data-testid="remotes-section">
       <SectionCard.Header icon={<Globe />} title="Remote Transports" />
       <SectionCard.Content>
-        <div className="flex flex-col gap-3">
-          {remotes.map((remote, idx) => (
-            <div
-              key={idx}
-              data-testid={`remote-item-${idx}`}
-              className="flex flex-col gap-1.5 border-b last:border-b-0"
-            >
-              <Badge variant="secondary" className="self-start">
-                {remote.type}
-              </Badge>
-              <CopyableUrl url={remote.url} />
-
-              {remote.headers && remote.headers.length > 0 && (
-                <div className="flex flex-col gap-1 pl-2 border-l-2 border-muted mt-0.5">
-                  <p className="text-xs font-medium text-muted-foreground">
-                    Headers
-                  </p>
-                  {remote.headers.map((header, hIdx) => (
-                    <div key={hIdx} className="font-mono text-xs">
-                      {Object.entries(header).map(([key, value]) => (
-                        <span key={key}>
-                          <span className="text-muted-foreground">{key}:</span>{" "}
-                          <span>{String(value)}</span>
-                        </span>
-                      ))}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+        {remotes.map((remote, idx) => (
+          <CollapsibleSection.Root key={idx} data-testid={`remote-item-${idx}`}>
+            <CollapsibleSection.Trigger>
+              {remote.type}
+            </CollapsibleSection.Trigger>
+            <CollapsibleSection.Content>
+              <div className="pb-4 pt-0 flex flex-col gap-2 pl-2">
+                <CopyableUrl url={remote.url} />
+                {remote.headers && remote.headers.length > 0 && (
+                  <div className="flex flex-col gap-1 pl-2 border-l-2 border-muted">
+                    <p className="text-xs font-medium text-muted-foreground">Headers</p>
+                    {remote.headers.map((header, hIdx) => (
+                      <div key={hIdx} className="font-mono text-xs">
+                        {Object.entries(header).map(([key, value]) => (
+                          <span key={key}>
+                            <span className="text-muted-foreground">{key}:</span>{" "}
+                            <span>{String(value)}</span>
+                          </span>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </CollapsibleSection.Content>
+          </CollapsibleSection.Root>
+        ))}
       </SectionCard.Content>
     </SectionCard.Root>
   );
