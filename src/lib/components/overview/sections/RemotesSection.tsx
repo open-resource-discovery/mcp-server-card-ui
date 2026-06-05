@@ -51,7 +51,7 @@ export function RemotesSection({ remotes }: RemotesSectionProps) {
               {remote.type}
             </CollapsibleSection.Trigger>
             <CollapsibleSection.Content>
-              <div className="pb-4 pt-0 flex flex-col gap-2 pl-2">
+              <div className="p-0 flex flex-col gap-2">
                 <CopyableUrl url={remote.url} />
                 {remote.headers && remote.headers.length > 0 && (
                   <div className="flex flex-col gap-1 pl-2 border-l-2 border-muted">
