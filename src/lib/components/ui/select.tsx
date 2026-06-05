@@ -15,5 +15,5 @@ function SelectPortalInRoot(
 export const Select = {
   ...LibSelect,
   Portal: SelectPortalInRoot,
-};
+} as typeof LibSelect;
 export { SimpleSelect };
