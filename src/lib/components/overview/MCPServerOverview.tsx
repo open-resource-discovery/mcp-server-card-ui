@@ -9,7 +9,7 @@ import { PromptsSection } from "@lib/components/overview/sections/PromptsSection
 import { ClientRequirementsSection } from "@lib/components/overview/sections/ClientRequirementsSection";
 import { ExtensionsSection } from "@lib/components/overview/sections/ExtensionsSection";
 import type { MCPServerCardDefinition } from "../../types/mcp-protocol";
-import { InfoCard } from "@open-resource-discovery/ui-components";
+import { InfoCard, CollapsibleSection } from "@open-resource-discovery/ui-components";
 import { Badge } from "@lib/components/ui/badge";
 import { MarkdownText } from "@lib/components/ui/MarkdownText";
 import { AlertTriangle, ExternalLink, FileJson } from "lucide-react";
@@ -88,12 +88,10 @@ export function MCPServerOverview({ readOnly }: MCPServerOverviewProps) {
 
           {card.instructions && (
             <InfoCard.Section>
-              <div className="rounded-md border bg-muted/50 px-3 py-2">
-                <p className="text-[11px] font-medium text-muted-foreground mb-0.5">
-                  Instructions
-                </p>
-                <MarkdownText text={card.instructions} className="text-sm" />
-              </div>
+              <CollapsibleSection.Root>
+                <CollapsibleSection.Trigger>Instructions</CollapsibleSection.Trigger>
+                <CollapsibleSection.Content><MarkdownText text={card.instructions}/></CollapsibleSection.Content>
+              </CollapsibleSection.Root>
             </InfoCard.Section>
           )}
 
