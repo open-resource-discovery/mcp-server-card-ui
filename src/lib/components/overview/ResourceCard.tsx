@@ -42,7 +42,7 @@ export function ResourceCard({ resource }: ResourceCardProps) {
           <div className="flex flex-col gap-2 pl-2">
             <div className="flex items-center gap-1.5">
               <span className="text-xs text-muted-foreground">URI:</span>
-              <code className="font-mono text-xs break-all bg-code-bg text-code-fg rounded px-1">{resource.uri}</code>
+              <code className="font-mono text-xs break-all bg-code text-code-foreground rounded px-1">{resource.uri}</code>
             </div>
 
             {resource.description && (
