@@ -20,9 +20,7 @@ export function ToolCard({ tool, readOnly }: ToolCardProps) {
   const annotationBadges = <AnnotationBadges annotations={tool.annotations} />;
 
   return (
-    <CollapsibleSection.Root
-      data-testid={`tool-item-${tool.name}`}
-    >
+    <CollapsibleSection.Root data-testid={`tool-item-${tool.name}`}>
       <CollapsibleSection.Trigger
         data-testid={`tool-trigger-${tool.name}`}
         badges={annotationBadges}

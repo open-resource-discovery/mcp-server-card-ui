@@ -39,7 +39,12 @@ export default function App() {
 Every component is a named export from the package root — never deep-import:
 
 ```tsx
-import { Button, Card, Tabs, Tooltip } from "@open-resource-discovery/ui-components";
+import {
+  Button,
+  Card,
+  Tabs,
+  Tooltip,
+} from "@open-resource-discovery/ui-components";
 ```
 
 ## Composition

@@ -26,10 +26,7 @@ export function PromptCard({ prompt }: PromptCardProps) {
     ) : null;
 
   return (
-    <CollapsibleSection.Root
-      data-testid={`prompt-item-${prompt.name}`}
-      
-    >
+    <CollapsibleSection.Root data-testid={`prompt-item-${prompt.name}`}>
       <CollapsibleSection.Trigger
         data-testid={`prompt-trigger-${prompt.name}`}
         badges={argsBadge}

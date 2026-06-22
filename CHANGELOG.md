@@ -20,5 +20,3 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Raw HTTP log viewer for inspecting MCP JSON-RPC traffic
 - Playground environment configuration via `VITE_*` env variables
 - Prompt execution support alongside tool calls in functions panel
-
-

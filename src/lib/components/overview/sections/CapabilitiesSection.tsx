@@ -22,7 +22,9 @@ function renderSubProps(value: unknown): string[] {
     return [];
   return Object.entries(value as Record<string, unknown>)
     .filter(([, v]) => v !== undefined)
-    .map(([k, v]) => (typeof v === "boolean" ? (v ? k : null) : `${k}: ${JSON.stringify(v)}`))
+    .map(([k, v]) =>
+      typeof v === "boolean" ? (v ? k : null) : `${k}: ${JSON.stringify(v)}`,
+    )
     .filter((s): s is string => s !== null);
 }
 
@@ -41,7 +43,10 @@ function ExpandableBadge({ label, subProps, testId }: ExpandableBadgeProps) {
   useEffect(() => {
     if (!open) return;
     function handleOutsideClick(e: MouseEvent) {
-      if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node)) {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(e.target as Node)
+      ) {
         setOpen(false);
       }
     }
@@ -67,16 +72,27 @@ function ExpandableBadge({ label, subProps, testId }: ExpandableBadgeProps) {
         onClick={handleClick}
       >
         {label}
-        {open ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
+        {open ? (
+          <ChevronUp className="h-3 w-3" />
+        ) : (
+          <ChevronDown className="h-3 w-3" />
+        )}
       </Badge>
       {open && (
         <div
-          style={{ position: "fixed", top: popupPos.top, left: popupPos.left, fontFamily: "inherit" }}
+          style={{
+            position: "fixed",
+            top: popupPos.top,
+            left: popupPos.left,
+            fontFamily: "inherit",
+          }}
           className="z-50 rounded-md border bg-popover p-2 shadow-md"
         >
           <div className="flex flex-col gap-0.5">
             {subProps.map((s) => (
-              <span key={s} className="text-[11px] text-popover-foreground">{s}</span>
+              <span key={s} className="text-[11px] text-popover-foreground">
+                {s}
+              </span>
             ))}
           </div>
         </div>
@@ -85,7 +101,9 @@ function ExpandableBadge({ label, subProps, testId }: ExpandableBadgeProps) {
   );
 }
 
-export function CapabilitiesSection({ capabilities }: CapabilitiesSectionProps) {
+export function CapabilitiesSection({
+  capabilities,
+}: CapabilitiesSectionProps) {
   const entries = Object.entries(capabilities).filter(
     ([, v]) => v !== undefined && v !== null,
   );
@@ -109,7 +127,11 @@ export function CapabilitiesSection({ capabilities }: CapabilitiesSectionProps) 
                 testId={`capability-${key}`}
               />
             ) : (
-              <Badge key={key} variant="secondary" data-testid={`capability-${key}`}>
+              <Badge
+                key={key}
+                variant="secondary"
+                data-testid={`capability-${key}`}
+              >
                 {label}
               </Badge>
             );

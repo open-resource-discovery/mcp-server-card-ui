@@ -10,7 +10,10 @@ interface PromptsSectionProps {
 export function PromptsSection({ prompts }: PromptsSectionProps) {
   return (
     <SectionCard.Root data-testid="prompts-section">
-      <SectionCard.Header icon={<MessageSquare />} title={`Prompts (${prompts.length})`} />
+      <SectionCard.Header
+        icon={<MessageSquare />}
+        title={`Prompts (${prompts.length})`}
+      />
       <SectionCard.Content>
         {prompts.map((prompt) => (
           <PromptCard key={prompt.name} prompt={prompt} />

@@ -1,6 +1,9 @@
 import { useState } from "react";
 import type { RemoteTransport } from "../../../types/mcp-protocol";
-import { SectionCard, CollapsibleSection } from "@open-resource-discovery/ui-components";
+import {
+  SectionCard,
+  CollapsibleSection,
+} from "@open-resource-discovery/ui-components";
 import { Globe, Copy, Check } from "lucide-react";
 
 interface RemotesSectionProps {
@@ -55,12 +58,16 @@ export function RemotesSection({ remotes }: RemotesSectionProps) {
                 <CopyableUrl url={remote.url} />
                 {remote.headers && remote.headers.length > 0 && (
                   <div className="flex flex-col gap-1 pl-2 border-l-2 border-muted">
-                    <p className="text-xs font-medium text-muted-foreground">Headers</p>
+                    <p className="text-xs font-medium text-muted-foreground">
+                      Headers
+                    </p>
                     {remote.headers.map((header, hIdx) => (
                       <div key={hIdx} className="font-mono text-xs">
                         {Object.entries(header).map(([key, value]) => (
                           <span key={key}>
-                            <span className="text-muted-foreground">{key}:</span>{" "}
+                            <span className="text-muted-foreground">
+                              {key}:
+                            </span>{" "}
                             <span>{String(value)}</span>
                           </span>
                         ))}

@@ -47,11 +47,11 @@ npx playwright test e2e/tests/connection.spec.ts --project=vite
 
 ### Build modes
 
-| Command | Output | Format | Use case |
-|---|---|---|---|
-| `build:lib` | `dist/` | ES modules, multiple entry points | npm consumers |
-| `build:standalone` | `dist-standalone/` | IIFE, React bundled | CDN / script tag |
-| `website:build` | `website/build/` | Static | Docusaurus docs |
+| Command            | Output             | Format                            | Use case         |
+| ------------------ | ------------------ | --------------------------------- | ---------------- |
+| `build:lib`        | `dist/`            | ES modules, multiple entry points | npm consumers    |
+| `build:standalone` | `dist-standalone/` | IIFE, React bundled               | CDN / script tag |
+| `website:build`    | `website/build/`   | Static                            | Docusaurus docs  |
 
 The lib build exports five separate entry points for tree-shaking: `index`, `playground-lite`, `viewer`, `editor`, `card-view`. The standalone build bundles everything into a single `mcp-server-card-ui.js` that exposes `window.MCPPlayground`.
 
@@ -83,6 +83,7 @@ The outer `ThemeRoot` component provides the `.mcp-root` CSS scope needed for st
 ### MCP transport
 
 `src/lib/utils/mcp-transport.ts` handles MCP JSON-RPC communication:
+
 - `sendRequest()` — POST JSON-RPC, handles both JSON and SSE response detection
 - Supports streamable-http and SSE transports
 - Mock transport available for in-browser demos without a real server
@@ -117,6 +118,7 @@ Located in `src/lib/stores/__tests__/`. Run with Vitest (jsdom environment).
 ### E2E tests
 
 `e2e/tests/` — Playwright targeting two servers:
+
 - `vite` project → `localhost:5173`
 - `docusaurus` project → `localhost:3000`
 
@@ -125,6 +127,7 @@ Start both servers before running e2e tests. Global setup is in `e2e/global-setu
 ## Dependency on ui-components
 
 This project depends on `@open-resource-discovery/ui-components` via `file:../ui-components`. When that library changes:
+
 1. Run `npm run build` in `../ui-components`
 2. Re-run `npm install` here if the package interface changed
 
