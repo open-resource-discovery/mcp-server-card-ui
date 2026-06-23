@@ -278,7 +278,10 @@ test.describe("Overview", () => {
 
         await tryItBtn.click();
 
-        await expect(playground.tabFunctions).toHaveAttribute("data-active", "");
+        await expect(playground.tabFunctions).toHaveAttribute(
+          "data-active",
+          "",
+        );
         await expect(
           playground.page
             .getByRole("combobox")
