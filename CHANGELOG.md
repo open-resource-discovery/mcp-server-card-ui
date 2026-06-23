@@ -7,8 +7,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [unreleased]
 
-## [0.2.0] - 2026-06-23
-
 ### Changed
 
 - Migrate all UI components (`Button`, `Badge`, `Card`, `Collapsible`, `Input`, `Select`, `Tabs`, `Switch`, `Separator`, `CodeBlock`, `MarkdownText`, `PasswordInput`) to re-export from `@open-resource-discovery/ui-components`, removing local shadcn-based implementations.
