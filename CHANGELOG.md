@@ -7,6 +7,24 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [unreleased]
 
+## [0.2.0] - 2026-06-23
+
+### Changed
+
+- Migrate all UI components (`Button`, `Badge`, `Card`, `Collapsible`, `Input`, `Select`, `Tabs`, `Switch`, `Separator`, `CodeBlock`, `MarkdownText`, `PasswordInput`) to re-export from `@open-resource-discovery/ui-components`, removing local shadcn-based implementations.
+- Replace `InfoCard`-based server overview layout with components from `@open-resource-discovery/ui-components`: `InfoCard`, `SectionCard`, `CollapsibleSection`.
+- Refactor `ToolCard`, `PromptCard`, `ResourceCard`, and all overview sections (`CapabilitiesSection`, `RemotesSection`, `ToolsSection`, `PromptsSection`, `ResourcesSection`, `AuthenticationSection`, `ExtensionsSection`, `ClientRequirementsSection`) to use library components.
+- Align CSS layer setup (`@layer theme, base, components`) and Tailwind import style with `@open-resource-discovery/ui-components` conventions.
+- Strip `@layer` wrappers from the standalone IIFE bundle so Tailwind utilities take precedence over unlayered host-page styles (e.g. Docusaurus Infima).
+- Switch `MCPConnectionSettings` transport/auth selects from shadcn `Select` to `Select.Root` compound API from the library.
+- Fix `Select.Value` in `FunctionInput` to display tool/prompt `title` instead of raw `name` when the two differ.
+- Update `vite.config.ts` to use `vite-plugin-dts` v5 API (`outDirs`, `copyDtsFiles`, `tsconfigPath`).
+
+### Fixed
+
+- E2E tests: update `data-state="active"` assertions to `data-active=""` to match Base UI's tab attribute convention.
+- E2E fixture: correct `isDocusaurus` port detection from `"3000"` to `"3003"`.
+
 ## [[0.1.0](https://github.com/open-resource-discovery/mcp-server-card-ui/releases/tag/v0.1.0)] - 2026-05-28
 
 ### Added
