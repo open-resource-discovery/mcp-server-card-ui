@@ -188,7 +188,13 @@ export function FunctionInput() {
           onValueChange={(v) => typeof v === "string" && handleSelectName(v)}
         >
           <Select.Trigger className="h-8 flex-1 text-xs">
-            <Select.Value placeholder={`Select ${mode}...`} />
+            <Select.Value placeholder={`Select ${mode}...`}>
+              {selectedName
+                ? (mode === "tool"
+                    ? tools.find((t) => t.name === selectedName)?.title || selectedName
+                    : prompts.find((p) => p.name === selectedName)?.title || selectedName)
+                : undefined}
+            </Select.Value>
             <Select.Icon />
           </Select.Trigger>
           <Select.Portal>
@@ -196,13 +202,13 @@ export function FunctionInput() {
               <Select.Popup>
                 {mode === "tool"
                   ? tools.map((t) => (
-                      <Select.Item key={t.name} value={t.name}>
+                      <Select.Item key={t.name} value={t.name} label={t.title || t.name}>
                         <Select.ItemIndicator />
                         <Select.ItemText>{t.title || t.name}</Select.ItemText>
                       </Select.Item>
                     ))
                   : prompts.map((p) => (
-                      <Select.Item key={p.name} value={p.name}>
+                      <Select.Item key={p.name} value={p.name} label={p.title || p.name}>
                         <Select.ItemIndicator />
                         <Select.ItemText>{p.title || p.name}</Select.ItemText>
                       </Select.Item>
