@@ -4,10 +4,22 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import dts from "vite-plugin-dts";
 import { resolve } from "path";
+import { readFileSync } from "fs";
+
+const pkg = JSON.parse(readFileSync("./package.json", "utf-8")) as {
+  dependencies?: Record<string, string>;
+  peerDependencies?: Record<string, string>;
+};
+const libExternals = [
+  ...Object.keys(pkg.dependencies ?? {}),
+  ...Object.keys(pkg.peerDependencies ?? {}),
+  "react/jsx-runtime",
+];
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   const isLib = mode === "lib";
+  const isWatch = process.argv.includes("--watch");
   const isProduction = process.env.NODE_ENV === "production";
 
   return {
@@ -20,7 +32,7 @@ export default defineConfig(({ mode }) => {
     plugins: [
       react(),
       tailwindcss(),
-      ...(isLib
+      ...(isLib && !isWatch
         ? [
             dts({
               include: ["src/lib/**/*.ts", "src/lib/**/*.tsx"],
@@ -38,6 +50,10 @@ export default defineConfig(({ mode }) => {
         "@lib": resolve(__dirname, "./src/lib"),
         "@demo": resolve(__dirname, "./src/demo"),
       },
+      dedupe: ["react", "react-dom", "react-resizable-panels"],
+    },
+    optimizeDeps: {
+      include: ["@open-resource-discovery/ui-components"],
     },
     build: isLib
       ? {
@@ -56,7 +72,7 @@ export default defineConfig(({ mode }) => {
             formats: ["es"],
           },
           rollupOptions: {
-            external: ["react", "react-dom", "react/jsx-runtime"],
+            external: libExternals,
             output: {
               globals: {
                 react: "React",

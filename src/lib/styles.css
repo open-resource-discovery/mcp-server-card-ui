@@ -1,7 +1,8 @@
-@layer theme, base, components, utilities;
+@layer theme, base, components;
 
+@import "@open-resource-discovery/ui-components/styles";
 @import "tailwindcss/theme.css" layer(theme);
-@import "tailwindcss/utilities.css" layer(utilities);
+@import "tailwindcss/utilities.css";
 @plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));
@@ -28,6 +29,7 @@
   --accent: oklch(0.967 0.003 264.542);
   --accent-foreground: oklch(0.21 0.034 264.665);
   --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0.002 247.839);
   --border: oklch(0.928 0.006 264.531);
   --input: oklch(0.928 0.006 264.531);
   --ring: oklch(0.707 0.022 261.325);
@@ -44,6 +46,27 @@
   --sidebar-accent-foreground: oklch(0.21 0.034 264.665);
   --sidebar-border: oklch(0.928 0.006 264.531);
   --sidebar-ring: oklch(0.707 0.022 261.325);
+  /* Bridge: map --ord-* vars (from ui-components) to host design tokens */
+  --ord-background: var(--background);
+  --ord-foreground: var(--foreground);
+  --ord-card: var(--card);
+  --ord-card-foreground: var(--card-foreground);
+  --ord-popover: var(--popover);
+  --ord-popover-foreground: var(--popover-foreground);
+  --ord-primary: var(--primary);
+  --ord-primary-foreground: var(--primary-foreground);
+  --ord-secondary: var(--secondary);
+  --ord-secondary-foreground: var(--secondary-foreground);
+  --ord-muted: var(--muted);
+  --ord-muted-foreground: var(--muted-foreground);
+  --ord-accent: var(--accent);
+  --ord-accent-foreground: var(--accent-foreground);
+  --ord-destructive: var(--destructive);
+  --ord-destructive-foreground: var(--destructive-foreground);
+  --ord-border: var(--border);
+  --ord-input: var(--input);
+  --ord-ring: var(--ring);
+  --ord-radius: var(--radius);
   /* Syntax highlighting tokens (light) */
   --c-accent: #4a9696;
   --hljs-attr: #881391;
@@ -72,6 +95,7 @@
   --accent: #2d2d30;
   --accent-foreground: #d4d4d4;
   --destructive: #f44747;
+  --destructive-foreground: #ffffff;
   --border: #3e3e42;
   --input: #3e3e42;
   --ring: #0098ff;

@@ -1,11 +1,5 @@
 import type { Tool } from "../../../types/mcp-protocol";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@lib/components/ui/card";
-import { Accordion } from "@lib/components/ui/accordion";
+import { SectionCard } from "@open-resource-discovery/ui-components";
 import { ToolCard } from "@lib/components/overview/ToolCard";
 import { Wrench } from "lucide-react";
 
@@ -16,20 +10,13 @@ interface ToolsSectionProps {
 
 export function ToolsSection({ tools, readOnly }: ToolsSectionProps) {
   return (
-    <Card data-testid="tools-section">
-      <CardHeader className="p-4 pb-2">
-        <CardTitle className="flex items-center gap-2 text-sm">
-          <Wrench className="h-4 w-4" />
-          Tools ({tools.length})
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="px-4 pb-4 pt-0">
-        <Accordion type="multiple" className="w-full">
-          {tools.map((tool) => (
-            <ToolCard key={tool.name} tool={tool} readOnly={readOnly} />
-          ))}
-        </Accordion>
-      </CardContent>
-    </Card>
+    <SectionCard.Root data-testid="tools-section">
+      <SectionCard.Header icon={<Wrench />} title={`Tools (${tools.length})`} />
+      <SectionCard.Content>
+        {tools.map((tool) => (
+          <ToolCard key={tool.name} tool={tool} readOnly={readOnly} />
+        ))}
+      </SectionCard.Content>
+    </SectionCard.Root>
   );
 }

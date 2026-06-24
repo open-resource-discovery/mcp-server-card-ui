@@ -1,11 +1,5 @@
 import type { Resource } from "../../../types/mcp-protocol";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@lib/components/ui/card";
-import { Accordion } from "@lib/components/ui/accordion";
+import { SectionCard } from "@open-resource-discovery/ui-components";
 import { ResourceCard } from "@lib/components/overview/ResourceCard";
 import { FileText } from "lucide-react";
 
@@ -15,20 +9,16 @@ interface ResourcesSectionProps {
 
 export function ResourcesSection({ resources }: ResourcesSectionProps) {
   return (
-    <Card data-testid="resources-section">
-      <CardHeader className="p-4 pb-2">
-        <CardTitle className="flex items-center gap-2 text-sm">
-          <FileText className="h-4 w-4" />
-          Resources ({resources.length})
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="px-4 pb-4 pt-0">
-        <Accordion type="multiple" className="w-full">
-          {resources.map((resource) => (
-            <ResourceCard key={resource.uri} resource={resource} />
-          ))}
-        </Accordion>
-      </CardContent>
-    </Card>
+    <SectionCard.Root data-testid="resources-section">
+      <SectionCard.Header
+        icon={<FileText />}
+        title={`Resources (${resources.length})`}
+      />
+      <SectionCard.Content>
+        {resources.map((resource) => (
+          <ResourceCard key={resource.uri} resource={resource} />
+        ))}
+      </SectionCard.Content>
+    </SectionCard.Root>
   );
 }

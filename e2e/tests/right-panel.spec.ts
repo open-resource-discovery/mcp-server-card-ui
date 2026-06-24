@@ -6,10 +6,7 @@ test.describe("Tools", () => {
     await playground.tabFunctions.click();
   });
   test("should display the tools tab", async ({ playground }) => {
-    await expect(playground.tabFunctions).toHaveAttribute(
-      "data-state",
-      "active",
-    );
+    await expect(playground.tabFunctions).toHaveAttribute("data-active", "");
   });
   test("Execute button should be disabled at the beginning", async ({
     playground,
@@ -51,7 +48,7 @@ test.describe("Raw HTTP", () => {
     await playground.logList.waitFor();
   });
   test("should display the Raw HTTP tab", async ({ playground }) => {
-    await expect(playground.tabRawHttp).toHaveAttribute("data-state", "active");
+    await expect(playground.tabRawHttp).toHaveAttribute("data-active", "");
     await expect(playground.logClearBtn).toBeVisible();
   });
   test("should show empty state after clearing logs", async ({
@@ -104,10 +101,7 @@ test.describe("Validation", () => {
   });
 
   test("should display the Validation tab", async ({ playground }) => {
-    await expect(playground.tabValidation).toHaveAttribute(
-      "data-state",
-      "active",
-    );
+    await expect(playground.tabValidation).toHaveAttribute("data-active", "");
   });
 
   test("should show validation panel", async ({ playground }) => {
@@ -232,10 +226,7 @@ test.describe("Overview", () => {
 
       await tryItBtn.click();
 
-      await expect(playground.tabFunctions).toHaveAttribute(
-        "data-state",
-        "active",
-      );
+      await expect(playground.tabFunctions).toHaveAttribute("data-active", "");
       await expect(
         playground.page.getByRole("combobox").filter({ hasText: "echo" }),
       ).toBeVisible();
@@ -288,8 +279,8 @@ test.describe("Overview", () => {
         await tryItBtn.click();
 
         await expect(playground.tabFunctions).toHaveAttribute(
-          "data-state",
-          "active",
+          "data-active",
+          "",
         );
         await expect(
           playground.page

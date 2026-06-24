@@ -3,13 +3,7 @@ import { useFunctionsStore } from "@lib/stores/functionsStore";
 import { useMCPConnectionStore } from "@lib/stores/mcpConnectionStore";
 import { useServerCardStore } from "@lib/stores/serverCardStore";
 import type { Tool, Prompt } from "../../types/mcp-protocol";
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from "@lib/components/ui/select";
+import { Select } from "@lib/components/ui/select";
 import { Button } from "@lib/components/ui/button";
 import { MonacoEditor } from "@lib/components/editor/MonacoEditor";
 import { Play, Loader2 } from "lucide-react";
@@ -165,37 +159,74 @@ export function FunctionInput() {
   return (
     <div className="border-t p-4 space-y-3">
       <div className="flex gap-2">
-        <Select
+        <Select.Root
           value={mode}
           onValueChange={(v) => setMode(v as "tool" | "prompt")}
         >
-          <SelectTrigger className="h-8 w-24 text-xs">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="tool">Tool</SelectItem>
-            <SelectItem value="prompt">Prompt</SelectItem>
-          </SelectContent>
-        </Select>
+          <Select.Trigger className="h-8 w-24 text-xs">
+            <Select.Value />
+            <Select.Icon />
+          </Select.Trigger>
+          <Select.Portal>
+            <Select.Positioner>
+              <Select.Popup>
+                <Select.Item value="tool">
+                  <Select.ItemIndicator />
+                  <Select.ItemText>Tool</Select.ItemText>
+                </Select.Item>
+                <Select.Item value="prompt">
+                  <Select.ItemIndicator />
+                  <Select.ItemText>Prompt</Select.ItemText>
+                </Select.Item>
+              </Select.Popup>
+            </Select.Positioner>
+          </Select.Portal>
+        </Select.Root>
 
-        <Select value={selectedName ?? ""} onValueChange={handleSelectName}>
-          <SelectTrigger className="h-8 flex-1 text-xs">
-            <SelectValue placeholder={`Select ${mode}...`} />
-          </SelectTrigger>
-          <SelectContent>
-            {mode === "tool"
-              ? tools.map((t) => (
-                  <SelectItem key={t.name} value={t.name}>
-                    {t.title || t.name}
-                  </SelectItem>
-                ))
-              : prompts.map((p) => (
-                  <SelectItem key={p.name} value={p.name}>
-                    {p.title || p.name}
-                  </SelectItem>
-                ))}
-          </SelectContent>
-        </Select>
+        <Select.Root
+          value={selectedName ?? ""}
+          onValueChange={(v) => typeof v === "string" && handleSelectName(v)}
+        >
+          <Select.Trigger className="h-8 flex-1 text-xs">
+            <Select.Value placeholder={`Select ${mode}...`}>
+              {selectedName
+                ? mode === "tool"
+                  ? tools.find((t) => t.name === selectedName)?.title ||
+                    selectedName
+                  : prompts.find((p) => p.name === selectedName)?.title ||
+                    selectedName
+                : undefined}
+            </Select.Value>
+            <Select.Icon />
+          </Select.Trigger>
+          <Select.Portal>
+            <Select.Positioner>
+              <Select.Popup>
+                {mode === "tool"
+                  ? tools.map((t) => (
+                      <Select.Item
+                        key={t.name}
+                        value={t.name}
+                        label={t.title || t.name}
+                      >
+                        <Select.ItemIndicator />
+                        <Select.ItemText>{t.title || t.name}</Select.ItemText>
+                      </Select.Item>
+                    ))
+                  : prompts.map((p) => (
+                      <Select.Item
+                        key={p.name}
+                        value={p.name}
+                        label={p.title || p.name}
+                      >
+                        <Select.ItemIndicator />
+                        <Select.ItemText>{p.title || p.name}</Select.ItemText>
+                      </Select.Item>
+                    ))}
+              </Select.Popup>
+            </Select.Positioner>
+          </Select.Portal>
+        </Select.Root>
       </div>
 
       <div className="h-32 rounded border overflow-hidden">

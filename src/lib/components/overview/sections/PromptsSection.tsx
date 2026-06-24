@@ -1,11 +1,5 @@
 import type { Prompt } from "../../../types/mcp-protocol";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@lib/components/ui/card";
-import { Accordion } from "@lib/components/ui/accordion";
+import { SectionCard } from "@open-resource-discovery/ui-components";
 import { PromptCard } from "@lib/components/overview/PromptCard";
 import { MessageSquare } from "lucide-react";
 
@@ -15,20 +9,16 @@ interface PromptsSectionProps {
 
 export function PromptsSection({ prompts }: PromptsSectionProps) {
   return (
-    <Card data-testid="prompts-section">
-      <CardHeader className="p-4 pb-2">
-        <CardTitle className="flex items-center gap-2 text-sm">
-          <MessageSquare className="h-4 w-4" />
-          Prompts ({prompts.length})
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="px-4 pb-4 pt-0">
-        <Accordion type="multiple" className="w-full">
-          {prompts.map((prompt) => (
-            <PromptCard key={prompt.name} prompt={prompt} />
-          ))}
-        </Accordion>
-      </CardContent>
-    </Card>
+    <SectionCard.Root data-testid="prompts-section">
+      <SectionCard.Header
+        icon={<MessageSquare />}
+        title={`Prompts (${prompts.length})`}
+      />
+      <SectionCard.Content>
+        {prompts.map((prompt) => (
+          <PromptCard key={prompt.name} prompt={prompt} />
+        ))}
+      </SectionCard.Content>
+    </SectionCard.Root>
   );
 }

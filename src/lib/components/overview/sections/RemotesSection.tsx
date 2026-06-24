@@ -1,12 +1,9 @@
 import { useState } from "react";
 import type { RemoteTransport } from "../../../types/mcp-protocol";
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@lib/components/ui/card";
-import { Badge } from "@lib/components/ui/badge";
+  SectionCard,
+  CollapsibleSection,
+} from "@open-resource-discovery/ui-components";
 import { Globe, Copy, Check } from "lucide-react";
 
 interface RemotesSectionProps {
@@ -25,7 +22,7 @@ function CopyableUrl({ url }: { url: string }) {
   };
 
   return (
-    <div className="relative group/url inline-flex items-center gap-1.5">
+    <div className="relative group/url inline-flex items-center gap-1.5 py-1">
       <a
         href={url}
         target="_blank"
@@ -48,47 +45,41 @@ function CopyableUrl({ url }: { url: string }) {
 
 export function RemotesSection({ remotes }: RemotesSectionProps) {
   return (
-    <Card data-testid="remotes-section">
-      <CardHeader className="p-4 pb-2">
-        <CardTitle className="flex items-center gap-2 text-sm">
-          <Globe className="h-4 w-4" />
-          Remote Transports
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="px-4 pb-4 pt-0">
-        <div className="flex flex-col">
-          {remotes.map((remote, idx) => (
-            <div
-              key={idx}
-              data-testid={`remote-item-${idx}`}
-              className="flex flex-col gap-1.5 py-3 border-b last:border-b-0"
-            >
-              <Badge variant="secondary" className="self-start">
-                {remote.type}
-              </Badge>
-              <CopyableUrl url={remote.url} />
-
-              {remote.headers && remote.headers.length > 0 && (
-                <div className="flex flex-col gap-1 pl-2 border-l-2 border-muted mt-0.5">
-                  <p className="text-xs font-medium text-muted-foreground">
-                    Headers
-                  </p>
-                  {remote.headers.map((header, hIdx) => (
-                    <div key={hIdx} className="font-mono text-xs">
-                      {Object.entries(header).map(([key, value]) => (
-                        <span key={key}>
-                          <span className="text-muted-foreground">{key}:</span>{" "}
-                          <span>{String(value)}</span>
-                        </span>
-                      ))}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
+    <SectionCard.Root data-testid="remotes-section">
+      <SectionCard.Header icon={<Globe />} title="Remote Transports" />
+      <SectionCard.Content>
+        {remotes.map((remote, idx) => (
+          <CollapsibleSection.Root key={idx} data-testid={`remote-item-${idx}`}>
+            <CollapsibleSection.Trigger>
+              {remote.type}
+            </CollapsibleSection.Trigger>
+            <CollapsibleSection.Content>
+              <div className="p-0 flex flex-col gap-2">
+                <CopyableUrl url={remote.url} />
+                {remote.headers && remote.headers.length > 0 && (
+                  <div className="flex flex-col gap-1 pl-2 border-l-2 border-muted">
+                    <p className="text-xs font-medium text-muted-foreground">
+                      Headers
+                    </p>
+                    {remote.headers.map((header, hIdx) => (
+                      <div key={hIdx} className="font-mono text-xs">
+                        {Object.entries(header).map(([key, value]) => (
+                          <span key={key}>
+                            <span className="text-muted-foreground">
+                              {key}:
+                            </span>{" "}
+                            <span>{String(value)}</span>
+                          </span>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </CollapsibleSection.Content>
+          </CollapsibleSection.Root>
+        ))}
+      </SectionCard.Content>
+    </SectionCard.Root>
   );
 }

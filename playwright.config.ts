@@ -15,7 +15,7 @@ export default defineConfig({
   reporter: "html",
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    baseURL: "http://localhost:3000",
+    baseURL: "http://localhost:3003",
     trace: "on-first-retry",
     actionTimeout: 15000,
   },
@@ -37,7 +37,7 @@ export default defineConfig({
       name: "docusaurus",
       use: {
         ...devices["Desktop Chrome"],
-        baseURL: "http://localhost:3000/mcp-server-card-ui/",
+        baseURL: "http://localhost:3003/mcp-server-card-ui/",
       },
     },
   ],
@@ -50,8 +50,8 @@ export default defineConfig({
       timeout: 30000,
     },
     {
-      command: "cd website && npx docusaurus start --port 3000",
-      port: 3000,
+      command: "cd website && npx docusaurus start --port 3003",
+      port: 3003,
       reuseExistingServer: !process.env.CI,
       timeout: 120000,
     },

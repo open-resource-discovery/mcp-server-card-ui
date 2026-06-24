@@ -282,7 +282,7 @@ export class PlaygroundPage {
 // Custom fixture that creates a PlaygroundPage with the correct isDocusaurus flag
 export const test = base.extend<{ playground: PlaygroundPage }>({
   playground: async ({ page, baseURL }, use) => {
-    const isDocusaurus = baseURL?.includes("3000") ?? false;
+    const isDocusaurus = baseURL?.includes("3003") ?? false;
     const pg = new PlaygroundPage(page, isDocusaurus);
     // eslint-disable-next-line react-hooks/rules-of-hooks
     await use(pg);

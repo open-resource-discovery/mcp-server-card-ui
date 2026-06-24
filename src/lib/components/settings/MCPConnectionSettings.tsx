@@ -6,13 +6,7 @@ import { usePredefinedServersStore } from "@lib/stores/predefinedServersStore";
 import { Input } from "@lib/components/ui/input";
 import { PasswordInput } from "@lib/components/ui/PasswordInput";
 import { Button } from "@lib/components/ui/button";
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from "@lib/components/ui/select";
+import { Select } from "@lib/components/ui/select";
 import { Loader2, Plug, Plus, Unplug } from "lucide-react";
 import {
   type ConnAuthType,
@@ -261,37 +255,65 @@ export function MCPConnectionSettings() {
           )}
         </div>
 
-        <Select
+        <Select.Root
           value={transportType}
           onValueChange={(v) =>
             setTransportType(v as "streamable-http" | "sse")
           }
         >
-          <SelectTrigger
+          <Select.Trigger
             className="h-8 text-xs"
             data-testid="transport-type-select"
           >
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="streamable-http">Streamable HTTP</SelectItem>
-            <SelectItem value="sse">SSE</SelectItem>
-          </SelectContent>
-        </Select>
+            <Select.Value />
+            <Select.Icon />
+          </Select.Trigger>
+          <Select.Portal>
+            <Select.Positioner>
+              <Select.Popup>
+                <Select.Item value="streamable-http">
+                  <Select.ItemIndicator />
+                  <Select.ItemText>Streamable HTTP</Select.ItemText>
+                </Select.Item>
+                <Select.Item value="sse">
+                  <Select.ItemIndicator />
+                  <Select.ItemText>SSE</Select.ItemText>
+                </Select.Item>
+              </Select.Popup>
+            </Select.Positioner>
+          </Select.Portal>
+        </Select.Root>
 
-        <Select
+        <Select.Root
           value={connAuthType}
           onValueChange={(v) => setManualAuthType(v as ConnAuthType)}
         >
-          <SelectTrigger className="h-8 text-xs" data-testid="auth-type-select">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="none">No Authentication</SelectItem>
-            <SelectItem value="basic">Basic Auth</SelectItem>
-            <SelectItem value="bearer">Bearer Token</SelectItem>
-          </SelectContent>
-        </Select>
+          <Select.Trigger
+            className="h-8 text-xs"
+            data-testid="auth-type-select"
+          >
+            <Select.Value />
+            <Select.Icon />
+          </Select.Trigger>
+          <Select.Portal>
+            <Select.Positioner>
+              <Select.Popup>
+                <Select.Item value="none">
+                  <Select.ItemIndicator />
+                  <Select.ItemText>No Authentication</Select.ItemText>
+                </Select.Item>
+                <Select.Item value="basic">
+                  <Select.ItemIndicator />
+                  <Select.ItemText>Basic Auth</Select.ItemText>
+                </Select.Item>
+                <Select.Item value="bearer">
+                  <Select.ItemIndicator />
+                  <Select.ItemText>Bearer Token</Select.ItemText>
+                </Select.Item>
+              </Select.Popup>
+            </Select.Positioner>
+          </Select.Portal>
+        </Select.Root>
 
         {connAuthType === "basic" && (
           <div className="space-y-2">

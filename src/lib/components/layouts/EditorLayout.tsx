@@ -1,10 +1,10 @@
-import { Panel, Group as PanelGroup, Separator } from "react-resizable-panels";
-import { GripVertical } from "lucide-react";
+import { SplitPane } from "@open-resource-discovery/ui-components";
 import { useIsLargeScreen } from "@lib/hooks/useMediaQuery";
 import { useUIStore } from "@lib/stores/uiStore";
 import { useAutoValidate } from "@lib/hooks/useAutoValidate";
 import { ServerCardEditor } from "@lib/components/editor/ServerCardEditor";
 import { EditorRightPanel } from "./EditorRightPanel";
+import { ResizeHandle } from "./ResizeHandle";
 import {
   Sheet,
   SheetContent,
@@ -19,16 +19,6 @@ interface EditorLayoutProps {
   readOnly?: boolean;
   defaultTab?: "overview" | "validation";
   className?: string;
-}
-
-function ResizeHandle() {
-  return (
-    <Separator className="group relative flex w-2 items-center justify-center bg-border/50 transition-colors hover:bg-border">
-      <div className="absolute z-10 flex h-8 w-4 items-center justify-center rounded-sm bg-border opacity-0 transition-opacity group-hover:opacity-100">
-        <GripVertical className="h-4 w-4 text-muted-foreground" />
-      </div>
-    </Separator>
-  );
 }
 
 export function EditorLayout({
@@ -50,18 +40,18 @@ export function EditorLayout({
   if (isLargeScreen) {
     return (
       <div className={cn("h-full", className)}>
-        <PanelGroup orientation="horizontal">
-          <Panel defaultSize={50} minSize={30}>
+        <SplitPane.Root orientation="horizontal">
+          <SplitPane.Panel defaultSize={50} minSize={30}>
             <ServerCardEditor readOnly={readOnly} />
-          </Panel>
+          </SplitPane.Panel>
           <ResizeHandle />
-          <Panel defaultSize={50} minSize={20}>
+          <SplitPane.Panel defaultSize={50} minSize={20}>
             <EditorRightPanel
               showValidation={showValidation}
               defaultTab={defaultTab}
             />
-          </Panel>
-        </PanelGroup>
+          </SplitPane.Panel>
+        </SplitPane.Root>
       </div>
     );
   }

@@ -142,6 +142,7 @@ export default defineConfig({
       "@": resolve(__dirname, "./src"),
       "@lib": resolve(__dirname, "./src/lib"),
     },
+    dedupe: ["react", "react-dom", "react-resizable-panels"],
   },
   define: {
     // Replace version placeholder with actual version
