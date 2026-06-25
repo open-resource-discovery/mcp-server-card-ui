@@ -7,6 +7,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [unreleased]
 
+## [[0.2.1](https://github.com/open-resource-discovery/mcp-server-card-ui/releases/tag/v0.2.1)] - 2026-06-25
+
 ### Changed
 
 - Replace `vite-plugin-dts` with `tsc` + `tsc-alias` for declaration emission. The plugin emitted only top-level entry `.d.ts` files, which broke consumer type resolution for re-exported subpaths. The new pipeline emits the full declaration tree (97 `.d.ts` files) and rewrites `@lib/*` / `@/*` path aliases to relative imports so types resolve in installed consumers.
