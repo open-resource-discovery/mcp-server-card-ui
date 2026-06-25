@@ -22,6 +22,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Fixed
 
+- Standalone bundle: mark `@base-ui/utils/store/createSelectorMemoized.js` as a module with side effects during the standalone IIFE build. Reselect's `package.json` declares `sideEffects: false`, which led rolldown (vite 8) to consider the top-level `createSelectorCreator({ memoize: lruMemoize, ... })` call inside that module as pure. It dropped the `reselect` import bindings but kept the call expression — producing `ReferenceError: createSelectorCreator is not defined` at runtime when the bundle loaded inside Docusaurus. A `resolveId` hook now returns `moduleSideEffects: true` for that module, so rolldown keeps the reselect bindings alongside the call site.
 - Publish full declaration tree so consumers can resolve types from the npm tarball — previously only the 5 entry-point `.d.ts` files shipped and any subpath import (or even the main entry's re-exports from `./components/...`, `./stores/...`, etc.) failed with `TS2307: Cannot find module`.
 
 - E2E tests: update `data-state="active"` assertions to `data-active=""` to match Base UI's tab attribute convention.
