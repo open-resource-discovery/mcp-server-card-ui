@@ -2,7 +2,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
-import dts from "vite-plugin-dts";
 import { resolve } from "path";
 import { readFileSync } from "fs";
 
@@ -19,7 +18,6 @@ const libExternals = [
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   const isLib = mode === "lib";
-  const isWatch = process.argv.includes("--watch");
   const isProduction = process.env.NODE_ENV === "production";
 
   return {
@@ -29,21 +27,7 @@ export default defineConfig(({ mode }) => {
       include: ["src/**/*.test.ts", "src/**/*.test.tsx"],
       environment: "jsdom",
     },
-    plugins: [
-      react(),
-      tailwindcss(),
-      ...(isLib && !isWatch
-        ? [
-            dts({
-              include: ["src/lib/**/*.ts", "src/lib/**/*.tsx"],
-              outDir: "dist",
-              rollupTypes: false,
-              tsconfigPath: "./tsconfig.app.json",
-              copyDtsFiles: true,
-            }),
-          ]
-        : []),
-    ],
+    plugins: [react(), tailwindcss()],
     resolve: {
       alias: {
         "@": resolve(__dirname, "./src"),
