@@ -83,6 +83,30 @@ export default defineConfig({
     react(),
     tailwindcss(),
     {
+      // Tell rolldown that @base-ui/utils/store/createSelectorMemoized.js
+      // has side effects. Without this, rolldown's tree-shaker sees the
+      // top-level `createSelectorCreator({...})` call as pure (because
+      // reselect's package.json has `sideEffects: false`), drops the
+      // reselect imports, but keeps the IIFE wrapper that references
+      // them — producing `ReferenceError: createSelectorCreator is not
+      // defined` at runtime. Marking the module as having side effects
+      // forces rolldown to either include reselect's bindings or drop the
+      // wrapper entirely.
+      //
+      // We use a resolveId hook with `moduleSideEffects: true` rather
+      // than the rollupOptions.treeshake option because the latter only
+      // accepts a boolean in rolldown 8.x.
+      name: "mark-base-ui-store-side-effects",
+      enforce: "pre",
+      async resolveId(source, importer, options) {
+        if (!source.includes("createSelectorMemoized")) return null;
+        const resolved = await this.resolve(source, importer, options);
+        if (!resolved || resolved.external) return resolved;
+        if (!resolved.id.includes("@base-ui/utils")) return resolved;
+        return { ...resolved, moduleSideEffects: true };
+      },
+    },
+    {
       name: "copy-standalone-files",
       closeBundle() {
         // Ensure dist-standalone exists

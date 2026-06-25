@@ -1,0 +1,23 @@
+{
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "composite": false,
+    "incremental": false,
+    "tsBuildInfoFile": null,
+    "noEmit": false,
+    "emitDeclarationOnly": true,
+    "declaration": true,
+    "declarationMap": false,
+    "rootDir": "./src/lib",
+    "outDir": "./dist",
+    "allowImportingTsExtensions": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false
+  },
+  "include": ["src/lib/**/*.ts", "src/lib/**/*.tsx"],
+  "exclude": [
+    "src/lib/**/__tests__/**",
+    "src/lib/**/*.test.ts",
+    "src/lib/**/*.test.tsx"
+  ]
+}

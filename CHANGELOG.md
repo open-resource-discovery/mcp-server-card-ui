@@ -9,6 +9,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Changed
 
+- Replace `vite-plugin-dts` with `tsc` + `tsc-alias` for declaration emission. The plugin emitted only top-level entry `.d.ts` files, which broke consumer type resolution for re-exported subpaths. The new pipeline emits the full declaration tree (97 `.d.ts` files) and rewrites `@lib/*` / `@/*` path aliases to relative imports so types resolve in installed consumers.
+- Strip side-effect CSS imports (`import "./styles.css"`) from emitted `.d.ts` via `scripts/strip-css-from-dts.mjs` — the CSS file is renamed to `index.css` at vite build time, so the original path no longer exists and tripped strict (`skipLibCheck: false`) consumers.
+- Extend `package.json#files` whitelist with `dist/{components,hooks,mock,stores,types,utils}/**/*.d.ts` so the supporting declaration files actually ship in the npm tarball.
 - Migrate all UI components (`Button`, `Badge`, `Card`, `Collapsible`, `Input`, `Select`, `Tabs`, `Switch`, `Separator`, `CodeBlock`, `MarkdownText`, `PasswordInput`) to re-export from `@open-resource-discovery/ui-components`, removing local shadcn-based implementations.
 - Replace `InfoCard`-based server overview layout with components from `@open-resource-discovery/ui-components`: `InfoCard`, `SectionCard`, `CollapsibleSection`.
 - Refactor `ToolCard`, `PromptCard`, `ResourceCard`, and all overview sections (`CapabilitiesSection`, `RemotesSection`, `ToolsSection`, `PromptsSection`, `ResourcesSection`, `AuthenticationSection`, `ExtensionsSection`, `ClientRequirementsSection`) to use library components.
@@ -16,9 +19,11 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Strip `@layer` wrappers from the standalone IIFE bundle so Tailwind utilities take precedence over unlayered host-page styles (e.g. Docusaurus Infima).
 - Switch `MCPConnectionSettings` transport/auth selects from shadcn `Select` to `Select.Root` compound API from the library.
 - Fix `Select.Value` in `FunctionInput` to display tool/prompt `title` instead of raw `name` when the two differ.
-- Update `vite.config.ts` to use `vite-plugin-dts` v5 API (`outDirs`, `copyDtsFiles`, `tsconfigPath`).
 
 ### Fixed
+
+- Standalone bundle: mark `@base-ui/utils/store/createSelectorMemoized.js` as a module with side effects during the standalone IIFE build. Reselect's `package.json` declares `sideEffects: false`, which led rolldown (vite 8) to consider the top-level `createSelectorCreator({ memoize: lruMemoize, ... })` call inside that module as pure. It dropped the `reselect` import bindings but kept the call expression — producing `ReferenceError: createSelectorCreator is not defined` at runtime when the bundle loaded inside Docusaurus. A `resolveId` hook now returns `moduleSideEffects: true` for that module, so rolldown keeps the reselect bindings alongside the call site.
+- Publish full declaration tree so consumers can resolve types from the npm tarball — previously only the 5 entry-point `.d.ts` files shipped and any subpath import (or even the main entry's re-exports from `./components/...`, `./stores/...`, etc.) failed with `TS2307: Cannot find module`.
 
 - E2E tests: update `data-state="active"` assertions to `data-active=""` to match Base UI's tab attribute convention.
 - E2E fixture: correct `isDocusaurus` port detection from `"3000"` to `"3003"`.
