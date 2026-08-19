@@ -7,6 +7,13 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [unreleased]
 
+### Changed
+
+- Upgraded `@open-resource-discovery/ui-components` to `0.1.6`.
+- Removed local highlight.js CSS token overrides (`--hljs-*` variables and
+  `.mcp-root .hljs-*` rules) — syntax highlighting is now bundled and managed
+  inside `ui-components`.
+
 ## [[0.2.1](https://github.com/open-resource-discovery/mcp-server-card-ui/releases/tag/v0.2.1)] - 2026-06-25
 
 ### Changed
