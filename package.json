@@ -149,7 +149,7 @@
   "devDependencies": {
     "@eslint/js": "9.39.4",
     "@playwright/test": "1.61.0",
-    "@tailwindcss/typography": "0.5.19",
+    "@tailwindcss/typography": "0.5.20",
     "@tailwindcss/vite": "4.2.2",
     "@types/node": "25.6.0",
     "@types/react": "19.2.14",
@@ -164,7 +164,7 @@
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "react-router-dom": "7.18.2",
-    "tailwindcss": "4.2.2",
+    "tailwindcss": "4.3.3",
     "tsc-alias": "^1.8.17",
     "typescript": "5.9.3",
     "typescript-eslint": "8.58.1",
