@@ -349,8 +349,7 @@ export const useMCPConnectionStore = create<MCPConnectionState>((set, get) => ({
       const result = initResult.response.result as Record<string, unknown>;
       const serverInfo = result.serverInfo as ServerInfo | undefined;
       const capabilities = result.capabilities as
-        | ServerCapabilities
-        | undefined;
+        ServerCapabilities | undefined;
       const sessionId = initResult.sessionId ?? null;
 
       // Update config with session ID for the notification
@@ -452,11 +451,9 @@ export const useMCPConnectionStore = create<MCPConnectionState>((set, get) => ({
               unknown
             >;
             const retryServerInfo = retryData.serverInfo as
-              | ServerInfo
-              | undefined;
+              ServerInfo | undefined;
             const retryCaps = retryData.capabilities as
-              | ServerCapabilities
-              | undefined;
+              ServerCapabilities | undefined;
             const retrySessionId = retryResult.sessionId ?? null;
 
             const retryConnConfig: MCPTransportConfig = {

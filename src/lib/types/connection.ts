@@ -1,10 +1,7 @@
 export type AuthType = "none" | "basic" | "bearer" | "oauth2";
 
 export type ConnectionStatus =
-  | "disconnected"
-  | "connecting"
-  | "connected"
-  | "error";
+  "disconnected" | "connecting" | "connected" | "error";
 
 export interface BasicCredentials {
   username: string;

@@ -226,8 +226,7 @@ const weatherServer: MockServerDef = {
       case "prompts/get": {
         const promptName = params?.name as string;
         const promptArgs = params?.arguments as
-          | Record<string, string>
-          | undefined;
+          Record<string, string> | undefined;
         if (promptName === "weather_report") {
           const city = promptArgs?.city ?? "Unknown";
           const format = promptArgs?.format ?? "brief";
