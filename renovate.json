@@ -55,11 +55,6 @@
       ]
     },
     {
-      "groupName": "Testing",
-      "matchManagers": ["npm"],
-      "matchPackageNames": ["vitest", "jsdom", "@playwright/test"]
-    },
-    {
       "groupName": "Docusaurus",
       "matchManagers": ["npm"],
       "matchPackageNames": [
@@ -102,6 +97,15 @@
       "matchDatasources": ["npm"],
       "semanticCommitType": "chore",
       "automerge": true
+    },
+    {
+      "groupName": "Testing",
+      "matchPackageNames": [
+        "vitest",
+        "jsdom",
+        "@playwright/test",
+        "mcr.microsoft.com/playwright"
+      ]
     }
   ]
 }
