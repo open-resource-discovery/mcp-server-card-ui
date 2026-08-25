@@ -2,11 +2,7 @@ import React, { useEffect, useRef, useId, useState } from "react";
 import useBaseUrl from "@docusaurus/useBaseUrl";
 
 type DemoType =
-  | "playground"
-  | "playground-lite"
-  | "editor"
-  | "viewer"
-  | "card-view";
+  "playground" | "playground-lite" | "editor" | "viewer" | "card-view";
 
 interface ComponentDemoProps {
   type: DemoType;

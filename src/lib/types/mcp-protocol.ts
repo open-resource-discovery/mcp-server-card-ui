@@ -114,11 +114,7 @@ export interface Icon {
    * Optional MIME type override if the source MIME type is missing or generic. Must be one of: image/png, image/jpeg, image/jpg, image/svg+xml, image/webp.
    */
   mimeType?:
-    | "image/png"
-    | "image/jpeg"
-    | "image/jpg"
-    | "image/svg+xml"
-    | "image/webp";
+    "image/png" | "image/jpeg" | "image/jpg" | "image/svg+xml" | "image/webp";
   /**
    * Optional array of strings that specify sizes at which the icon can be used.
    * Each string should be in WxH format (e.g., '48x48', '96x96') or 'any' for scalable formats like SVG. If not provided,
