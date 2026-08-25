@@ -44,7 +44,7 @@
   },
   "overrides": {
     "serialize-javascript": "7.1.0",
-    "@babel/plugin-transform-modules-systemjs": "7.29.8",
+    "@babel/plugin-transform-modules-systemjs": "8.0.1",
     "shell-quote": "1.10.0",
     "ws": "8.21.0",
     "undici": "7.29.0",
