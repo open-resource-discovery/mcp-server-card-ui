@@ -31,14 +31,6 @@ export function MCPServerSelector() {
     loadDefaults();
   }, [loadDefaults]);
 
-  // Auto-select the first server after loading defaults (if nothing is selected)
-  useEffect(() => {
-    if (!loading && servers.length > 0 && !selectedId) {
-      handleSelect(servers[0].id);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loading, servers, selectedId]);
-
   const handleSelect = async (id: string) => {
     // Skip if already selected and connected/connecting
     if (
@@ -68,6 +60,14 @@ export function MCPServerSelector() {
 
     await connect();
   };
+
+  // Auto-select the first server after loading defaults (if nothing is selected)
+  useEffect(() => {
+    if (!loading && servers.length > 0 && !selectedId) {
+      handleSelect(servers[0].id);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading, servers, selectedId]);
 
   const handleRemove = (e: React.MouseEvent, id: string) => {
     e.stopPropagation();

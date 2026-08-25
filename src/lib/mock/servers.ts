@@ -366,7 +366,7 @@ const calculatorServer: MockServerDef = {
           const value = args?.value as number;
           const from = (args?.from as string).toLowerCase();
           const to = (args?.to as string).toLowerCase();
-          let result: number | null = null;
+          let result: number;
           if (from === "celsius" && to === "fahrenheit")
             result = (value * 9) / 5 + 32;
           else if (from === "fahrenheit" && to === "celsius")
