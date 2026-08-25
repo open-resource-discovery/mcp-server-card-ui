@@ -11,9 +11,9 @@ jobs:
     name: Static linting
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.1.0
 
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v6.5.0
         with:
           node-version: "24.11.1"
 
@@ -30,9 +30,9 @@ jobs:
     name: Unit Tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.1.0
 
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v6.5.0
         with:
           node-version: "24.11.1"
 
@@ -49,10 +49,10 @@ jobs:
     container:
       image: mcr.microsoft.com/playwright:v1.61.0-noble
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@v6.1.0
+      - uses: actions/setup-node@v6.5.0
         with:
-          node-version: "24"
+          node-version: "24.19.0"
       - name: Install dependencies
         run: npm ci
       - name: Install website dependencies
@@ -60,7 +60,7 @@ jobs:
         working-directory: website
       - name: Run Playwright tests
         run: npx playwright test
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@v7.0.1
         if: ${{ !cancelled() }}
         with:
           name: playwright-report
@@ -70,9 +70,9 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.1.0
 
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v6.5.0
         with:
           node-version: "24.11.1"
 
