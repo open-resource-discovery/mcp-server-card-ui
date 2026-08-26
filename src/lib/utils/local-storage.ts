@@ -1,10 +1,25 @@
+export interface StoredJsonResult<T> {
+  value: T;
+  error?: string;
+}
+
 export function getStoredJson<T>(key: string, fallback: T): T {
-  if (typeof window === "undefined") return fallback;
+  return getStoredJsonResult(key, fallback).value;
+}
+
+export function getStoredJsonResult<T>(
+  key: string,
+  fallback: T,
+): StoredJsonResult<T> {
+  if (typeof window === "undefined") return { value: fallback };
   try {
     const raw = localStorage.getItem(key);
-    return raw ? (JSON.parse(raw) as T) : fallback;
-  } catch {
-    return fallback;
+    return { value: raw !== null ? (JSON.parse(raw) as T) : fallback };
+  } catch (error) {
+    return {
+      value: fallback,
+      error: error instanceof Error ? error.message : String(error),
+    };
   }
 }
 
