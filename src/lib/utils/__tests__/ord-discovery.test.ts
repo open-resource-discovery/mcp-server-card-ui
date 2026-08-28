@@ -221,6 +221,34 @@ describe("discoverServersFromOrd", () => {
     );
   });
 
+  it("reports an invalid configuration base URL and uses the endpoint fallback", async () => {
+    fetchMock
+      .mockResolvedValueOnce(
+        jsonResponse({
+          baseUrl: "http://localhost:3005/provider?tenant=one",
+          openResourceDiscoveryV1: {
+            documents: [{ url: "/ord/document" }],
+          },
+        }),
+      )
+      .mockResolvedValueOnce(jsonResponse({ apiResources: [] }));
+
+    const result = await discoverServersFromOrd(ORD_URL);
+
+    expect(fetchMock).toHaveBeenNthCalledWith(
+      2,
+      "http://localhost:3005/ord/document",
+    );
+    expect(result.issues).toEqual([
+      expect.objectContaining({
+        path: "baseUrl",
+        message: expect.stringContaining(
+          "Expected an absolute HTTP(S) URL without a query or fragment",
+        ),
+      }),
+    ]);
+  });
+
   it("rejects base-relative entry points without a described system base URL", async () => {
     fetchMock
       .mockResolvedValueOnce(
@@ -325,6 +353,72 @@ describe("discoverServersFromOrd", () => {
     expect(result.issues.map((issue) => issue.message)).toEqual([
       'Expected an absolute HTTP(S) URL without a query or fragment; received "http://localhost:3005/root?tenant=one". Base-URL-relative entry points cannot be resolved.',
       'Cannot resolve base-URL-relative entry point "/mcp" because describedSystemInstance.baseUrl is missing or invalid.',
+    ]);
+  });
+
+  it("skips unsupported schemes and keeps a supported secondary entry point", async () => {
+    fetchMock
+      .mockResolvedValueOnce(
+        jsonResponse({
+          openResourceDiscoveryV1: {
+            documents: [{ url: "/ord/v1/document" }],
+          },
+        }),
+      )
+      .mockResolvedValueOnce(
+        jsonResponse({
+          apiResources: [
+            {
+              ordId: "example:apiResource:mixed-schemes:v1",
+              apiProtocol: "mcp",
+              entryPoints: ["file:///etc/passwd", "https://example.com/mcp"],
+            },
+          ],
+        }),
+      );
+
+    const result = await discoverServersFromOrd(ORD_URL);
+
+    expect(result.servers).toEqual([
+      expect.objectContaining({ url: "https://example.com/mcp" }),
+    ]);
+    expect(result.issues).toEqual([
+      expect.objectContaining({
+        path: "apiResources[0].entryPoints[0]",
+        message:
+          'Unsupported URL scheme "file:". Expected "http:", "https:", or the playground\'s internal "mock:" scheme.',
+      }),
+    ]);
+  });
+
+  it("reports an API resource with a missing protocol", async () => {
+    fetchMock
+      .mockResolvedValueOnce(
+        jsonResponse({
+          openResourceDiscoveryV1: {
+            documents: [{ url: "/ord/v1/document" }],
+          },
+        }),
+      )
+      .mockResolvedValueOnce(
+        jsonResponse({
+          apiResources: [
+            {
+              ordId: "example:apiResource:missing-protocol:v1",
+              entryPoints: ["https://example.com/mcp"],
+            },
+          ],
+        }),
+      );
+
+    const result = await discoverServersFromOrd(ORD_URL);
+
+    expect(result.servers).toEqual([]);
+    expect(result.issues).toEqual([
+      expect.objectContaining({
+        path: "apiResources[0].apiProtocol",
+        message: "Expected a string; received undefined.",
+      }),
     ]);
   });
 });

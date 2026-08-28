@@ -77,6 +77,48 @@ describe("predefinedServersStore", () => {
     ]);
   });
 
+  it("retains and rewrites servers with malformed optional fields", async () => {
+    localStorage.setItem(
+      "mcp-custom-servers",
+      JSON.stringify([
+        {
+          id: "custom-sanitized",
+          name: "sanitized",
+          title: { text: "Invalid title" },
+          description: "Usable server",
+          url: "mock://sanitized",
+          transportType: "streamable-http",
+          tags: ["valid", 42],
+          authHeaders: {
+            Authorization: "Bearer token",
+            Invalid: false,
+          },
+        },
+      ]),
+    );
+
+    await usePredefinedServersStore.getState().loadDefaults();
+
+    const state = usePredefinedServersStore.getState();
+    expect(state.servers[0]).toEqual({
+      id: "custom-sanitized",
+      name: "sanitized",
+      description: "Usable server",
+      url: "mock://sanitized",
+      transportType: "streamable-http",
+      tags: ["valid"],
+      authHeaders: { Authorization: "Bearer token" },
+    });
+    expect(state.notice?.details).toEqual([
+      expect.stringContaining("[0].title"),
+      expect.stringContaining("[0].authHeaders.Invalid"),
+      expect.stringContaining("[0].tags[1]"),
+    ]);
+    expect(
+      JSON.parse(localStorage.getItem("mcp-custom-servers") ?? "[]"),
+    ).toEqual([state.servers[0]]);
+  });
+
   it("reports and removes syntactically invalid persisted JSON", async () => {
     localStorage.setItem("mcp-custom-servers", "{");
 
@@ -108,7 +150,7 @@ describe("predefinedServersStore", () => {
   });
 
   it("returns false and preserves state when a custom server is rejected", () => {
-    const added = usePredefinedServersStore.getState().addCustomServer({
+    const result = usePredefinedServersStore.getState().addCustomServer({
       id: "custom-invalid",
       name: "",
       description: "Invalid server",
@@ -116,7 +158,7 @@ describe("predefinedServersStore", () => {
       transportType: "streamable-http",
     });
 
-    expect(added).toBe(false);
+    expect(result.status).toBe("invalid");
     expect(usePredefinedServersStore.getState().servers).toEqual([]);
     expect(usePredefinedServersStore.getState().notice?.summary).toBe(
       "The custom server was not added.",
@@ -136,7 +178,7 @@ describe("predefinedServersStore", () => {
       ],
     });
 
-    const added = usePredefinedServersStore.getState().addCustomServer({
+    const result = usePredefinedServersStore.getState().addCustomServer({
       id: "custom-duplicate",
       name: "replacement",
       description: "Replacement server",
@@ -144,12 +186,32 @@ describe("predefinedServersStore", () => {
       transportType: "streamable-http",
     });
 
-    expect(added).toBe(false);
+    expect(result.status).toBe("duplicate");
     expect(usePredefinedServersStore.getState().servers[0].url).toBe(
       "mock://existing",
     );
     expect(usePredefinedServersStore.getState().notice?.details[0]).toContain(
       "A server with this ID already exists.",
     );
+  });
+
+  it("returns the normalized added-server result", () => {
+    const result = usePredefinedServersStore.getState().addCustomServer({
+      id: "custom-sanitized",
+      name: "sanitized",
+      description: "Sanitized server",
+      url: "mock://sanitized",
+      transportType: "streamable-http",
+      tags: ["valid"],
+    });
+
+    expect(result).toEqual({
+      status: "added",
+      server: expect.objectContaining({
+        id: "custom-sanitized",
+        tags: ["valid"],
+      }),
+      issues: [],
+    });
   });
 });

@@ -235,7 +235,7 @@ test.describe("Connection URL", () => {
       playground.serverSelectorItem("custom-example:apiResource:calculator:v1"),
     ).toBeVisible();
     await expect(playground.serverLoadNotice).toContainText(
-      "Discovered 1 MCP server with 1 warning.",
+      "Added 1 of 1 discovered MCP server with 1 warning.",
     );
     await expect(playground.serverLoadNotice).toContainText(
       'resource "example:apiResource:broken:v1"',
@@ -243,6 +243,75 @@ test.describe("Connection URL", () => {
     await expect(
       playground.page.getByText("Something went wrong"),
     ).not.toBeVisible();
+  });
+
+  test("should continue after duplicates and no-op when all servers exist", async ({
+    playground,
+  }) => {
+    const ordUrl = "https://ord.test/.well-known/open-resource-discovery";
+    const firstResource = {
+      ordId: "example:apiResource:first:v1",
+      apiProtocol: "mcp",
+      title: "First ORD Server",
+      entryPoints: ["mock://weather"],
+    };
+    const secondResource = {
+      ordId: "example:apiResource:second:v1",
+      apiProtocol: "mcp",
+      title: "Second ORD Server",
+      entryPoints: ["mock://calculator"],
+    };
+    let resources = [firstResource];
+
+    await playground.page.route("https://ord.test/**", async (route) => {
+      if (route.request().url() === ordUrl) {
+        await route.fulfill({
+          json: {
+            baseUrl: "https://ord.test",
+            openResourceDiscoveryV1: {
+              documents: [{ url: "/ord/document" }],
+            },
+          },
+        });
+        return;
+      }
+      await route.fulfill({ json: { apiResources: resources } });
+    });
+
+    await playground.connectionUrl.fill(ordUrl);
+    await playground.addServerBtn.click();
+    await expect(
+      playground.serverSelectorItem("custom-example:apiResource:first:v1"),
+    ).toBeVisible();
+
+    resources = [firstResource, secondResource];
+    await playground.connectionUrl.fill(ordUrl);
+    await playground.addServerBtn.click();
+
+    const secondServer = playground.serverSelectorItem(
+      "custom-example:apiResource:second:v1",
+    );
+    await expect(secondServer).toBeVisible();
+    await expect(secondServer).toHaveAttribute("aria-selected", "true");
+    await expect(playground.connectionUrl).toHaveValue("mock://calculator");
+    await expect(playground.serverLoadNotice).toContainText(
+      "Added 1 of 2 discovered MCP servers with 1 warning.",
+    );
+    await expect(playground.serverLoadNotice).toContainText(
+      "A server with this ID already exists.",
+    );
+
+    await playground.connectionUrl.fill(ordUrl);
+    await playground.addServerBtn.click();
+
+    await expect(playground.connectionStatus).toHaveText("connected");
+    await expect(secondServer).toHaveAttribute("aria-selected", "true");
+    await expect(playground.serverLoadNotice).toContainText(
+      "No new MCP servers were added.",
+    );
+    await expect(playground.serverLoadNotice).toContainText(
+      "A server with this ID already exists.",
+    );
   });
 });
 test.describe("Predefined Server Auto-Select", () => {

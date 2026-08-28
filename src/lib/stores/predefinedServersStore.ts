@@ -22,6 +22,22 @@ export interface ServerLoadNotice {
   details: string[];
 }
 
+export type AddCustomServerResult =
+  | {
+      status: "added";
+      server: PredefinedServer;
+      issues: string[];
+    }
+  | {
+      status: "duplicate";
+      server: PredefinedServer;
+      issues: string[];
+    }
+  | {
+      status: "invalid";
+      issues: string[];
+    };
+
 interface PredefinedServersState {
   servers: PredefinedServer[];
   selectedId: string | null;
@@ -30,7 +46,7 @@ interface PredefinedServersState {
   isAddingServer: boolean;
 
   loadDefaults: () => Promise<void>;
-  addCustomServer: (server: PredefinedServer) => boolean;
+  addCustomServer: (server: PredefinedServer) => AddCustomServerResult;
   removeServer: (id: string) => void;
   select: (id: string) => void;
   deselect: () => void;
@@ -148,39 +164,58 @@ export const usePredefinedServersStore = create<PredefinedServersState>(
 
     addCustomServer: (server) => {
       const validation = validatePredefinedServers([server], "Custom server");
+      const validationIssues = validation.issues.map(
+        formatPredefinedServerIssue,
+      );
       const validServer = validation.servers[0];
       if (!validServer) {
         set({
           notice: {
             severity: "error",
             summary: "The custom server was not added.",
-            details: validation.issues.map(formatPredefinedServerIssue),
+            details: validationIssues,
           },
         });
-        return false;
+        return { status: "invalid", issues: validationIssues };
       }
       if (
         usePredefinedServersStore
           .getState()
           .servers.some((existing) => existing.id === validServer.id)
       ) {
+        const issues = [
+          `Custom server, server "${validServer.id}", id: A server with this ID already exists.`,
+        ];
         set({
           notice: {
-            severity: "error",
+            severity: "warning",
             summary: "The custom server was not added.",
-            details: [
-              `Custom server, server "${validServer.id}", id: A server with this ID already exists.`,
-            ],
+            details: issues,
           },
         });
-        return false;
+        return { status: "duplicate", server: validServer, issues };
       }
+      const warningNotice: ServerLoadNotice | undefined =
+        validationIssues.length > 0
+          ? {
+              severity: "warning",
+              summary: "The custom server was added with warnings.",
+              details: validationIssues,
+            }
+          : undefined;
       set((state) => {
         const newServers = [...state.servers, validServer];
         persistCustom(newServers);
-        return { servers: newServers };
+        return {
+          servers: newServers,
+          ...(warningNotice ? { notice: warningNotice } : {}),
+        };
       });
-      return true;
+      return {
+        status: "added",
+        server: validServer,
+        issues: validationIssues,
+      };
     },
 
     removeServer: (id) => {

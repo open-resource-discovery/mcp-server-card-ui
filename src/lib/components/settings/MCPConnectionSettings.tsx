@@ -147,29 +147,42 @@ export function MCPConnectionSettings() {
           setNotice({
             severity: "error",
             summary: "ORD discovery failed. No MCP servers were added.",
-            details:
-              details.length > 0
-                ? details
-                : [
-                    "No MCP API resources with a usable entry point were found.",
-                  ],
+            details,
           });
           return;
         }
 
-        if (details.length > 0) {
-          setNotice({
-            severity: "warning",
-            summary: `Discovered ${discovered.length} MCP ${discovered.length === 1 ? "server" : "servers"} with ${details.length} ${details.length === 1 ? "warning" : "warnings"}.`,
-            details,
-          });
+        const addedServers = [];
+        const additionIssues = [...details];
+        for (const server of discovered) {
+          const addition = addCustomServer(server);
+          additionIssues.push(...addition.issues);
+          if (addition.status === "added") {
+            addedServers.push(addition.server);
+          }
         }
 
-        for (const server of discovered) {
-          if (!addCustomServer(server)) return;
+        if (addedServers.length === 0) {
+          setNotice({
+            severity: "warning",
+            summary: "No new MCP servers were added.",
+            details: additionIssues,
+          });
+          return;
         }
+
+        if (additionIssues.length > 0) {
+          setNotice({
+            severity: "warning",
+            summary: `Added ${addedServers.length} of ${discovered.length} discovered MCP ${discovered.length === 1 ? "server" : "servers"} with ${additionIssues.length} ${additionIssues.length === 1 ? "warning" : "warnings"}.`,
+            details: additionIssues,
+          });
+        } else {
+          setNotice(null);
+        }
+
         // Select and connect to the first discovered server
-        const first = discovered[0];
+        const first = addedServers[0];
         const currentConnection = useMCPConnectionStore.getState();
         if (currentConnection.connectionStatus === "connecting") {
           setNotice({
@@ -177,7 +190,7 @@ export function MCPConnectionSettings() {
             summary:
               "Servers were discovered, but automatic connection was skipped.",
             details: [
-              ...details,
+              ...additionIssues,
               "Another connection attempt is still in progress. Select the discovered server after it finishes.",
             ],
           });
@@ -214,7 +227,9 @@ export function MCPConnectionSettings() {
         transportType,
       };
 
-      if (!addCustomServer(server)) return;
+      const addition = addCustomServer(server);
+      if (addition.status !== "added") return;
+      const addedServer = addition.server;
       const currentConnection = useMCPConnectionStore.getState();
       if (currentConnection.connectionStatus === "connecting") {
         setNotice({
@@ -233,9 +248,9 @@ export function MCPConnectionSettings() {
       ) {
         await currentConnection.disconnect();
       }
-      select(server.id);
-      setFromPredefined(server);
-      setInputUrl(server.url);
+      select(addedServer.id);
+      setFromPredefined(addedServer);
+      setInputUrl(addedServer.url);
       reset();
       await connect();
     } finally {
@@ -267,10 +282,7 @@ export function MCPConnectionSettings() {
         }
 
         const server = servers.find((s) => s.url === trimmedInputUrl);
-        if (!server) {
-          await handleConnect();
-          return;
-        }
+        if (!server) return;
         const currentConnection = useMCPConnectionStore.getState();
         if (
           currentConnection.connectionStatus === "connected" &&
@@ -298,7 +310,6 @@ export function MCPConnectionSettings() {
       connectionStatus,
       showAddButton,
       handleAdd,
-      handleConnect,
       select,
       setFromPredefined,
       reset,

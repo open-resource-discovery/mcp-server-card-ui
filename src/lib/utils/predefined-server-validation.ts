@@ -87,7 +87,6 @@ function parsePredefinedServer(
     typeof value.id === "string" && value.id.trim() !== ""
       ? value.id
       : undefined;
-  const initialIssueCount = result.issues.length;
   const id = readRequiredString(
     value,
     "id",
@@ -204,7 +203,6 @@ function parsePredefinedServer(
   );
 
   if (
-    result.issues.length !== initialIssueCount ||
     id === undefined ||
     name === undefined ||
     description === undefined ||
@@ -340,13 +338,11 @@ function readOptionalStringRecord(
     return undefined;
   }
 
-  let valid = true;
   const parsed: Record<string, string> = {};
   for (const [entryKey, entryValue] of Object.entries(value)) {
     if (typeof entryValue === "string") {
       parsed[entryKey] = entryValue;
     } else {
-      valid = false;
       issues.push({
         source,
         serverId,
@@ -356,7 +352,7 @@ function readOptionalStringRecord(
       });
     }
   }
-  return valid ? parsed : undefined;
+  return parsed;
 }
 
 function readOptionalStringArray(
@@ -379,14 +375,12 @@ function readOptionalStringArray(
     return undefined;
   }
 
-  let valid = true;
   const parsed: string[] = [];
   for (let index = 0; index < value.length; index++) {
     const entry = value[index];
     if (typeof entry === "string") {
       parsed.push(entry);
     } else {
-      valid = false;
       issues.push({
         source,
         serverId,
@@ -396,7 +390,7 @@ function readOptionalStringArray(
       });
     }
   }
-  return valid ? parsed : undefined;
+  return parsed;
 }
 
 function readOptionalBoolean(

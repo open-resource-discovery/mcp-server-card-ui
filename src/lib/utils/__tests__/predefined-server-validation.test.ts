@@ -42,25 +42,40 @@ describe("validatePredefinedServers", () => {
     );
   });
 
-  it("rejects optional fields that could break rendering", () => {
+  it("sanitizes optional fields without rejecting the server", () => {
     const result = validatePredefinedServers(
       [
         {
-          id: "custom-invalid",
-          name: "invalid",
+          id: "custom-sanitized",
+          name: "sanitized",
           title: { text: "Invalid title" },
           description: "",
-          url: "mock://invalid",
+          url: "mock://sanitized",
           transportType: "streamable-http",
           tags: ["valid", 42],
+          authHeaders: {
+            Authorization: "Bearer token",
+            Invalid: false,
+          },
         },
       ],
       "Configured predefined servers",
     );
 
-    expect(result.servers).toEqual([]);
+    expect(result.servers).toEqual([
+      {
+        id: "custom-sanitized",
+        name: "sanitized",
+        description: "",
+        url: "mock://sanitized",
+        transportType: "streamable-http",
+        tags: ["valid"],
+        authHeaders: { Authorization: "Bearer token" },
+      },
+    ]);
     expect(result.issues.map((issue) => issue.path)).toEqual([
       "[0].title",
+      "[0].authHeaders.Invalid",
       "[0].tags[1]",
     ]);
   });

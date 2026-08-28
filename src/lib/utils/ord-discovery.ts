@@ -2,6 +2,8 @@ import type { PredefinedServer } from "@lib/types/connection";
 
 type JsonObject = Record<string, unknown>;
 
+const SUPPORTED_ENTRY_POINT_PROTOCOLS = new Set(["http:", "https:", "mock:"]);
+
 interface FetchedJson {
   value: unknown;
   responseUrl: string;
@@ -353,6 +355,18 @@ function parseMcpResource(
         resourceIndex,
         path,
         message: `Could not resolve URL reference "${entryPoint}".`,
+      });
+      continue;
+    }
+    const protocol = new URL(resolvedUrl).protocol;
+    if (!SUPPORTED_ENTRY_POINT_PROTOCOLS.has(protocol)) {
+      result.issues.push({
+        phase: "resource",
+        sourceUrl: documentUrl,
+        resourceId,
+        resourceIndex,
+        path,
+        message: `Unsupported URL scheme "${protocol}". Expected "http:", "https:", or the playground's internal "mock:" scheme.`,
       });
       continue;
     }
