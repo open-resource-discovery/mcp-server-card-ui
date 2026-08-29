@@ -43,7 +43,7 @@
     "node": ">=18.0"
   },
   "overrides": {
-    "serialize-javascript": "7.1.0",
+    "serialize-javascript": "7.1.1",
     "@babel/plugin-transform-modules-systemjs": "7.29.8",
     "shell-quote": "1.10.0",
     "ws": "8.21.0",
