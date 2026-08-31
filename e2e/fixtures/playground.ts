@@ -45,6 +45,7 @@ export class PlaygroundPage {
   readonly disconnectBtn: Locator;
   readonly connectionStatus: Locator;
   readonly addServerBtn: Locator;
+  readonly serverLoadNotice: Locator;
 
   // Authtype and connection settings
   readonly transportTypeSelect: Locator;
@@ -110,6 +111,7 @@ export class PlaygroundPage {
     this.disconnectBtn = page.getByTestId("disconnect-btn");
     this.connectionStatus = page.getByTestId("connection-status");
     this.addServerBtn = page.getByTestId("add-server-btn");
+    this.serverLoadNotice = page.getByTestId("server-load-notice");
 
     //Authtype and connection settings
     this.transportTypeSelect = page.getByTestId("transport-type-select");

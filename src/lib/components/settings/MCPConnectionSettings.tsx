@@ -13,11 +13,15 @@ import {
   mapStoreAuthType,
 } from "@lib/utils/connection-auth";
 import { cn } from "@lib/utils/cn";
-import { isOrdUrl, discoverServersFromOrd } from "@lib/utils/ord-discovery";
+import {
+  discoverServersFromOrd,
+  formatOrdDiscoveryIssue,
+  isOrdUrl,
+} from "@lib/utils/ord-discovery";
 
 export function MCPConnectionSettings() {
   const {
-    url,
+    url: activeUrl,
     setUrl,
     transportType,
     setTransportType,
@@ -38,6 +42,10 @@ export function MCPConnectionSettings() {
   const servers = usePredefinedServersStore((s) => s.servers);
   const addCustomServer = usePredefinedServersStore((s) => s.addCustomServer);
   const select = usePredefinedServersStore((s) => s.select);
+  const notice = usePredefinedServersStore((s) => s.notice);
+  const setNotice = usePredefinedServersStore((s) => s.setNotice);
+  const isAdding = usePredefinedServersStore((s) => s.isAddingServer);
+  const setIsAdding = usePredefinedServersStore((s) => s.setIsAddingServer);
 
   const [manualAuthType, setManualAuthType] = useState<ConnAuthType | null>(
     null,
@@ -57,6 +65,7 @@ export function MCPConnectionSettings() {
   const effectiveUsername = localUsername ?? username;
   const effectivePassword = localPassword ?? password;
   const effectiveToken = localToken ?? token;
+  const [inputUrl, setInputUrl] = useState(activeUrl);
 
   useEffect(() => {
     setManualAuthType(null);
@@ -65,11 +74,19 @@ export function MCPConnectionSettings() {
     setLocalToken(null);
   }, [storeAuthType]);
 
-  const urlMatchesServer = servers.some((s) => s.url === url);
-  const showAddButton = url.trim().length > 0 && !urlMatchesServer;
-  const [isAdding, setIsAdding] = useState(false);
+  useEffect(() => {
+    setInputUrl(activeUrl);
+  }, [activeUrl]);
+
+  const trimmedInputUrl = inputUrl.trim();
+  const urlMatchesServer = servers.some((s) => s.url === trimmedInputUrl);
+  const showAddButton = trimmedInputUrl.length > 0 && !urlMatchesServer;
 
   const handleConnect = useCallback(async () => {
+    const requestedUrl = inputUrl.trim();
+    if (!requestedUrl) return;
+    setUrl(requestedUrl);
+
     if (connAuthType === "basic" && (localUsername || localPassword)) {
       useMCPConnectionStore.getState().setBasicCredentials({
         username: effectiveUsername,
@@ -95,45 +112,108 @@ export function MCPConnectionSettings() {
     localUsername,
     localPassword,
     localToken,
+    inputUrl,
+    setUrl,
     connect,
     parsedCard,
     autoConfigureAuth,
   ]);
 
   const handleAdd = useCallback(async () => {
-    const trimmedUrl = url.trim();
+    const trimmedUrl = inputUrl.trim();
     if (!trimmedUrl) return;
 
+    if (useMCPConnectionStore.getState().connectionStatus === "connecting") {
+      setNotice({
+        severity: "error",
+        summary:
+          "The server cannot be added while a connection is in progress.",
+        details: [
+          "Wait for the current connection attempt to finish and retry.",
+        ],
+      });
+      return;
+    }
+
+    setNotice(null);
     setIsAdding(true);
     try {
       // Try ORD discovery first if the URL looks like an ORD endpoint
       if (isOrdUrl(trimmedUrl)) {
-        const discovered = await discoverServersFromOrd(trimmedUrl, "custom-");
-        if (discovered.length > 0) {
-          for (const server of discovered) {
-            addCustomServer(server);
-          }
-          // Select and connect to the first discovered server
-          const first = discovered[0];
-          select(first.id);
-          setFromPredefined(first);
-          reset();
-          setUrl("");
-          if (
-            connectionStatus === "connected" ||
-            connectionStatus === "error"
-          ) {
-            await disconnect();
-          }
-          await connect();
+        const result = await discoverServersFromOrd(trimmedUrl, "custom-");
+        const discovered = result.servers;
+        const details = result.issues.map(formatOrdDiscoveryIssue);
+        if (discovered.length === 0) {
+          setNotice({
+            severity: "error",
+            summary: "ORD discovery failed. No MCP servers were added.",
+            details,
+          });
           return;
         }
+
+        const addedServers = [];
+        const additionIssues = [...details];
+        for (const server of discovered) {
+          const addition = addCustomServer(server);
+          additionIssues.push(...addition.issues);
+          if (addition.status === "added") {
+            addedServers.push(addition.server);
+          }
+        }
+
+        if (addedServers.length === 0) {
+          setNotice({
+            severity: "warning",
+            summary: "No new MCP servers were added.",
+            details: additionIssues,
+          });
+          return;
+        }
+
+        if (additionIssues.length > 0) {
+          setNotice({
+            severity: "warning",
+            summary: `Added ${addedServers.length} of ${discovered.length} discovered MCP ${discovered.length === 1 ? "server" : "servers"} with ${additionIssues.length} ${additionIssues.length === 1 ? "warning" : "warnings"}.`,
+            details: additionIssues,
+          });
+        } else {
+          setNotice(null);
+        }
+
+        // Select and connect to the first discovered server
+        const first = addedServers[0];
+        const currentConnection = useMCPConnectionStore.getState();
+        if (currentConnection.connectionStatus === "connecting") {
+          setNotice({
+            severity: "warning",
+            summary:
+              "Servers were discovered, but automatic connection was skipped.",
+            details: [
+              ...additionIssues,
+              "Another connection attempt is still in progress. Select the discovered server after it finishes.",
+            ],
+          });
+          return;
+        }
+        if (
+          currentConnection.connectionStatus === "connected" ||
+          currentConnection.connectionStatus === "error"
+        ) {
+          await currentConnection.disconnect();
+        }
+        select(first.id);
+        setFromPredefined(first);
+        setInputUrl(first.url);
+        reset();
+        await connect();
+        return;
       }
 
       // Fall back to single server add
       let hostname: string;
       try {
-        hostname = new URL(trimmedUrl).hostname;
+        hostname = new URL(trimmedUrl).hostname || trimmedUrl;
       } catch {
         hostname = trimmedUrl;
       }
@@ -147,58 +227,94 @@ export function MCPConnectionSettings() {
         transportType,
       };
 
-      addCustomServer(server);
-      select(server.id);
-      setFromPredefined(server);
-      reset();
-      if (connectionStatus === "connected" || connectionStatus === "error") {
-        await disconnect();
+      const addition = addCustomServer(server);
+      if (addition.status !== "added") return;
+      const addedServer = addition.server;
+      const currentConnection = useMCPConnectionStore.getState();
+      if (currentConnection.connectionStatus === "connecting") {
+        setNotice({
+          severity: "warning",
+          summary:
+            "The server was added, but automatic connection was skipped.",
+          details: [
+            "Another connection attempt is still in progress. Select the new server after it finishes.",
+          ],
+        });
+        return;
       }
+      if (
+        currentConnection.connectionStatus === "connected" ||
+        currentConnection.connectionStatus === "error"
+      ) {
+        await currentConnection.disconnect();
+      }
+      select(addedServer.id);
+      setFromPredefined(addedServer);
+      setInputUrl(addedServer.url);
+      reset();
       await connect();
     } finally {
       setIsAdding(false);
     }
   }, [
-    url,
+    inputUrl,
     transportType,
-    connectionStatus,
     addCustomServer,
     select,
+    setNotice,
+    setIsAdding,
     setFromPredefined,
     reset,
-    setUrl,
     connect,
-    disconnect,
   ]);
 
   const handleUrlKeyDown = useCallback(
-    (e: React.KeyboardEvent) => {
+    async (e: React.KeyboardEvent) => {
       if (
         e.key === "Enter" &&
-        url.trim() &&
+        trimmedInputUrl &&
+        !isAdding &&
         connectionStatus !== "connecting"
       ) {
         if (showAddButton) {
-          handleAdd();
-        } else {
-          select(servers.find((s) => s.url === url.trim())?.id ?? "");
-          // Disconnect previous session before switching
-          if (connectionStatus === "connected") {
-            disconnect();
-          }
-          handleConnect();
+          await handleAdd();
+          return;
         }
+
+        const server = servers.find((s) => s.url === trimmedInputUrl);
+        if (!server) return;
+        const currentConnection = useMCPConnectionStore.getState();
+        if (
+          currentConnection.connectionStatus === "connected" &&
+          activeUrl === server.url
+        ) {
+          return;
+        }
+        if (currentConnection.connectionStatus === "connecting") return;
+        if (
+          currentConnection.connectionStatus === "connected" ||
+          currentConnection.connectionStatus === "error"
+        ) {
+          await currentConnection.disconnect();
+        }
+        select(server.id);
+        setFromPredefined(server);
+        reset();
+        await connect();
       }
     },
     [
-      url,
+      activeUrl,
+      trimmedInputUrl,
+      isAdding,
       connectionStatus,
       showAddButton,
       handleAdd,
-      handleConnect,
       select,
+      setFromPredefined,
+      reset,
       servers,
-      disconnect,
+      connect,
     ],
   );
 
@@ -230,9 +346,10 @@ export function MCPConnectionSettings() {
         <div className="flex items-center gap-1.5">
           <Input
             placeholder="MCP Server or ORD URL"
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
+            value={inputUrl}
+            onChange={(e) => setInputUrl(e.target.value)}
             onKeyDown={handleUrlKeyDown}
+            disabled={isAdding}
             className="h-8 text-xs flex-1"
             data-testid="connection-url"
           />
@@ -243,7 +360,7 @@ export function MCPConnectionSettings() {
               size="icon"
               className="h-8 w-8 shrink-0"
               onClick={handleAdd}
-              disabled={isAdding}
+              disabled={isAdding || connectionStatus === "connecting"}
               title="Add server to list"
             >
               {isAdding ? (
@@ -257,6 +374,7 @@ export function MCPConnectionSettings() {
 
         <Select.Root
           value={transportType}
+          disabled={isAdding}
           onValueChange={(v) =>
             setTransportType(v as "streamable-http" | "sse")
           }
@@ -286,6 +404,7 @@ export function MCPConnectionSettings() {
 
         <Select.Root
           value={connAuthType}
+          disabled={isAdding}
           onValueChange={(v) => setManualAuthType(v as ConnAuthType)}
         >
           <Select.Trigger
@@ -354,7 +473,7 @@ export function MCPConnectionSettings() {
               variant="outline"
               size="sm"
               onClick={() => disconnect()}
-              disabled={connectionStatus === "connecting"}
+              disabled={isAdding || connectionStatus === "connecting"}
               data-testid="disconnect-btn"
             >
               {connectionStatus === "connecting" ? (
@@ -368,7 +487,11 @@ export function MCPConnectionSettings() {
             <Button
               size="sm"
               onClick={handleConnect}
-              disabled={!url || connectionStatus === "connecting"}
+              disabled={
+                isAdding ||
+                !trimmedInputUrl ||
+                connectionStatus === "connecting"
+              }
               data-testid="connect-btn"
             >
               {connectionStatus === "connecting" ? (
@@ -382,7 +505,38 @@ export function MCPConnectionSettings() {
         </div>
 
         {errorMessage && (
-          <p className="text-xs text-destructive">{errorMessage}</p>
+          <p className="text-xs text-destructive" role="alert">
+            {errorMessage}
+          </p>
+        )}
+
+        {notice && (
+          <div
+            className={cn(
+              "rounded-md border px-3 py-2 text-xs",
+              notice.severity === "error"
+                ? "border-destructive/40 bg-destructive/10"
+                : "border-warning/40 bg-warning/10",
+            )}
+            role="alert"
+            data-testid="server-load-notice"
+          >
+            <p
+              className={cn(
+                "font-medium",
+                notice.severity === "error"
+                  ? "text-destructive"
+                  : "text-warning",
+              )}
+            >
+              {notice.summary}
+            </p>
+            <ul className="mt-1 list-disc space-y-1 pl-4 text-muted-foreground">
+              {notice.details.map((detail, index) => (
+                <li key={`${index}-${detail}`}>{detail}</li>
+              ))}
+            </ul>
+          </div>
         )}
 
         {serverInfo && (

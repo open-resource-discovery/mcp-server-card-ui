@@ -7,7 +7,8 @@ import { cn } from "@lib/utils/cn";
 import { getMockServerCard } from "@lib/mock/servers";
 import { Loader2, X } from "lucide-react";
 
-function getHostname(url: string): string {
+function getHostname(url: unknown): string {
+  if (typeof url !== "string") return "Invalid server URL";
   if (url.startsWith("mock://")) return url;
   try {
     return new URL(url).hostname;
@@ -20,6 +21,7 @@ export function MCPServerSelector() {
   const servers = usePredefinedServersStore((s) => s.servers);
   const selectedId = usePredefinedServersStore((s) => s.selectedId);
   const loading = usePredefinedServersStore((s) => s.loading);
+  const isAddingServer = usePredefinedServersStore((s) => s.isAddingServer);
   const loadDefaults = usePredefinedServersStore((s) => s.loadDefaults);
   const select = usePredefinedServersStore((s) => s.select);
   const removeServer = usePredefinedServersStore((s) => s.removeServer);
@@ -32,6 +34,8 @@ export function MCPServerSelector() {
   }, [loadDefaults]);
 
   const handleSelect = async (id: string) => {
+    if (isAddingServer) return;
+
     // Skip if already selected and connected/connecting
     if (
       id === selectedId &&
@@ -52,7 +56,11 @@ export function MCPServerSelector() {
 
     if (server.serverCard) {
       setRawJson(server.serverCard);
-    } else if (server.mocked && server.url.startsWith("mock://")) {
+    } else if (
+      server.mocked &&
+      typeof server.url === "string" &&
+      server.url.startsWith("mock://")
+    ) {
       const mockId = server.url.replace("mock://", "");
       const card = getMockServerCard(mockId);
       if (card) setRawJson(card);
@@ -71,6 +79,7 @@ export function MCPServerSelector() {
 
   const handleRemove = (e: React.MouseEvent, id: string) => {
     e.stopPropagation();
+    if (isAddingServer) return;
     const wasSelected = selectedId === id;
     removeServer(id);
     if (wasSelected) {
@@ -97,17 +106,20 @@ export function MCPServerSelector() {
       <h3 className="text-xs font-medium text-muted-foreground">Servers</h3>
       <div className="space-y-1" role="list">
         {servers.map((server) => {
-          const isCustom = server.id.startsWith("custom-");
+          const isCustom =
+            typeof server.id === "string" && server.id.startsWith("custom-");
           return (
             <div
               key={server.id}
               role="listitem"
-              tabIndex={0}
+              tabIndex={isAddingServer ? -1 : 0}
               aria-selected={selectedId === server.id}
+              aria-disabled={isAddingServer}
               data-testid={`server-selector-item-${server.id}`}
               className={cn(
                 "group cursor-pointer rounded-md border px-2.5 py-2 transition-colors hover:bg-accent/50",
                 selectedId === server.id && "border-primary bg-accent/30",
+                isAddingServer && "pointer-events-none opacity-60",
               )}
               onClick={() => handleSelect(server.id)}
               onKeyDown={(e) => {
@@ -142,6 +154,7 @@ export function MCPServerSelector() {
                   <button
                     data-testid={`server-remove-btn-${server.id}`}
                     onClick={(e) => handleRemove(e, server.id)}
+                    disabled={isAddingServer}
                     className="hidden group-hover:flex h-4 w-4 items-center justify-center rounded-sm hover:bg-destructive/20 text-muted-foreground hover:text-destructive shrink-0 transition-colors"
                     title="Remove server"
                   >

@@ -14,6 +14,29 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
   `.mcp-root .hljs-*` rules) — syntax highlighting is now bundled and managed
   inside `ui-components`.
 
+### Fixed
+
+- Prevent malformed ORD configuration, document, MCP resource, and persisted
+  server data from crashing the playground. Invalid entries are skipped with
+  detailed inline errors, and malformed optional fields on an otherwise valid
+  server are sanitized (dropped) rather than discarding the whole server — so
+  valid resources from partial discoveries, including persisted custom servers,
+  remain usable.
+- Resolve ORD document and MCP entry-point references using redirect-aware ORD
+  base and document-relative URL rules, and avoid treating a failed ORD endpoint
+  as a direct MCP server.
+- Reject discovered MCP entry points whose resolved URL uses an unsupported
+  scheme — only `http:`, `https:`, and the playground's internal `mock:` scheme
+  are accepted — so a malformed ORD document cannot inject a non-connectable
+  server URL.
+- Continue adding the remaining servers when an ORD discovery batch contains
+  duplicate or already-known IDs instead of aborting on the first collision. The
+  batch completes cleanly as a no-op when every discovered server already exists,
+  and otherwise auto-connects to the first newly added server.
+- Keep connection URL input separate from the active session so discovery and
+  server switching cannot send session credentials or teardown requests to the
+  newly entered URL.
+
 ## [[0.2.1](https://github.com/open-resource-discovery/mcp-server-card-ui/releases/tag/v0.2.1)] - 2026-06-25
 
 ### Changed
