@@ -126,7 +126,7 @@
     "react-dom": "^18.0.0 || ^19.0.0"
   },
   "dependencies": {
-    "@base-ui/react": "1.7.0",
+    "@base-ui/react": "1.8.0",
     "@monaco-editor/react": "4.7.0",
     "@open-resource-discovery/ui-components": "0.1.6",
     "@radix-ui/react-dialog": "1.1.23",
