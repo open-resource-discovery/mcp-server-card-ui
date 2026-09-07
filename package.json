@@ -144,7 +144,7 @@
   },
   "overrides": {
     "dompurify": "3.4.14",
-    "undici": "8.10.0"
+    "undici": "8.10.2"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
