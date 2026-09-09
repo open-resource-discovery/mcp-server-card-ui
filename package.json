@@ -128,7 +128,7 @@
   "dependencies": {
     "@base-ui/react": "1.8.0",
     "@monaco-editor/react": "4.7.0",
-    "@open-resource-discovery/ui-components": "0.1.6",
+    "@open-resource-discovery/ui-components": "file:../ui-components",
     "@radix-ui/react-dialog": "1.1.23",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",

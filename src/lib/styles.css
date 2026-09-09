@@ -124,6 +124,12 @@
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
+  /* Code surface — aligns mcp's `bg-code`/`text-code-foreground` utilities with
+     ui-components' code tokens so inline <code> chips match CodeBlock. Without
+     this, the utilities aren't generated and bare <code> falls through to the
+     host page's `code` background (e.g. Docusaurus/Infima's --ifm-code-background). */
+  --color-code: var(--ord-code-bg);
+  --color-code-foreground: var(--ord-code-fg);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
@@ -154,142 +160,12 @@
 
 @layer base {
   /*
-   * Scoped preflight — Tailwind v4's element resets applied only inside .mcp-root
-   * so the host page (e.g. Docusaurus/Infima) is never affected.
-   *
-   * Element selectors use :where() to keep specificity at (0,1,0) — matching
-   * Tailwind utilities. Since utilities come later in source order, they win.
-   * When @layer wrappers are stripped for the standalone bundle, this also
-   * ensures the preflight doesn't beat utilities via specificity.
+   * The element reset (box-sizing, margins, headings, lists, form controls, …)
+   * now comes from @open-resource-discovery/ui-components' own `.ord-ui`-scoped
+   * reset, imported above. `.mcp-root` is the same element as `.ord-ui` (see
+   * ThemeRoot), so mcp's markup is covered without a duplicated preflight here.
+   * Only mcp-owned base styles remain in this layer.
    */
-  .mcp-root :where(*),
-  .mcp-root :where(::after),
-  .mcp-root :where(::before),
-  .mcp-root :where(::backdrop) {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    border: 0 solid;
-  }
-
-  .mcp-root {
-    line-height: 1.5;
-    -webkit-text-size-adjust: 100%;
-    tab-size: 4;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .mcp-root :where(hr) {
-    height: 0;
-    color: inherit;
-    border-top-width: 1px;
-  }
-
-  .mcp-root :where(abbr[title]) {
-    -webkit-text-decoration: underline dotted;
-    text-decoration: underline dotted;
-  }
-
-  .mcp-root :where(h1, h2, h3, h4, h5, h6) {
-    font-size: inherit;
-    font-weight: inherit;
-  }
-
-  .mcp-root :where(a) {
-    color: inherit;
-    -webkit-text-decoration: inherit;
-    text-decoration: inherit;
-  }
-
-  .mcp-root :where(b, strong) {
-    font-weight: bolder;
-  }
-
-  .mcp-root :where(code, kbd, samp, pre) {
-    font-family:
-      ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
-      "Courier New", monospace;
-    font-size: inherit;
-  }
-
-  .mcp-root :where(small) {
-    font-size: 80%;
-  }
-
-  .mcp-root :where(sub, sup) {
-    font-size: 75%;
-    line-height: 0;
-    position: relative;
-    vertical-align: baseline;
-  }
-
-  .mcp-root :where(sub) {
-    bottom: -0.25em;
-  }
-
-  .mcp-root :where(sup) {
-    top: -0.5em;
-  }
-
-  .mcp-root :where(table) {
-    text-indent: 0;
-    border-color: inherit;
-    border-collapse: collapse;
-  }
-
-  .mcp-root :where(summary) {
-    display: list-item;
-  }
-
-  .mcp-root :where(ol, ul, menu) {
-    list-style: none;
-  }
-
-  .mcp-root :where(img, svg, video, canvas, audio, iframe, embed, object) {
-    display: block;
-    vertical-align: middle;
-  }
-
-  .mcp-root :where(img, video) {
-    max-width: 100%;
-    height: auto;
-  }
-
-  .mcp-root :where(button, input, select, optgroup, textarea) {
-    font: inherit;
-    font-feature-settings: inherit;
-    font-variation-settings: inherit;
-    letter-spacing: inherit;
-    color: inherit;
-    border-radius: 0;
-    background-color: transparent;
-    opacity: 1;
-  }
-
-  .mcp-root :where(textarea) {
-    resize: vertical;
-  }
-
-  .mcp-root :where(::placeholder) {
-    opacity: 1;
-  }
-
-  @supports (not (-webkit-appearance: -apple-pay-button)) or
-    (contain-intrinsic-size: 1px) {
-    .mcp-root :where(::placeholder) {
-      color: color-mix(in oklab, currentcolor 50%, transparent);
-    }
-  }
-
-  .mcp-root :where(button),
-  .mcp-root
-    :where(input[type="button"], input[type="reset"], input[type="submit"]) {
-    appearance: button;
-  }
-
-  .mcp-root :where([hidden]:not([hidden="until-found"])) {
-    display: none !important;
-  }
 
   /* Library base styles */
   .mcp-root,
