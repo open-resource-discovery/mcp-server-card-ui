@@ -9,13 +9,22 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Changed
 
-- Upgraded `@open-resource-discovery/ui-components` to `0.1.6`.
+- Upgraded `@open-resource-discovery/ui-components` to `^0.2.0`.
 - Removed local highlight.js CSS token overrides (`--hljs-*` variables and
   `.mcp-root .hljs-*` rules) — syntax highlighting is now bundled and managed
   inside `ui-components`.
+- Removed local scoped preflight CSS reset (`.mcp-root :where(*)` block and all
+  element resets) from `styles.css` — the reset is now provided by
+  `ui-components`' own `.ord-ui`-scoped reset, which covers `.mcp-root` since
+  `ThemeRoot` renders both classes on the same element.
 
 ### Fixed
 
+- Fix inline `<code>` chip background in the standalone bundle by mapping
+  `--color-code` and `--color-code-foreground` to `ui-components`' `--ord-code-bg`
+  and `--ord-code-fg` tokens — without this, `bg-code`/`text-code-foreground`
+  utilities were not generated and bare `<code>` elements fell through to the host
+  page's code background (e.g. Docusaurus/Infima's `--ifm-code-background`).
 - Prevent malformed ORD configuration, document, MCP resource, and persisted
   server data from crashing the playground. Invalid entries are skipped with
   detailed inline errors, and malformed optional fields on an otherwise valid
