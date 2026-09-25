@@ -5,7 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html) rules.
 
+
 ## [unreleased]
+
+## [[0.2.3](https://github.com/open-resource-discovery/mcp-server-card-ui/releases/tag/v0.2.3)] - 2026-09-25
 
 ### Changed
 
@@ -45,6 +48,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Keep connection URL input separate from the active session so discovery and
   server switching cannot send session credentials or teardown requests to the
   newly entered URL.
+
 
 ## [[0.2.1](https://github.com/open-resource-discovery/mcp-server-card-ui/releases/tag/v0.2.1)] - 2026-06-25
 
