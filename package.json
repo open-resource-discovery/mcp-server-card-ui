@@ -135,7 +135,7 @@
     "jsonc-parser": "3.3.1",
     "lucide-react": "1.47.0",
     "react-markdown": "10.1.0",
-    "react-resizable-panels": "4.13.1",
+    "react-resizable-panels": "4.13.3",
     "sonner": "2.0.8",
     "tailwind-merge": "3.7.0",
     "uuid": "14.0.2",
