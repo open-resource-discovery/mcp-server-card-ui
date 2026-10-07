@@ -179,27 +179,6 @@ html[data-theme="light"]
 
 html[data-theme="light"]
   nav.navbar
-  :is(
-    .navbar__search,
-    [class*="searchbarContainer_"],
-    [class*="searchBarContainer_"]
-  )::before {
-  content: "";
-  position: absolute;
-  left: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 16px;
-  height: 16px;
-  -webkit-mask: url("/img/icons/search.svg") center/contain no-repeat;
-  mask: url("/img/icons/search.svg") center/contain no-repeat;
-  opacity: 0.9;
-  pointer-events: none;
-  background-color: var(--ifm-color-emphasis-700);
-}
-
-html[data-theme="light"]
-  nav.navbar
   :is(input.navbar__search-input, input[class*="searchInput_"]) {
   flex: 1;
   min-width: 0;
@@ -272,31 +251,10 @@ html[data-theme="dark"]
 
 html[data-theme="dark"]
   nav.navbar
-  :is(
-    .navbar__search,
-    [class*="searchbarContainer_"],
-    [class*="searchBarContainer_"]
-  )::before {
-  content: "";
-  position: absolute;
-  left: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 16px;
-  height: 16px;
-  -webkit-mask: url("/img/icons/search.svg") center/contain no-repeat;
-  mask: url("/img/icons/search.svg") center/contain no-repeat;
-  opacity: 0.9;
-  pointer-events: none;
-  background-color: var(--ifm-color-emphasis-600);
-}
-
-html[data-theme="dark"]
-  nav.navbar
   :is(input.navbar__search-input, input[class*="searchInput_"]) {
   flex: 1;
   min-width: 0;
-  padding-left: 22px;
+  padding-left: 24px;
   background: transparent !important;
   color: var(--ifm-color-emphasis-900) !important;
   caret-color: var(--ifm-color-emphasis-900) !important;
