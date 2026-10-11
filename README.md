@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/open-resource-discovery-mcp-server-card-ui-badge.png)](https://mseep.ai/app/open-resource-discovery-mcp-server-card-ui)
+
 # MCP Server Card UI
 
 UI components for editing, viewing, and testing servers that implement the MCP Protocol.
