@@ -143,7 +143,7 @@
     "zustand": "5.0.15"
   },
   "overrides": {
-    "dompurify": "3.4.16",
+    "dompurify": "3.4.17",
     "undici": "8.11.2"
   },
   "devDependencies": {
