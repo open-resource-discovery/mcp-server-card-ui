@@ -5,12 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html) rules.
 
+
 ## [unreleased]
+
+## [[0.2.4](https://github.com/open-resource-discovery/mcp-server-card-ui/releases/tag/v0.2.4)] - 2026-10-27
 
 ### Fixed
 
 - Removed "shadow" of the search icon
 - Confined the bundled `ui-components` `.ord-ui` reset to `.ord-ui:where(.mcp-root)` in the library build so it no longer zeroes padding/margins on a host app's own `.ord-ui` elements.
+
 
 ## [[0.2.3](https://github.com/open-resource-discovery/mcp-server-card-ui/releases/tag/v0.2.3)] - 2026-09-25
 
