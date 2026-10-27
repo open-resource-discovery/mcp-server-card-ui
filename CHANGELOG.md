@@ -7,6 +7,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [unreleased]
 
+## [[0.2.4](https://github.com/open-resource-discovery/mcp-server-card-ui/releases/tag/v0.2.4)] - 2026-10-27
+
 ### Fixed
 
 - Removed "shadow" of the search icon
