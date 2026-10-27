@@ -10,6 +10,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Fixed
 
 - Removed "shadow" of the search icon
+- Confined the bundled `ui-components` `.ord-ui` reset to `.ord-ui:where(.mcp-root)` in the library build so it no longer zeroes padding/margins on a host app's own `.ord-ui` elements.
 
 ## [[0.2.3](https://github.com/open-resource-discovery/mcp-server-card-ui/releases/tag/v0.2.3)] - 2026-09-25
 
