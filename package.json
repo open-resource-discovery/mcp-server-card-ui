@@ -163,7 +163,7 @@
     "prettier": "3.9.10",
     "react": "19.3.1",
     "react-dom": "19.3.1",
-    "react-router-dom": "7.18.4",
+    "react-router-dom": "7.18.5",
     "tailwindcss": "4.3.3",
     "tsc-alias": "1.9.9",
     "typescript": "5.9.3",
