@@ -144,7 +144,7 @@
     "tailwind-merge": "3.7.0",
     "uuid": "14.0.3",
     "zod": "4.6.7",
-    "zustand": "5.0.16"
+    "zustand": "5.1.0"
   },
   "overrides": {
     "dompurify": "3.4.17",
