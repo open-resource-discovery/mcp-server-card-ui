@@ -47,7 +47,7 @@
     "@babel/plugin-transform-modules-systemjs": "7.29.8",
     "shell-quote": "1.12.0",
     "ws": "8.22.1",
-    "undici": "8.12.2",
+    "undici": "8.12.4",
     "qs": "6.16.1",
     "uuid": "14.0.3",
     "launch-editor": "2.14.2",
