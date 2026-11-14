@@ -155,7 +155,7 @@
     "@playwright/test": "1.65.0",
     "@tailwindcss/typography": "0.5.20",
     "@tailwindcss/vite": "4.3.5",
-    "@types/node": "25.9.9",
+    "@types/node": "26.6.6",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "@vitejs/plugin-react": "6.2.1",
@@ -170,7 +170,7 @@
     "react-router-dom": "7.18.5",
     "tailwindcss": "4.3.5",
     "tsc-alias": "1.9.10",
-    "typescript": "5.9.3",
+    "typescript": "7.0.2",
     "typescript-eslint": "8.72.1",
     "vite": "8.3.6",
     "vitest": "5.1.0"
