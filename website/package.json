@@ -52,6 +52,6 @@
     "uuid": "14.0.3",
     "launch-editor": "2.14.2",
     "http-proxy-middleware": "2.0.11",
-    "dompurify": "3.4.17"
+    "dompurify": "3.4.18"
   }
 }
