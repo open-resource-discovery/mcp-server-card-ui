@@ -1,9 +1,9 @@
-import type { Resource } from "../../types/mcp-protocol";
-import {
-  CollapsibleSection,
-  Badge,
-} from "@open-resource-discovery/ui-components";
 import { MarkdownText } from "@lib/components/ui/MarkdownText";
+import {
+  Badge,
+  CollapsibleSection,
+} from "@open-resource-discovery/ui-components";
+import type { Resource } from "../../types/mcp-protocol";
 
 interface ResourceCardProps {
   resource: Resource;
@@ -13,7 +13,7 @@ function formatBytes(bytes: number): string {
   if (bytes === 0) return "0 B";
   const units = ["B", "KB", "MB", "GB"];
   const i = Math.floor(Math.log(bytes) / Math.log(1024));
-  const value = bytes / Math.pow(1024, i);
+  const value = bytes / 1024 ** i;
   return `${value.toFixed(i === 0 ? 0 : 1)} ${units[i]}`;
 }
 

@@ -1,5 +1,5 @@
-import * as React from "react";
 import { cn } from "@lib/utils/cn";
+import * as React from "react";
 
 /**
  * Simple ScrollArea component that avoids Radix UI's compose-refs issue with React 19.

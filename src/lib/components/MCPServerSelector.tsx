@@ -1,11 +1,11 @@
-import { useEffect } from "react";
-import { usePredefinedServersStore } from "@lib/stores/predefinedServersStore";
-import { useMCPConnectionStore } from "@lib/stores/mcpConnectionStore";
-import { useServerCardStore } from "@lib/stores/serverCardStore";
 import { Badge } from "@lib/components/ui/badge";
-import { cn } from "@lib/utils/cn";
 import { getMockServerCard } from "@lib/mock/servers";
+import { useMCPConnectionStore } from "@lib/stores/mcpConnectionStore";
+import { usePredefinedServersStore } from "@lib/stores/predefinedServersStore";
+import { useServerCardStore } from "@lib/stores/serverCardStore";
+import { cn } from "@lib/utils/cn";
 import { Loader2, X } from "lucide-react";
+import { useEffect } from "react";
 
 function getHostname(url: unknown): string {
   if (typeof url !== "string") return "Invalid server URL";
@@ -74,7 +74,7 @@ export function MCPServerSelector() {
     if (!loading && servers.length > 0 && !selectedId) {
       handleSelect(servers[0].id);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // biome-ignore lint/correctness/useExhaustiveDependencies: Existing exception retained during tooling migration.
   }, [loading, servers, selectedId]);
 
   const handleRemove = (e: React.MouseEvent, id: string) => {

@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from "react";
 import { cn } from "@lib/utils/cn";
+import { useCallback, useEffect, useState } from "react";
 
 interface TextareaEditorProps {
   value: string;

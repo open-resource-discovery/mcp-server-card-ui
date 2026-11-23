@@ -1,6 +1,6 @@
-import type { ToolCallResult } from "@lib/types/functions";
-import { JsonHighlight } from "@lib/components/ui/JsonHighlight";
 import { Badge } from "@lib/components/ui/badge";
+import { JsonHighlight } from "@lib/components/ui/JsonHighlight";
+import type { ToolCallResult } from "@lib/types/functions";
 
 interface ToolCallResultViewProps {
   result: ToolCallResult;

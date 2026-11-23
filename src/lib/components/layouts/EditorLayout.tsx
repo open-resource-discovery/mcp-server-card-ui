@@ -1,17 +1,17 @@
-import { SplitPane } from "@open-resource-discovery/ui-components";
-import { useIsLargeScreen } from "@lib/hooks/useMediaQuery";
-import { useUIStore } from "@lib/stores/uiStore";
-import { useAutoValidate } from "@lib/hooks/useAutoValidate";
 import { ServerCardEditor } from "@lib/components/editor/ServerCardEditor";
-import { EditorRightPanel } from "./EditorRightPanel";
-import { ResizeHandle } from "./ResizeHandle";
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
 } from "@lib/components/ui/sheet";
+import { useAutoValidate } from "@lib/hooks/useAutoValidate";
+import { useIsLargeScreen } from "@lib/hooks/useMediaQuery";
+import { useUIStore } from "@lib/stores/uiStore";
 import { cn } from "@lib/utils/cn";
+import { SplitPane } from "@open-resource-discovery/ui-components";
+import { EditorRightPanel } from "./EditorRightPanel";
+import { ResizeHandle } from "./ResizeHandle";
 
 interface EditorLayoutProps {
   showValidation?: boolean;

@@ -1,7 +1,7 @@
-import { ScrollArea } from "@lib/components/ui/scroll-area";
-import { MCPConnectionSettings } from "./MCPConnectionSettings";
 import { MCPServerSelector } from "@lib/components/MCPServerSelector";
+import { ScrollArea } from "@lib/components/ui/scroll-area";
 import { Separator } from "@lib/components/ui/separator";
+import { MCPConnectionSettings } from "./MCPConnectionSettings";
 
 export function MCPSettingsPanel() {
   return (

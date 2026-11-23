@@ -1,5 +1,5 @@
-import { create } from "zustand";
 import type { MCPLogEntry } from "@lib/types/mcpLog";
+import { create } from "zustand";
 
 const MAX_LOG_ENTRIES = 50;
 

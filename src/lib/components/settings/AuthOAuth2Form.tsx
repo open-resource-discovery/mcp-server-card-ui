@@ -1,7 +1,7 @@
-import { useMCPConnectionStore } from "@lib/stores/mcpConnectionStore";
+import { Button } from "@lib/components/ui/button";
 import { Input } from "@lib/components/ui/input";
 import { PasswordInput } from "@lib/components/ui/PasswordInput";
-import { Button } from "@lib/components/ui/button";
+import { useMCPConnectionStore } from "@lib/stores/mcpConnectionStore";
 import { Loader2 } from "lucide-react";
 
 export function AuthOAuth2Form() {

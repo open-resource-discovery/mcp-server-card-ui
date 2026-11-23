@@ -36,7 +36,9 @@ function createMiddleware(basePath = "/") {
     router.use(basePath, express.static(getAbsoluteFSPath()));
     return router;
   } catch {
-    throw new Error("express is required to use createMiddleware. Install it with: npm install express");
+    throw new Error(
+      "express is required to use createMiddleware. Install it with: npm install express",
+    );
   }
 }
 

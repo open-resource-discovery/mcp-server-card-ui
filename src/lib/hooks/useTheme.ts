@@ -1,5 +1,5 @@
-import { create } from "zustand";
 import { getStored, setStored } from "@lib/utils/local-storage";
+import { create } from "zustand";
 
 type Theme = "light" | "dark" | "system";
 

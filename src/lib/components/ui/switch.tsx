@@ -1,10 +1,10 @@
-import {
-  forwardRef,
-  type ForwardRefExoticComponent,
-  type RefAttributes,
-} from "react";
 import { Switch as LibSwitch } from "@open-resource-discovery/ui-components";
 import type { ComponentPropsWithoutRef } from "react";
+import {
+  type ForwardRefExoticComponent,
+  forwardRef,
+  type RefAttributes,
+} from "react";
 
 export const Switch: ForwardRefExoticComponent<
   ComponentPropsWithoutRef<typeof LibSwitch.Root> &

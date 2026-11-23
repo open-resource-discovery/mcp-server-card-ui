@@ -8,18 +8,18 @@
  * - MCP-Session-Id and MCP-Protocol-Version header management
  */
 
-import { parseSSEStream } from "./sse-parser";
+import { handleMockRequest, isMockUrl } from "@lib/mock/servers";
+import { useMCPLogStore } from "@lib/stores/mcpLogStore";
+import type { MCPLogEntry } from "@lib/types/mcpLog";
+import { v4 as uuidv4 } from "uuid";
 import {
-  createRequest,
   createNotification,
-  parseResponse,
+  createRequest,
   type JsonRpcRequest,
   type JsonRpcResponse,
+  parseResponse,
 } from "./mcp-jsonrpc";
-import { useMCPLogStore } from "@lib/stores/mcpLogStore";
-import { v4 as uuidv4 } from "uuid";
-import type { MCPLogEntry } from "@lib/types/mcpLog";
-import { isMockUrl, handleMockRequest } from "@lib/mock/servers";
+import { parseSSEStream } from "./sse-parser";
 
 export interface MCPTransportConfig {
   url: string;

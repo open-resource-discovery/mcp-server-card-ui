@@ -21,9 +21,7 @@ import "@open-resource-discovery/mcp-server-card-ui/styles";
 function App() {
   return (
     <div style={{ height: "100vh" }}>
-      <MCPServerPlayground
-        onServerCardChange={(json, parsed) => console.log(parsed?.name)}
-      />
+      <MCPServerPlayground onServerCardChange={(json, parsed) => console.log(parsed?.name)} />
     </div>
   );
 }

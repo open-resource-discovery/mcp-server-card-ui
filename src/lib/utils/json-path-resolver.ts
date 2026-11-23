@@ -5,7 +5,7 @@
  * Powered by jsonc-parser (Microsoft's VS Code JSON parser).
  */
 
-import { parseTree, findNodeAtLocation } from "jsonc-parser";
+import { findNodeAtLocation, parseTree } from "jsonc-parser";
 
 export interface JsonPosition {
   startLineNumber: number;

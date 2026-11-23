@@ -1,6 +1,6 @@
-import type { PromptResult } from "@lib/types/functions";
 import { Badge } from "@lib/components/ui/badge";
 import { JsonHighlight } from "@lib/components/ui/JsonHighlight";
+import type { PromptResult } from "@lib/types/functions";
 
 interface PromptResultViewProps {
   result: PromptResult;

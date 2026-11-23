@@ -174,13 +174,7 @@
   }
   .mcp-root {
     @apply bg-background text-foreground;
-    font-family:
-      system-ui,
-      -apple-system,
-      BlinkMacSystemFont,
-      "Segoe UI",
-      Roboto,
-      sans-serif;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   }
 }
 
@@ -254,8 +248,7 @@
   transform-origin: 50% 50%;
   stroke-dasharray: 48;
   stroke-dashoffset: 48;
-  animation: mcp-checkmark-stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s
-    forwards;
+  animation: mcp-checkmark-stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
 }
 @keyframes mcp-checkmark-stroke {
   100% {

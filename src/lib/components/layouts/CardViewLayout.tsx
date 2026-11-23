@@ -1,3 +1,4 @@
+import { MCPServerOverview } from "@lib/components/overview/MCPServerOverview";
 import { ScrollArea } from "@lib/components/ui/scroll-area";
 import {
   Tabs,
@@ -5,7 +6,6 @@ import {
   TabsList,
   TabsTrigger,
 } from "@lib/components/ui/tabs";
-import { MCPServerOverview } from "@lib/components/overview/MCPServerOverview";
 import { ValidationPanel } from "@lib/components/validation/ValidationPanel";
 import { useAutoValidate } from "@lib/hooks/useAutoValidate";
 import { cn } from "@lib/utils/cn";

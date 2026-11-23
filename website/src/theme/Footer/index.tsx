@@ -1,7 +1,7 @@
-import React from "react";
-import useBaseUrl from "@docusaurus/useBaseUrl";
 import { useLocation } from "@docusaurus/router";
+import useBaseUrl from "@docusaurus/useBaseUrl";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
+import type React from "react";
 import "./footer.css";
 import { useColorMode } from "@docusaurus/theme-common";
 

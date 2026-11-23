@@ -1,12 +1,12 @@
-import { useEffect } from "react";
-import type { MCPServerCardDefinition } from "../types/mcp-protocol";
-import type { ValidationResult } from "@lib/types/validation";
 import { useServerCardStore } from "@lib/stores/serverCardStore";
 import { useValidationStore } from "@lib/stores/validationStore";
+import type { ValidationResult } from "@lib/types/validation";
+import { cn } from "@lib/utils/cn";
+import { useEffect } from "react";
+import type { MCPServerCardDefinition } from "../types/mcp-protocol";
+import { ErrorBoundary } from "./ErrorBoundary";
 import { EditorLayout } from "./layouts/EditorLayout";
 import { ThemeRoot } from "./ThemeRoot";
-import { ErrorBoundary } from "./ErrorBoundary";
-import { cn } from "@lib/utils/cn";
 
 export interface MCPServerEditorProps {
   initialServerCard?: string;
@@ -43,7 +43,7 @@ export function MCPServerEditor({
     } else if (initialServerUrl) {
       loadFromUrl(initialServerUrl);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // biome-ignore lint/correctness/useExhaustiveDependencies: Existing exception retained during tooling migration.
   }, []);
 
   useEffect(() => {

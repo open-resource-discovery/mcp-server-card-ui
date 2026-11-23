@@ -1,10 +1,10 @@
-import { useState, useMemo } from "react";
 import { useValidationStore } from "@lib/stores/validationStore";
-import { ValidationSummary } from "./ValidationSummary";
-import { ValidationResultCard } from "./ValidationResultCard";
-import Checkmark from "./Checkmark";
-import { Spinner } from "@open-resource-discovery/ui-components";
 import type { ValidationStatus } from "@lib/types/validation";
+import { Spinner } from "@open-resource-discovery/ui-components";
+import { useMemo, useState } from "react";
+import Checkmark from "./Checkmark";
+import { ValidationResultCard } from "./ValidationResultCard";
+import { ValidationSummary } from "./ValidationSummary";
 
 const sortOrder: Record<ValidationStatus, number> = {
   fail: 0,

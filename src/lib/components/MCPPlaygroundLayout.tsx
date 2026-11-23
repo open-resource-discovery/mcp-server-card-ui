@@ -1,19 +1,19 @@
-import { lazy, Suspense } from "react";
-import { SplitPane } from "@open-resource-discovery/ui-components";
-import { useIsLargeScreen } from "@lib/hooks/useMediaQuery";
-import { useUIStore } from "@lib/stores/uiStore";
-import { useAutoValidate } from "@lib/hooks/useAutoValidate";
 import { ServerCardEditor } from "@lib/components/editor/ServerCardEditor";
+import { ResizeHandle } from "@lib/components/layouts/ResizeHandle";
 import { MCPRightPanel } from "@lib/components/MCPRightPanel";
 import { MobileBottomBar } from "@lib/components/MobileBottomBar";
-import { ResizeHandle } from "@lib/components/layouts/ResizeHandle";
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
 } from "@lib/components/ui/sheet";
+import { useAutoValidate } from "@lib/hooks/useAutoValidate";
+import { useIsLargeScreen } from "@lib/hooks/useMediaQuery";
+import { useUIStore } from "@lib/stores/uiStore";
 import { cn } from "@lib/utils/cn";
+import { SplitPane } from "@open-resource-discovery/ui-components";
+import { lazy, Suspense } from "react";
 
 const MCPSettingsPanel = lazy(() =>
   import("@lib/components/settings/MCPSettingsPanel").then((m) => ({

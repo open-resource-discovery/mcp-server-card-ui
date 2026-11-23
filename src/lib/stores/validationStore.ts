@@ -1,9 +1,9 @@
-import { create } from "zustand";
 import type {
   ValidationResult,
   ValidationSummary,
 } from "@lib/types/validation";
 import { validateMCPServerCardSchema } from "@lib/utils/mcp-schema";
+import { create } from "zustand";
 
 interface ValidationState {
   results: ValidationResult[];

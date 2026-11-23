@@ -1,7 +1,7 @@
-import { useEffect, useRef } from "react";
-import { useServerCardStore } from "@lib/stores/serverCardStore";
 import { useEditorSettingsStore } from "@lib/stores/editorSettingsStore";
+import { useServerCardStore } from "@lib/stores/serverCardStore";
 import { useValidationStore } from "@lib/stores/validationStore";
+import { useEffect, useRef } from "react";
 
 export function useAutoValidate() {
   const rawJson = useServerCardStore((s) => s.rawJson);

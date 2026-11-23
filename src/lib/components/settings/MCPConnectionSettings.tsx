@@ -1,23 +1,23 @@
-import { useState, useCallback, useEffect } from "react";
-import { v4 as uuid } from "uuid";
-import { useMCPConnectionStore } from "@lib/stores/mcpConnectionStore";
-import { useServerCardStore } from "@lib/stores/serverCardStore";
-import { usePredefinedServersStore } from "@lib/stores/predefinedServersStore";
+import { Button } from "@lib/components/ui/button";
 import { Input } from "@lib/components/ui/input";
 import { PasswordInput } from "@lib/components/ui/PasswordInput";
-import { Button } from "@lib/components/ui/button";
 import { Select } from "@lib/components/ui/select";
-import { Loader2, Plug, Plus, Unplug } from "lucide-react";
+import { useMCPConnectionStore } from "@lib/stores/mcpConnectionStore";
+import { usePredefinedServersStore } from "@lib/stores/predefinedServersStore";
+import { useServerCardStore } from "@lib/stores/serverCardStore";
+import { cn } from "@lib/utils/cn";
 import {
   type ConnAuthType,
   mapStoreAuthType,
 } from "@lib/utils/connection-auth";
-import { cn } from "@lib/utils/cn";
 import {
   discoverServersFromOrd,
   formatOrdDiscoveryIssue,
   isOrdUrl,
 } from "@lib/utils/ord-discovery";
+import { Loader2, Plug, Plus, Unplug } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
+import { v4 as uuid } from "uuid";
 
 export function MCPConnectionSettings() {
   const {

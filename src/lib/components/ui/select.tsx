@@ -1,8 +1,8 @@
+import { usePortalContainer } from "@lib/components/ThemeRoot";
 import {
   Select as LibSelect,
   SimpleSelect,
 } from "@open-resource-discovery/ui-components";
-import { usePortalContainer } from "@lib/components/ThemeRoot";
 import type { ComponentPropsWithoutRef } from "react";
 
 function SelectPortalInRoot(

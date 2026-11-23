@@ -1,10 +1,10 @@
+import {
+  CollapsibleSection,
+  SectionCard,
+} from "@open-resource-discovery/ui-components";
+import { Check, Copy, Globe } from "lucide-react";
 import { useState } from "react";
 import type { RemoteTransport } from "../../../types/mcp-protocol";
-import {
-  SectionCard,
-  CollapsibleSection,
-} from "@open-resource-discovery/ui-components";
-import { Globe, Copy, Check } from "lucide-react";
 
 interface RemotesSectionProps {
   remotes: RemoteTransport[];

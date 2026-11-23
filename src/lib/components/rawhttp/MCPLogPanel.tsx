@@ -1,7 +1,7 @@
-import { useMCPLogStore } from "@lib/stores/mcpLogStore";
-import { MCPLogEntryCard } from "./MCPLogEntry";
 import { Button } from "@lib/components/ui/button";
-import { Trash2, Network } from "lucide-react";
+import { useMCPLogStore } from "@lib/stores/mcpLogStore";
+import { Network, Trash2 } from "lucide-react";
+import { MCPLogEntryCard } from "./MCPLogEntry";
 
 export function MCPLogPanel() {
   const { logs, highlightedLogId, clearLogs } = useMCPLogStore();

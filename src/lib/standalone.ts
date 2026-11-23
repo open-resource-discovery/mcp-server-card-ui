@@ -17,30 +17,30 @@
 import React from "react";
 import { createRoot, type Root } from "react-dom/client";
 import {
-  MCPServerPlayground,
-  type MCPServerPlaygroundProps,
-} from "./components/MCPServerPlayground";
-import {
   MCPServerCardView,
   type MCPServerCardViewProps,
 } from "./components/MCPServerCardView";
 import {
-  MCPServerViewer,
-  type MCPServerViewerProps,
-} from "./components/MCPServerViewer";
-import {
   MCPServerEditor,
   type MCPServerEditorProps,
 } from "./components/MCPServerEditor";
-import { useServerCardStore } from "./stores/serverCardStore";
-import { useMCPConnectionStore } from "./stores/mcpConnectionStore";
-import { useValidationStore } from "./stores/validationStore";
-import { useUIStore } from "./stores/uiStore";
+import {
+  MCPServerPlayground,
+  type MCPServerPlaygroundProps,
+} from "./components/MCPServerPlayground";
+import {
+  MCPServerViewer,
+  type MCPServerViewerProps,
+} from "./components/MCPServerViewer";
+import { useThemeStore } from "./hooks/useTheme";
 import { useFunctionsStore } from "./stores/functionsStore";
+import { useMCPConnectionStore } from "./stores/mcpConnectionStore";
+import { useServerCardStore } from "./stores/serverCardStore";
+import { useUIStore } from "./stores/uiStore";
+import { useValidationStore } from "./stores/validationStore";
+import type { AuthType, PredefinedServer } from "./types/connection";
 import type { MCPServerCardDefinition } from "./types/mcp-protocol";
 import type { ValidationResult } from "./types/validation";
-import type { AuthType, PredefinedServer } from "./types/connection";
-import { useThemeStore } from "./hooks/useTheme";
 
 import "./styles.css";
 
@@ -431,7 +431,7 @@ declare global {
   }
 }
 
-(function () {
+(() => {
   if (typeof window !== "undefined") {
     window.MCPPlayground = MCPPlayground;
   }

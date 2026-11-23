@@ -1,14 +1,3 @@
-import { useState, useEffect } from "react";
-import {
-  ChevronDown,
-  Clock,
-  AlertCircle,
-  CheckCircle,
-  Loader2,
-  RotateCcw,
-  Wrench,
-  MessageSquare,
-} from "lucide-react";
 import { Badge } from "@lib/components/ui/badge";
 import { Button } from "@lib/components/ui/button";
 import {
@@ -17,16 +6,27 @@ import {
   CollapsibleTrigger,
 } from "@lib/components/ui/collapsible";
 import { JsonHighlight } from "@lib/components/ui/JsonHighlight";
-import { cn } from "@lib/utils/cn";
-import type {
-  FunctionCall,
-  ToolCallResult,
-  PromptResult,
-} from "@lib/types/functions";
-import { ToolCallResultView } from "./ToolCallResult";
-import { PromptResultView } from "./PromptResult";
 import { useFunctionsStore } from "@lib/stores/functionsStore";
 import { useUIStore } from "@lib/stores/uiStore";
+import type {
+  FunctionCall,
+  PromptResult,
+  ToolCallResult,
+} from "@lib/types/functions";
+import { cn } from "@lib/utils/cn";
+import {
+  AlertCircle,
+  CheckCircle,
+  ChevronDown,
+  Clock,
+  Loader2,
+  MessageSquare,
+  RotateCcw,
+  Wrench,
+} from "lucide-react";
+import { useEffect, useState } from "react";
+import { PromptResultView } from "./PromptResult";
+import { ToolCallResultView } from "./ToolCallResult";
 
 interface FunctionCallCardProps {
   call: FunctionCall;

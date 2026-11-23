@@ -1,21 +1,21 @@
-import { useServerCardStore } from "@lib/stores/serverCardStore";
-import { ServerHeader } from "@lib/components/overview/sections/ServerHeader";
-import { RemotesSection } from "@lib/components/overview/sections/RemotesSection";
 import { AuthenticationSection } from "@lib/components/overview/sections/AuthenticationSection";
 import { CapabilitiesSection } from "@lib/components/overview/sections/CapabilitiesSection";
-import { ToolsSection } from "@lib/components/overview/sections/ToolsSection";
-import { ResourcesSection } from "@lib/components/overview/sections/ResourcesSection";
-import { PromptsSection } from "@lib/components/overview/sections/PromptsSection";
 import { ClientRequirementsSection } from "@lib/components/overview/sections/ClientRequirementsSection";
 import { ExtensionsSection } from "@lib/components/overview/sections/ExtensionsSection";
-import type { MCPServerCardDefinition } from "../../types/mcp-protocol";
-import {
-  InfoCard,
-  CollapsibleSection,
-} from "@open-resource-discovery/ui-components";
+import { PromptsSection } from "@lib/components/overview/sections/PromptsSection";
+import { RemotesSection } from "@lib/components/overview/sections/RemotesSection";
+import { ResourcesSection } from "@lib/components/overview/sections/ResourcesSection";
+import { ServerHeader } from "@lib/components/overview/sections/ServerHeader";
+import { ToolsSection } from "@lib/components/overview/sections/ToolsSection";
 import { Badge } from "@lib/components/ui/badge";
 import { MarkdownText } from "@lib/components/ui/MarkdownText";
+import { useServerCardStore } from "@lib/stores/serverCardStore";
+import {
+  CollapsibleSection,
+  InfoCard,
+} from "@open-resource-discovery/ui-components";
 import { AlertTriangle, ExternalLink, FileJson } from "lucide-react";
+import type { MCPServerCardDefinition } from "../../types/mcp-protocol";
 
 interface MCPServerOverviewProps {
   readOnly?: boolean;

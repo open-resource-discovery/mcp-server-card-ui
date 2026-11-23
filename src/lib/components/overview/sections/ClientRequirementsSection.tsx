@@ -1,7 +1,7 @@
-import type { ClientCapabilities } from "../../../types/mcp-protocol";
-import { SectionCard } from "@open-resource-discovery/ui-components";
 import { Badge } from "@lib/components/ui/badge";
+import { SectionCard } from "@open-resource-discovery/ui-components";
 import { Monitor } from "lucide-react";
+import type { ClientCapabilities } from "../../../types/mcp-protocol";
 
 interface ClientRequirementsSectionProps {
   requires: ClientCapabilities;

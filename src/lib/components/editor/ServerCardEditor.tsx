@@ -1,9 +1,9 @@
-import { useMemo } from "react";
-import { MonacoEditor } from "./MonacoEditor";
-import { JsonToolbar } from "./JsonToolbar";
 import { useServerCardStore } from "@lib/stores/serverCardStore";
 import { useValidationStore } from "@lib/stores/validationStore";
 import type { EditorMarker } from "@lib/types/validation";
+import { useMemo } from "react";
+import { JsonToolbar } from "./JsonToolbar";
+import { MonacoEditor } from "./MonacoEditor";
 
 interface ServerCardEditorProps {
   readOnly?: boolean;

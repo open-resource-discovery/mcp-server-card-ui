@@ -1,7 +1,7 @@
+import { Badge, SectionCard } from "@open-resource-discovery/ui-components";
+import { ChevronDown, ChevronUp, Puzzle } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import type { ServerCapabilities } from "../../../types/mcp-protocol";
-import { SectionCard, Badge } from "@open-resource-discovery/ui-components";
-import { ChevronDown, ChevronUp, Puzzle } from "lucide-react";
 
 interface CapabilitiesSectionProps {
   capabilities: ServerCapabilities;

@@ -1,6 +1,6 @@
-import React from "react";
 import SearchBar from "@theme/SearchBar";
 import OriginalPrimaryMenu from "@theme-original/Navbar/MobileSidebar/PrimaryMenu";
+import type React from "react";
 
 export default function PrimaryMenuWrapper(props): React.ReactElement {
   return (

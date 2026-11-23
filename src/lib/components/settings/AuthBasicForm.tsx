@@ -1,6 +1,6 @@
-import { useMCPConnectionStore } from "@lib/stores/mcpConnectionStore";
 import { Input } from "@lib/components/ui/input";
 import { PasswordInput } from "@lib/components/ui/PasswordInput";
+import { useMCPConnectionStore } from "@lib/stores/mcpConnectionStore";
 
 export function AuthBasicForm() {
   const { basicCredentials, setBasicCredentials } = useMCPConnectionStore();

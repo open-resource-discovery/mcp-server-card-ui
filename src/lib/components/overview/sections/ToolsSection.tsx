@@ -1,7 +1,7 @@
-import type { Tool } from "../../../types/mcp-protocol";
-import { SectionCard } from "@open-resource-discovery/ui-components";
 import { ToolCard } from "@lib/components/overview/ToolCard";
+import { SectionCard } from "@open-resource-discovery/ui-components";
 import { Wrench } from "lucide-react";
+import type { Tool } from "../../../types/mcp-protocol";
 
 interface ToolsSectionProps {
   tools: Tool[];

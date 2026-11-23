@@ -2,10 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <title>MCP Server Card UI</title>
     <meta
@@ -44,13 +41,13 @@
         readOnly: false,
         defaultTab: "overview",
         theme: "system",
-        onReady: function (instance) {
+        onReady: (instance) => {
           console.log("MCP Server Card UI ready!", instance);
         },
-        onConnect: function (url) {
+        onConnect: (url) => {
           console.log("Connected to:", url);
         },
-        onError: function (error) {
+        onError: (error) => {
           console.error("MCP Server Card UI error:", error);
         },
       });

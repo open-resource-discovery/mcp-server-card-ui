@@ -17,7 +17,10 @@ export interface ToolCallResult {
 }
 
 export type ContentItem =
-  TextContent | ImageContent | AudioContent | EmbeddedResource;
+  | TextContent
+  | ImageContent
+  | AudioContent
+  | EmbeddedResource;
 
 export interface TextContent {
   type: "text";

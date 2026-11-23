@@ -1,9 +1,9 @@
-import { Menu, Code, FileText } from "lucide-react";
+import { Badge } from "@lib/components/ui/badge";
 import { Button } from "@lib/components/ui/button";
 import { useUIStore } from "@lib/stores/uiStore";
 import { useValidationStore } from "@lib/stores/validationStore";
-import { Badge } from "@lib/components/ui/badge";
 import { cn } from "@lib/utils/cn";
+import { Code, FileText, Menu } from "lucide-react";
 
 interface MobileBottomBarProps {
   showSettings?: boolean;

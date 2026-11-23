@@ -1,5 +1,5 @@
-import { ValidationEntry } from "@open-resource-discovery/ui-components";
 import type { ValidationResult } from "@lib/types/validation";
+import { ValidationEntry } from "@open-resource-discovery/ui-components";
 
 interface ValidationResultCardProps {
   result: ValidationResult;

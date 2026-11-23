@@ -21,12 +21,7 @@ import { MCPServerEditor } from "@open-resource-discovery/mcp-server-card-ui";
 import "@open-resource-discovery/mcp-server-card-ui/styles";
 
 function App() {
-  return (
-    <MCPServerEditor
-      initialServerCard='{"name": "example/server", ...}'
-      showValidation={true}
-    />
-  );
+  return <MCPServerEditor initialServerCard='{"name": "example/server", ...}' showValidation={true} />;
 }
 ```
 

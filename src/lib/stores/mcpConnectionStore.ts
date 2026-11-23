@@ -1,34 +1,34 @@
-import { create } from "zustand";
 import type {
   AuthType,
   BasicCredentials,
   BearerCredentials,
-  OAuth2Credentials,
   ConnectionStatus,
+  OAuth2Credentials,
   PredefinedServer,
 } from "@lib/types/connection";
-import type { MCPServerCardDefinition } from "../types/mcp-protocol";
-import { getConfigAuth } from "@lib/utils/playground-config";
+import { isErrorResponse, resetIdCounter } from "@lib/utils/mcp-jsonrpc";
 import {
-  sendRequest,
-  sendNotification,
   deleteSession,
   type MCPTransportConfig,
   type MCPTransportResult,
+  sendNotification,
+  sendRequest,
 } from "@lib/utils/mcp-transport";
-import { resetIdCounter, isErrorResponse } from "@lib/utils/mcp-jsonrpc";
+import {
+  clearOAuthParams,
+  generateCodeChallenge,
+  generateCodeVerifier,
+  generateState,
+  getDefaultOAuthRedirectUri,
+  getStoredOAuthParams,
+  storeOAuthParams,
+} from "@lib/utils/pkce";
+import { getConfigAuth } from "@lib/utils/playground-config";
+import { create } from "zustand";
+import type { MCPServerCardDefinition } from "../types/mcp-protocol";
+import { useFunctionsStore } from "./functionsStore";
 import { useMCPLogStore } from "./mcpLogStore";
 import { useServerCardStore } from "./serverCardStore";
-import {
-  generateCodeVerifier,
-  generateCodeChallenge,
-  generateState,
-  storeOAuthParams,
-  getStoredOAuthParams,
-  clearOAuthParams,
-  getDefaultOAuthRedirectUri,
-} from "@lib/utils/pkce";
-import { useFunctionsStore } from "./functionsStore";
 
 // Compute auth headers from current credentials
 function computeAuthHeaders(
@@ -349,7 +349,8 @@ export const useMCPConnectionStore = create<MCPConnectionState>((set, get) => ({
       const result = initResult.response.result as Record<string, unknown>;
       const serverInfo = result.serverInfo as ServerInfo | undefined;
       const capabilities = result.capabilities as
-        ServerCapabilities | undefined;
+        | ServerCapabilities
+        | undefined;
       const sessionId = initResult.sessionId ?? null;
 
       // Update config with session ID for the notification
@@ -451,9 +452,11 @@ export const useMCPConnectionStore = create<MCPConnectionState>((set, get) => ({
               unknown
             >;
             const retryServerInfo = retryData.serverInfo as
-              ServerInfo | undefined;
+              | ServerInfo
+              | undefined;
             const retryCaps = retryData.capabilities as
-              ServerCapabilities | undefined;
+              | ServerCapabilities
+              | undefined;
             const retrySessionId = retryResult.sessionId ?? null;
 
             const retryConnConfig: MCPTransportConfig = {
@@ -498,10 +501,7 @@ export const useMCPConnectionStore = create<MCPConnectionState>((set, get) => ({
             }
 
             return true;
-          } catch {
-            // This strategy failed, try the next one
-            continue;
-          }
+          } catch {}
         }
       }
 

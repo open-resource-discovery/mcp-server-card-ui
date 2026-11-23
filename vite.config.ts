@@ -1,10 +1,11 @@
 /// <reference types="vitest" />
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
+
 import tailwindcss from "@tailwindcss/vite";
-import postcss from "postcss";
+import react from "@vitejs/plugin-react";
+import { existsSync, readFileSync, writeFileSync } from "fs";
 import { resolve } from "path";
-import { readFileSync, writeFileSync, existsSync } from "fs";
+import postcss from "postcss";
+import { defineConfig } from "vite";
 
 // The card root (`.mcp-root`) is rendered on the SAME element as `.ord-ui`
 // (see src/lib/components/ThemeRoot.tsx).

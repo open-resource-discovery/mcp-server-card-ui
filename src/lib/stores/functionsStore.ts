@@ -1,13 +1,13 @@
-import { create } from "zustand";
-import { v4 as uuidv4 } from "uuid";
 import type {
   FunctionCall,
-  ToolCallResult,
   PromptResult,
+  ToolCallResult,
 } from "@lib/types/functions";
-import { useMCPConnectionStore } from "./mcpConnectionStore";
-import { sendRequest } from "@lib/utils/mcp-transport";
 import { isErrorResponse } from "@lib/utils/mcp-jsonrpc";
+import { sendRequest } from "@lib/utils/mcp-transport";
+import { v4 as uuidv4 } from "uuid";
+import { create } from "zustand";
+import { useMCPConnectionStore } from "./mcpConnectionStore";
 
 interface FunctionsState {
   calls: FunctionCall[];

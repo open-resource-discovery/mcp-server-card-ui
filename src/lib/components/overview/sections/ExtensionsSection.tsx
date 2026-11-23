@@ -1,8 +1,8 @@
+import { JsonHighlight } from "@lib/components/ui/JsonHighlight";
+import { SectionCard } from "@open-resource-discovery/ui-components";
+import { Braces, Check, Copy, ExternalLink } from "lucide-react";
 import { useState } from "react";
 import type { MetaObject } from "../../../types/mcp-protocol";
-import { SectionCard } from "@open-resource-discovery/ui-components";
-import { JsonHighlight } from "@lib/components/ui/JsonHighlight";
-import { Braces, Copy, Check, ExternalLink } from "lucide-react";
 
 interface ExtensionsSectionProps {
   meta: MetaObject;

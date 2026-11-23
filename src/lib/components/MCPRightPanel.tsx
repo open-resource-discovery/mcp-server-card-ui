@@ -1,3 +1,7 @@
+import { FunctionsPanel } from "@lib/components/functions/FunctionsPanel";
+import { MCPServerOverview } from "@lib/components/overview/MCPServerOverview";
+import { MCPLogPanel } from "@lib/components/rawhttp/MCPLogPanel";
+import { Badge } from "@lib/components/ui/badge";
 import { ScrollArea } from "@lib/components/ui/scroll-area";
 import {
   Tabs,
@@ -5,15 +9,11 @@ import {
   TabsList,
   TabsTrigger,
 } from "@lib/components/ui/tabs";
-import { MCPServerOverview } from "@lib/components/overview/MCPServerOverview";
-import { FunctionsPanel } from "@lib/components/functions/FunctionsPanel";
-import { MCPLogPanel } from "@lib/components/rawhttp/MCPLogPanel";
 import { ValidationPanel } from "@lib/components/validation/ValidationPanel";
-import { useValidationStore } from "@lib/stores/validationStore";
 import { useFunctionsStore } from "@lib/stores/functionsStore";
 import { useMCPLogStore } from "@lib/stores/mcpLogStore";
 import { useUIStore } from "@lib/stores/uiStore";
-import { Badge } from "@lib/components/ui/badge";
+import { useValidationStore } from "@lib/stores/validationStore";
 import { useEffect } from "react";
 
 interface MCPRightPanelProps {

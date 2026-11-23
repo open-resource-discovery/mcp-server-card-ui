@@ -1,18 +1,18 @@
-import { create } from "zustand";
 import type { PredefinedServer } from "@lib/types/connection";
 import { getStoredJsonResult, setStoredJson } from "@lib/utils/local-storage";
-import {
-  getConfigServers,
-  getConfigOrdUrl,
-} from "@lib/utils/playground-config";
 import {
   discoverServersFromOrd,
   formatOrdDiscoveryIssue,
 } from "@lib/utils/ord-discovery";
 import {
+  getConfigOrdUrl,
+  getConfigServers,
+} from "@lib/utils/playground-config";
+import {
   formatPredefinedServerIssue,
   validatePredefinedServers,
 } from "@lib/utils/predefined-server-validation";
+import { create } from "zustand";
 
 const CUSTOM_SERVERS_STORAGE_KEY = "mcp-custom-servers";
 

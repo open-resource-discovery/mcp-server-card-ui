@@ -1,9 +1,9 @@
+import { Button } from "@lib/components/ui/button";
+import { ScrollArea } from "@lib/components/ui/scroll-area";
 import { useFunctionsStore } from "@lib/stores/functionsStore";
+import { Trash2, Wrench } from "lucide-react";
 import { FunctionCallCard } from "./FunctionCallCard";
 import { FunctionInput } from "./FunctionInput";
-import { Button } from "@lib/components/ui/button";
-import { Trash2, Wrench } from "lucide-react";
-import { ScrollArea } from "@lib/components/ui/scroll-area";
 
 export function FunctionsPanel() {
   const { calls, clearCalls } = useFunctionsStore();

@@ -1,7 +1,7 @@
-import type { MCPServerCardDefinition } from "../../../types/mcp-protocol";
-import { InfoCard } from "@open-resource-discovery/ui-components";
 import { Badge } from "@lib/components/ui/badge";
+import { InfoCard } from "@open-resource-discovery/ui-components";
 import { Server } from "lucide-react";
+import type { MCPServerCardDefinition } from "../../../types/mcp-protocol";
 
 interface ServerHeaderProps {
   card: MCPServerCardDefinition;

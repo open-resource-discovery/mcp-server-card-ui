@@ -1,7 +1,7 @@
-import type { Prompt } from "../../../types/mcp-protocol";
-import { SectionCard } from "@open-resource-discovery/ui-components";
 import { PromptCard } from "@lib/components/overview/PromptCard";
+import { SectionCard } from "@open-resource-discovery/ui-components";
 import { MessageSquare } from "lucide-react";
+import type { Prompt } from "../../../types/mcp-protocol";
 
 interface PromptsSectionProps {
   prompts: Prompt[];

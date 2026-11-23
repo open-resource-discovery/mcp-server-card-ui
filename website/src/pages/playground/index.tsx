@@ -1,7 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
-import Layout from "@theme/Layout";
-import useBaseUrl from "@docusaurus/useBaseUrl";
 import Head from "@docusaurus/Head";
+import useBaseUrl from "@docusaurus/useBaseUrl";
+import Layout from "@theme/Layout";
+import type React from "react";
+import { useEffect, useRef, useState } from "react";
 
 function getDocusaurusTheme(): "dark" | "light" {
   if (typeof document === "undefined") return "light";

@@ -1,5 +1,5 @@
-import { useMCPConnectionStore } from "@lib/stores/mcpConnectionStore";
 import { PasswordInput } from "@lib/components/ui/PasswordInput";
+import { useMCPConnectionStore } from "@lib/stores/mcpConnectionStore";
 
 export function AuthBearerForm() {
   const { bearerCredentials, setBearerCredentials } = useMCPConnectionStore();

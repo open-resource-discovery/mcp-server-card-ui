@@ -1,18 +1,18 @@
-import { SplitPane } from "@open-resource-discovery/ui-components";
-import { useIsLargeScreen } from "@lib/hooks/useMediaQuery";
-import { useUIStore } from "@lib/stores/uiStore";
-import { useAutoValidate } from "@lib/hooks/useAutoValidate";
 import { TextareaEditor } from "@lib/components/editor/TextareaEditor";
-import { useServerCardStore } from "@lib/stores/serverCardStore";
-import { ViewerRightPanel } from "./ViewerRightPanel";
-import { ResizeHandle } from "./ResizeHandle";
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
 } from "@lib/components/ui/sheet";
+import { useAutoValidate } from "@lib/hooks/useAutoValidate";
+import { useIsLargeScreen } from "@lib/hooks/useMediaQuery";
+import { useServerCardStore } from "@lib/stores/serverCardStore";
+import { useUIStore } from "@lib/stores/uiStore";
 import { cn } from "@lib/utils/cn";
+import { SplitPane } from "@open-resource-discovery/ui-components";
+import { ResizeHandle } from "./ResizeHandle";
+import { ViewerRightPanel } from "./ViewerRightPanel";
 
 interface ViewerLayoutProps {
   showValidation?: boolean;

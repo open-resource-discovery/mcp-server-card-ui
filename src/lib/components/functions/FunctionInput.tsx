@@ -1,12 +1,12 @@
-import { useState, useCallback, useEffect, useMemo } from "react";
+import { MonacoEditor } from "@lib/components/editor/MonacoEditor";
+import { Button } from "@lib/components/ui/button";
+import { Select } from "@lib/components/ui/select";
 import { useFunctionsStore } from "@lib/stores/functionsStore";
 import { useMCPConnectionStore } from "@lib/stores/mcpConnectionStore";
 import { useServerCardStore } from "@lib/stores/serverCardStore";
-import type { Tool, Prompt } from "../../types/mcp-protocol";
-import { Select } from "@lib/components/ui/select";
-import { Button } from "@lib/components/ui/button";
-import { MonacoEditor } from "@lib/components/editor/MonacoEditor";
-import { Play, Loader2 } from "lucide-react";
+import { Loader2, Play } from "lucide-react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import type { Prompt, Tool } from "../../types/mcp-protocol";
 
 /**
  * Generate a sample JSON object from a tool's inputSchema.

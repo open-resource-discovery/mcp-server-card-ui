@@ -1,16 +1,3 @@
-import { useState, useEffect, useRef } from "react";
-import {
-  ChevronDown,
-  Copy,
-  Check,
-  Clock,
-  AlertCircle,
-  CheckCircle,
-  Play,
-  X,
-  GitBranch,
-  Loader2,
-} from "lucide-react";
 import { Badge } from "@lib/components/ui/badge";
 import { Button } from "@lib/components/ui/button";
 import {
@@ -19,10 +6,23 @@ import {
   CollapsibleTrigger,
 } from "@lib/components/ui/collapsible";
 import { JsonHighlight } from "@lib/components/ui/JsonHighlight";
-import { cn } from "@lib/utils/cn";
-import type { MCPLogEntry } from "@lib/types/mcpLog";
-import { sendRawRequest } from "@lib/utils/mcp-transport";
 import { useMCPConnectionStore } from "@lib/stores/mcpConnectionStore";
+import type { MCPLogEntry } from "@lib/types/mcpLog";
+import { cn } from "@lib/utils/cn";
+import { sendRawRequest } from "@lib/utils/mcp-transport";
+import {
+  AlertCircle,
+  Check,
+  CheckCircle,
+  ChevronDown,
+  Clock,
+  Copy,
+  GitBranch,
+  Loader2,
+  Play,
+  X,
+} from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 interface MCPLogEntryCardProps {
   entry: MCPLogEntry;

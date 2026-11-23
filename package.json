@@ -105,13 +105,13 @@
     "build:demo": "vite build",
     "copy:website-standalone": "node ./scripts/copy-standalone-to-website.mjs",
     "prepare:website-assets": "npm run build:standalone && npm run copy:website-standalone",
-    "lint": "npm run eslint:ci",
-    "eslint": "eslint . --fix",
-    "eslint:ci": "eslint .",
-    "prettier": "prettier --write \"**/*.{ts,tsx,json,yml,yaml,md,html,css,scss}\"",
-    "prettier:ci": "prettier --check \"**/*.{ts,tsx,json,yml,yaml,md,html,css,scss}\"",
-    "format": "npm run prettier && npm run eslint",
-    "format:check": "npm run prettier:ci && npm run eslint:ci",
+    "lint": "biome lint .",
+    "eslint": "npm run lint",
+    "eslint:ci": "npm run lint",
+    "prettier": "npm run format",
+    "prettier:ci": "npm run format:check",
+    "format": "biome format --write . && oxfmt --no-error-on-unmatched-pattern '**/*.{md,yml,yaml,css,scss,html}'",
+    "format:check": "biome format . && oxfmt --check --no-error-on-unmatched-pattern '**/*.{md,yml,yaml,css,scss,html}'",
     "preview": "vite preview",
     "preview:standalone": "vite preview --outDir dist-standalone",
     "website": "npm --prefix website run start",
@@ -123,7 +123,9 @@
     "test:e2e:docusaurus": "npx playwright test --project=docusaurus",
     "test:e2e:ui": "npx playwright test --ui",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "lint:fix": "biome lint --write .",
+    "check:tooling": "npm run lint && npm run format:check"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",
@@ -151,7 +153,6 @@
     "undici": "8.12.4"
   },
   "devDependencies": {
-    "@eslint/js": "10.0.1",
     "@playwright/test": "1.65.1",
     "@tailwindcss/typography": "0.5.20",
     "@tailwindcss/vite": "4.3.5",
@@ -159,20 +160,16 @@
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "@vitejs/plugin-react": "6.3.0",
-    "eslint": "10.15.0",
-    "eslint-plugin-react-hooks": "7.1.1",
-    "eslint-plugin-react-refresh": "0.5.8",
-    "globals": "17.14.0",
     "jsdom": "31.0.1",
-    "prettier": "3.10.1",
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "react-router-dom": "7.18.6",
     "tailwindcss": "4.3.5",
     "tsc-alias": "1.9.10",
     "typescript": "5.9.3",
-    "typescript-eslint": "8.72.2",
     "vite": "8.3.8",
-    "vitest": "5.1.0"
+    "vitest": "5.1.0",
+    "@biomejs/biome": "2.6.4",
+    "oxfmt": "0.75.0"
   }
 }

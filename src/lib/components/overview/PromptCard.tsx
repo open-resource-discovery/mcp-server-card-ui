@@ -1,12 +1,12 @@
-import type { Prompt } from "../../types/mcp-protocol";
-import {
-  CollapsibleSection,
-  Badge,
-  Button,
-} from "@open-resource-discovery/ui-components";
 import { MarkdownText } from "@lib/components/ui/MarkdownText";
 import { useUIStore } from "@lib/stores/uiStore";
+import {
+  Badge,
+  Button,
+  CollapsibleSection,
+} from "@open-resource-discovery/ui-components";
 import { Play } from "lucide-react";
+import type { Prompt } from "../../types/mcp-protocol";
 
 interface PromptCardProps {
   prompt: Prompt;

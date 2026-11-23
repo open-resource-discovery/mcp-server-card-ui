@@ -1,14 +1,14 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
-import { resolve } from "path";
+import react from "@vitejs/plugin-react";
 import {
   copyFileSync,
-  mkdirSync,
   existsSync,
+  mkdirSync,
   readFileSync,
   writeFileSync,
 } from "fs";
+import { resolve } from "path";
+import { defineConfig } from "vite";
 
 /**
  * Strip all @layer wrappers from CSS output and scope loose selectors to .mcp-root.

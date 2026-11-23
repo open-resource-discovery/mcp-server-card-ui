@@ -22,7 +22,7 @@
  * - onError: Callback on error
  */
 
-window.addEventListener("DOMContentLoaded", function () {
+window.addEventListener("DOMContentLoaded", () => {
   window.playground = MCPPlayground.init({
     el: "#mcp-server-card-ui",
 
@@ -50,15 +50,15 @@ window.addEventListener("DOMContentLoaded", function () {
     // },
 
     // Callbacks
-    onReady: function (instance) {
+    onReady: (instance) => {
       console.log("MCP Server Card UI ready!", instance);
     },
 
-    onConnect: function (url) {
+    onConnect: (url) => {
       console.log("Connected to:", url);
     },
 
-    onError: function (error) {
+    onError: (error) => {
       console.error("MCP Server Card UI error:", error);
     },
   });

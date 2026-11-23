@@ -1,6 +1,6 @@
-import { Copy, Wand2, RotateCcw, Check } from "lucide-react";
 import { Button } from "@lib/components/ui/button";
 import { useServerCardStore } from "@lib/stores/serverCardStore";
+import { Check, Copy, RotateCcw, Wand2 } from "lucide-react";
 import { useState } from "react";
 
 export function JsonToolbar() {

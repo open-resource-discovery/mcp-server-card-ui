@@ -11,17 +11,17 @@
  * Runtime CSS loading is handled by the JS bundle's side-effect imports —
  * the .d.ts copy is purely cosmetic and safe to strip.
  */
-import { readFile, writeFile } from "node:fs/promises";
-import { fileURLToPath } from "node:url";
+import { glob, readFile, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
-import { glob } from "node:fs/promises";
+import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const distDir = resolve(__dirname, "..", "dist");
 
 // Match bare side-effect imports of CSS/SCSS/Sass/Less, with single or
 // double quotes, optional trailing semicolon, on their own line.
-const CSS_IMPORT_RE = /^\s*import\s+["'][^"']+\.(?:css|scss|sass|less)["'];?\s*\r?\n/gm;
+const CSS_IMPORT_RE =
+  /^\s*import\s+["'][^"']+\.(?:css|scss|sass|less)["'];?\s*\r?\n/gm;
 
 let touched = 0;
 

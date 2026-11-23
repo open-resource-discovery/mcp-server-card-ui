@@ -1,7 +1,7 @@
-import { createContext, useContext, useState } from "react";
-import type { ReactNode } from "react";
 import { useTheme } from "@lib/hooks/useTheme";
 import { cn } from "@lib/utils/cn";
+import type { ReactNode } from "react";
+import { createContext, useContext, useState } from "react";
 
 interface ThemeRootProps {
   className?: string;

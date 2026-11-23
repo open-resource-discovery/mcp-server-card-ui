@@ -1,13 +1,13 @@
-import type { Tool } from "../../types/mcp-protocol";
-import {
-  CollapsibleSection,
-  Badge,
-  Button,
-} from "@open-resource-discovery/ui-components";
 import { JsonHighlight } from "@lib/components/ui/JsonHighlight";
 import { MarkdownText } from "@lib/components/ui/MarkdownText";
 import { useUIStore } from "@lib/stores/uiStore";
+import {
+  Badge,
+  Button,
+  CollapsibleSection,
+} from "@open-resource-discovery/ui-components";
 import { Play } from "lucide-react";
+import type { Tool } from "../../types/mcp-protocol";
 
 interface ToolCardProps {
   tool: Tool;

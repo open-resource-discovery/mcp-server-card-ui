@@ -1,3 +1,5 @@
+import { MCPServerOverview } from "@lib/components/overview/MCPServerOverview";
+import { Badge } from "@lib/components/ui/badge";
 import { ScrollArea } from "@lib/components/ui/scroll-area";
 import {
   Tabs,
@@ -5,10 +7,8 @@ import {
   TabsList,
   TabsTrigger,
 } from "@lib/components/ui/tabs";
-import { MCPServerOverview } from "@lib/components/overview/MCPServerOverview";
 import { ValidationPanel } from "@lib/components/validation/ValidationPanel";
 import { useValidationStore } from "@lib/stores/validationStore";
-import { Badge } from "@lib/components/ui/badge";
 
 interface EditorRightPanelProps {
   showValidation?: boolean;

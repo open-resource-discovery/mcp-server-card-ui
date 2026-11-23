@@ -1,10 +1,10 @@
-import type {
-  ValidationSummary as ValidationSummaryType,
-  ValidationStatus,
-} from "@lib/types/validation";
 import { Badge } from "@lib/components/ui/badge";
-import { XCircle, AlertTriangle } from "lucide-react";
+import type {
+  ValidationStatus,
+  ValidationSummary as ValidationSummaryType,
+} from "@lib/types/validation";
 import { cn } from "@lib/utils/cn";
+import { AlertTriangle, XCircle } from "lucide-react";
 
 interface ValidationSummaryProps {
   summary: ValidationSummaryType;
