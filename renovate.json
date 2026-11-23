@@ -3,10 +3,11 @@
   "extends": [
     "config:recommended",
     ":pinAllExceptPeerDependencies",
-    "helpers:pinGitHubActionDigests"
+    "helpers:pinGitHubActionDigests",
+    "docker:pinDigests"
   ],
   "semanticCommits": "enabled",
-  "enabledManagers": ["npm", "github-actions"],
+  "enabledManagers": ["npm", "github-actions", "dockerfile"],
   "branchPrefix": "deps/",
   "timezone": "Europe/Berlin",
   "schedule": ["every weekend"],
