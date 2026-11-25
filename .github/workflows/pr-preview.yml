@@ -36,11 +36,11 @@ jobs:
           VITE_PLAYGROUND_CONFIG: ${{ vars.VITE_PLAYGROUND_CONFIG }}
         run: |
           set -euo pipefail
-          npm ci
+          npm ci --ignore-scripts
           npm run build:standalone
           npm run copy:website-standalone
           cd website
-          npm ci
+          npm ci --ignore-scripts
           npm run build
 
       - name: PR preview
