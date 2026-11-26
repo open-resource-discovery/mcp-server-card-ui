@@ -137,18 +137,18 @@
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
     "jsonc-parser": "3.3.1",
-    "lucide-react": "1.73.0",
+    "lucide-react": "1.78.0",
     "react-markdown": "10.1.0",
-    "react-resizable-panels": "4.24.0",
+    "react-resizable-panels": "4.24.2",
     "sonner": "2.0.8",
-    "tailwind-merge": "3.7.0",
+    "tailwind-merge": "3.7.1",
     "uuid": "14.0.3",
     "zod": "4.6.7",
     "zustand": "5.1.0"
   },
   "overrides": {
     "dompurify": "3.4.18",
-    "minimatch": "11.0.1",
+    "minimatch": "11.0.9",
     "postcss-selector-parser": "6.1.5"
   },
   "devDependencies": {
@@ -168,12 +168,12 @@
     "prettier": "3.10.1",
     "react": "19.3.1",
     "react-dom": "19.3.1",
-    "react-router-dom": "7.18.5",
+    "react-router-dom": "7.18.6",
     "tailwindcss": "4.3.5",
     "tsc-alias": "1.9.10",
     "typescript": "5.9.3",
-    "typescript-eslint": "8.72.2",
+    "typescript-eslint": "8.74.0",
     "vite": "8.3.8",
-    "vitest": "5.1.0"
+    "vitest": "5.1.2"
   }
 }
