@@ -7,3 +7,6 @@
 /website/.npmrc @open-resource-discovery/mcp-server-card-ui-admin
 /website/package.json @open-resource-discovery/mcp-server-card-ui-admin
 /website/package-lock.json @open-resource-discovery/mcp-server-card-ui-admin
+
+# Review the installer policy with the corresponding package owners.
+/.npmrc @open-resource-discovery/mcp-server-card-ui-admin
